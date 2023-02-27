@@ -25,7 +25,7 @@ class Order:
     def __init__(self, order_id: int, date: datetime):
         self.order_id = order_id
         self.order_date = date
-        self.item_ids = [random.randint(1, ITEM_COUNT) for _ in range(1, 5)]
+        self.item_ids = random.choices(range(ITEM_COUNT), k=random.randint(1, 5))
         self.payment_method = random.choice(
             ["cash", "card", "dining_dollars", "retail_swipe", "meal_plan_both"]
         )
@@ -106,7 +106,7 @@ def create_orders():
                     for _ in range(0, random.randint(0, popularity)):
                         minute = random.randint(0, 59)
                         second = random.randint(0, 59)
-                        date = datetime(2020, month, day, hour, minute, second)
+                        date = datetime(2022, month, day, hour, minute, second)
                         yield Order(order_id_next, date)
                         order_id_next = order_id_next + 1
             except ValueError:
