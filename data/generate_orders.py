@@ -7,20 +7,6 @@ import random
 from datetime import datetime
 from typing import Optional
 
-# Schema:
-
-CREATE_COMMAND = """
-CREATE TABLE order_history (
-    id bigserial PRIMARY KEY,
-    order_id int NOT NULL,
-    order_date timestamp NOT NULL,
-    item_id bigint NOT NULL FOREIGN KEY REFERENCES menu_items (item_id),
-    price numeric(10,2) NOT NULL,
-    payment_method varchar(50) NOT NULL,
-    quantity int NOT NULL
-);
-"""
-
 ITEM_COUNT = 100
 
 
@@ -39,12 +25,12 @@ class Order:
     def __init__(self, order_id: int, date: datetime):
         self.order_id = order_id
         self.order_date = date
-        self.item_ids = []
+        self.item_ids = []  # TODO: add item ids based on items table
         self.payment_method = random.choice(
             ["cash", "card", "dining_dollars", "retail_swipe", "meal_plan_both"]
         )
-        self.quantity = []
         self.price = self.get_price()
+        self.quantity = [random.randint(2, 7) // 2 for _ in self.item_ids]
 
     def __str__(self):
         out = ""
@@ -131,7 +117,6 @@ def create_orders():
 
 def main():
     """Entry point"""
-    print(CREATE_COMMAND)
     total_price = 0
     with open("order_history.csv", "w", encoding="utf-8") as file:
         file.write("order_id, order_date, item_id, price, payment_method, quantity\n")
