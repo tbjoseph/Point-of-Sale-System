@@ -1,3 +1,6 @@
+import csv
+import random
+import datetime
 
 ###### Define the materials and their cost  
 
@@ -23,4 +26,32 @@ materials_cost = [
     #sauce ingredients
     6, 5, 5, 4, 5, 7, 7
     ]
+
+
+###### Generate random shipment history data
+
+shipment_ID = 476835
+date = datetime.datetime.today().date()
+shipments = []
+day_offset = 0
+
+#52 weeks in a year
+for i in range(52):
+    for j in range(25):
+        randomItem = random.randint(0, 6)
+        amount = random.randint(1, 20)
+
+        shipment = {
+            'shipment_ID': shipment_ID,
+            'Date': date - datetime.timedelta(days=day_offset),
+            'item': materials[randomItem],
+            'Amount': amount,
+            'price': materials_cost[randomItem],
+            'total_price': materials_cost[randomItem] * amount,
+        }
+
+        shipments.append(shipment)
+        shipment_ID -= 1
+        
+    day_offset += 7 #shipments are a week apart
 
