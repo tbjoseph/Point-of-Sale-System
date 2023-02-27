@@ -55,3 +55,11 @@ for i in range(52):
         
     day_offset += 7 #shipments are a week apart
 
+
+###### Save the shipment history data to a CSV file
+
+with open('shipment_history.csv', mode='w', newline='') as file:
+    writer = csv.DictWriter(file, fieldnames=['shipment_ID', 'Date', 'item', 'Amount', 'price', 'total_price'])
+    writer.writeheader()
+    for shipment in shipments:
+        writer.writerow(shipment)
