@@ -7,7 +7,7 @@ import random
 from datetime import datetime
 from typing import Optional
 
-ITEM_COUNT = 100
+ITEM_COUNT = 21
 
 
 class Order:
@@ -25,7 +25,7 @@ class Order:
     def __init__(self, order_id: int, date: datetime):
         self.order_id = order_id
         self.order_date = date
-        self.item_ids = []  # TODO: add item ids based on items table
+        self.item_ids = [random.randint(1, ITEM_COUNT) for _ in range(1, 5)]
         self.payment_method = random.choice(
             ["cash", "card", "dining_dollars", "retail_swipe", "meal_plan_both"]
         )
@@ -46,7 +46,6 @@ class Order:
         # family meals
         if random.randint(1, 100) < 1:
             price += 31.50
-            self.item_ids = random.sample(range(ITEM_COUNT), 4)
             # drinks
             for _ in range(random.randint(1, 3)):
                 price += random.randint(17, 21) * 0.10
