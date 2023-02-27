@@ -1,3 +1,5 @@
+###### Define the materials and their cost  
+
 materials = [ 
     #meats and grains
     'chicken', 'beef', 'shrimp', 'tofu', 'rice', 'chow mein noodles',
