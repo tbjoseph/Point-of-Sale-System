@@ -1,11 +1,11 @@
 menu_id, name, inventory_id, type, description
 000,The Original Orange Chicken,0,entree,Our signature dish. Crispy chicken wok-tossed in a sweet and spicy orange sauce.
 000,The Original Orange Chicken,16,entree,Our signature dish. Crispy chicken wok-tossed in a sweet and spicy orange sauce.
-001,Black Pepper Angus Steak,2,premium entree,Angus steak wok-seared with green beans, onions, red bell peppers and mushrooms in a savory black pepper sauce.
-001,Black Pepper Angus Steak,17,premium entree,Angus steak wok-seared with green beans, onions, red bell peppers and mushrooms in a savory black pepper sauce.
-001,Black Pepper Angus Steak,12,premium entree,Angus steak wok-seared with green beans, onions, red bell peppers and mushrooms in a savory black pepper sauce.
-001,Black Pepper Angus Steak,5,premium entree,Angus steak wok-seared with green beans, onions, red bell peppers and mushrooms in a savory black pepper sauce.
-001,Black Pepper Angus Steak, add sauce number here ,premium entree,Angus steak wok-seared with green beans, onions, red bell peppers and mushrooms in a savory black pepper sauce.
+001,Black Pepper Angus Steak,2,premium entree,Angus steak wok-seared with green beans onions red bell peppers and mushrooms in a savory black pepper sauce.
+001,Black Pepper Angus Steak,17,premium entree,Angus steak wok-seared with green beans onions red bell peppers and mushrooms in a savory black pepper sauce.
+001,Black Pepper Angus Steak,12,premium entree,Angus steak wok-seared with green beans onions red bell peppers and mushrooms in a savory black pepper sauce.
+001,Black Pepper Angus Steak,5,premium entree,Angus steak wok-seared with green beans onions red bell peppers and mushrooms in a savory black pepper sauce.
+001,Black Pepper Angus Steak, add sauce number here ,premium entree,Angus steak wok-seared with green beans onions red bell peppers and mushrooms in a savory black pepper sauce.
 002,Grilled Teriyaki Chicken,8,entree,Grilled chicken hand-sliced to order and served with teriyaki sauce.
 002,Grilled Teriyaki Chicken,9,entree,Grilled chicken hand-sliced to order and served with teriyaki sauce.
 003,Broccoli Beef,10,entree,A classic favorite. Tender beef and fresh broccoli in a ginger soy sauce.
