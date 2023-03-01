@@ -46,7 +46,6 @@ menu_id,name,inventory_id,meal_type,description
 013,White Steamed Rice,26,side, The normal steamed white rice.
 014,Super Greens,3,side,A light and zesty blend of broccoli kale and cabbage 
 014,Super Greens,24,side,A light and zesty blend of broccoli kale and cabbage 
-014,Super Greens, put kale here ,side,A light and zesty blend of broccoli kale and cabbage 
 015,Chicken Potsicker,8,side,Pan-seared dumplings filled with chicken cabbage and onion.
 015,Chicken Potsicker,24,side,Pan-seared dumplings filled with chicken cabbage and onion.
 015,Chicken Potsicker,4,side,Pan-seared dumplings filled with chicken cabbage and onion.
