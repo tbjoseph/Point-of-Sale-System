@@ -144,9 +144,9 @@ for i in range(26):
         shipment = {
             'item_ID': materials_ID[randomItem],
             'shipment_ID': shipment_ID,
-            'Date': date - datetime.timedelta(days=day_offset),
-            'item': materials[randomItem],
-            'Amount': amount,
+            'shipment_date': date - datetime.timedelta(days=day_offset),
+            'item_name': materials[randomItem],
+            'quantity': amount,
             'price': materials_cost[randomItem],
             'total_price': materials_cost[randomItem] * amount,
         }
@@ -159,8 +159,8 @@ for i in range(26):
 
 ###### Save the shipment history data to a CSV file
 
-with open('shipment_history.csv', mode='w', newline='') as file:
-    writer = csv.DictWriter(file, fieldnames=['item_ID', 'shipment_ID', 'Date', 'item', 'Amount', 'price', 'total_price'])
+with open('data/shipment_history.csv', mode='w', newline='') as file:
+    writer = csv.DictWriter(file, fieldnames=['item_ID', 'shipment_ID', 'shipment_date', 'item_name', 'quantity', 'price', 'total_price'])
     writer.writeheader()
     for shipment in shipments:
         writer.writerow(shipment)
