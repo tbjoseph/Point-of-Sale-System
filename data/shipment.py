@@ -61,7 +61,11 @@ materials = [
     'Plate',
     'Bigger Plate',
     'Lids',
-    'Straws'
+    'Straws',
+    'Fortune Cookies',
+    'Small Cups',
+    'Medium Cups',
+    'Large Cups'
     ]
 
 # Meats: 20, Vegetables: 15, Miscellaneous: 10
@@ -98,6 +102,10 @@ materials_cost = [
     15,
     15,
     15,
+    10,
+    10,
+    10,
+    10,
     10,
     10,
     10,
