@@ -34,7 +34,6 @@ menu_id,name,inventory_id,meal_type,description
 010,Black Pepper Chicken,8,entree,Marinated chicken celery and onions in a bold black pepper sauce.
 010,Black Pepper Chicken,23,entree,Marinated chicken celery and onions in a bold black pepper sauce.
 010,Black Pepper Chicken,4,entree,Marinated chicken celery and onions in a bold black pepper sauce.
-010,Black Pepper Chicken, put sauce here ,entree,Marinated chicken celery and onions in a bold black pepper sauce.
 011,Chow Mein,24,side,Stir-fried wheat noodles with onions celery and cabbage.
 011,Chow Mein,4,side,Stir-fried wheat noodles with onions celery and cabbage.
 011,Chow Mein,25,side,Stir-fried wheat noodles with onions celery and cabbage.
