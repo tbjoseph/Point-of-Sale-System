@@ -6,7 +6,6 @@ import datetime
 
 materials = [
     'Breaded Chicken',
-    'Orange Chicken Sauce',
     'Angus Steak',
     'Broccoli',
     'Onions',
@@ -71,7 +70,6 @@ materials = [
 # Meats: 20, Vegetables: 15, Miscellaneous: 10
 materials_cost = [
     20,
-    10,
     20,
     15,
     15,
@@ -133,8 +131,8 @@ materials_cost = [
     10
     ]
 
-materials_ID = range(len(materials))
-
+materials_ID = list(range(len(materials) + 1))
+del materials_ID[1]
 
 ###### Generate random shipment history data
 
