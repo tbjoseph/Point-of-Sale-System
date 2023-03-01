@@ -5,7 +5,6 @@ menu_id,name,inventory_id,meal_type,description
 001,Black Pepper Angus Steak,17,premium entree,Angus steak wok-seared with green beans onions red bell peppers and mushrooms in a savory black pepper sauce.
 001,Black Pepper Angus Steak,12,premium entree,Angus steak wok-seared with green beans onions red bell peppers and mushrooms in a savory black pepper sauce.
 001,Black Pepper Angus Steak,5,premium entree,Angus steak wok-seared with green beans onions red bell peppers and mushrooms in a savory black pepper sauce.
-001,Black Pepper Angus Steak, add sauce number here ,premium entree,Angus steak wok-seared with green beans onions red bell peppers and mushrooms in a savory black pepper sauce.
 002,Grilled Teriyaki Chicken,8,entree,Grilled chicken hand-sliced to order and served with teriyaki sauce.
 002,Grilled Teriyaki Chicken,9,entree,Grilled chicken hand-sliced to order and served with teriyaki sauce.
 003,Broccoli Beef,10,entree,A classic favorite. Tender beef and fresh broccoli in a ginger soy sauce.
@@ -56,6 +55,8 @@ menu_id,name,inventory_id,meal_type,description
 017,Chicken Egg Roll,33,appetizer,Cabbage carrots mushrooms green onions and chicken in a crispy wonton wrapper.
 018,Veggie Spring Roll,34,appetizer,Cabbage celery carrots green onions and Chinese noodles in a crispy wonton wrapper.
 019,Crispy Shrimp,6,appetizer,Crisp-golden butterflied shrimp.
-020,Fortune Cookies,35,appetizer,A small and hard golden cookies with a fortune in each one.
-021,Cream Cheese Rangoon,,appetizer,Wonton wrappers filled with cream cheese and served with sweet and sour sauce.
-022,Drink, ,drink,Your choice of fountain drink.
+020,Fortune Cookies,57,appetizer,A small and hard golden cookies with a fortune in each one.
+021,Cream Cheese Rangoon,35,appetizer,Wonton wrappers filled with cream cheese and served with sweet and sour sauce.
+022,Drink,58,drink,Your choice of fountain drink.
+022,Drink,59,drink,Your choice of fountain drink.
+022,Drink,60,drink,Your choice of fountain drink.
