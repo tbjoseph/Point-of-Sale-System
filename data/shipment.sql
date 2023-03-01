@@ -1,5 +1,5 @@
 -- shipment history
-CREATE TABLE order_history (
+CREATE TABLE shipment_history (
     id bigserial PRIMARY KEY,
     item_id bigint NOT NULL FOREIGN KEY REFERENCES inventory_items (item_id),
     shipment_id int NOT NULL,
