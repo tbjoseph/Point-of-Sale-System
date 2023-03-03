@@ -3,30 +3,29 @@
 -- Orders
 
 -- 1. List 10 of the orders that happened on July 5th
-SELECT * FROM order_history WHERE order_date LIKE '2022-07-05%' LIMIT 10;
+SELECT * FROM order_history WHERE order_date::date = date '2022-07-05' LIMIT 10;
 
 -- 2. Insert a new order with one item - a drink
 INSERT INTO order_history (order_id, order_date, item_id, price, payment_method, quantity) VALUES (129532, '2023-02-28 12:00:00', 22, 2.00, 'dining_dollars', 1);
 
 -- 3. Find the total value of sales on May 4th
 WITH order_totals AS (
-    SELECT order_id, SUM(price) AS total
+    SELECT DISTINCT order_id, order_date, price AS total
     FROM order_history
-    GROUP BY order_id
-) SELECT SUM(total) FROM order_totals WHERE order_date LIKE '2022-05-04%';
+) SELECT SUM(total) FROM order_totals WHERE order_date::date = date '2022-05-04';
 
 -- Employees
 -- List all employees
-SELECT * FROM employees WHERE permission = 'employee';
+SELECT * FROM employees WHERE permission = 'Employee';
 
 --List all managers
-SELECT * FROM employees WHERE permission = 'manager';
+SELECT * FROM employees WHERE permission = 'Manager';
 
 -- Change an employee's name and gender
 UPDATE employees SET name = 'Jane Smith' SET gender = 'Female' WHERE id = 111222333;
 
 -- Add a newly hired employee into the database
-INSERT INTO employees (id, name, gender, birth_date, permission) values (000000001, 'Daxton Gilliam', 'Male', '1997-01-01', 'employee');
+INSERT INTO employees (id, name, gender, birth_date, permission) values (000000001, 'Daxton Gilliam', 'Male', '1997-01-01', 'Employee');
 
 
 -- Menu

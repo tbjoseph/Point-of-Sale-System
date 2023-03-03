@@ -1,0 +1,12 @@
+#cont {
+    -fx-background-color: #E02229;
+}
+
+#header {
+    -fx-font-weight: bold;
+}
+
+.label {
+    -fx-font-size: 20px;
+    -fx-text-fill: #F5F5F5;
+}
