@@ -16,7 +16,7 @@ public class MainApp extends Application {
         // Load the FXML file, handling exceptions manually
         // to get them printed to the console
         try {
-            root = FXMLLoader.load(getClass().getResource("login.fxml"));
+            root = FXMLLoader.load(getClass().getResource("server_home.fxml"));
         } catch (Exception e) {
             System.err.println(e);
             System.exit(1);
@@ -25,7 +25,7 @@ public class MainApp extends Application {
         // Create the scene and set the stage
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("common.css").toExternalForm());
-        scene.getStylesheets().add(getClass().getResource("login.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("server_home.css").toExternalForm());
 
         Image icon = new Image(getClass().getResourceAsStream("icon.png"));
         stage.getIcons().add(icon);
