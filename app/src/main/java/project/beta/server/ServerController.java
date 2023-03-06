@@ -5,7 +5,7 @@ import project.beta.BackendDAO;
 public class ServerController {
     private BackendDAO dao;
 
-    public ServerController() {
+    public void initialize() {
 
     }
 

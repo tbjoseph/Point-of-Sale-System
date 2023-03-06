@@ -1,10 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 
-<VBox alignment="CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.server.ServerController">
+<HBox alignment="CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.server.ServerController">
    <children>
-      <Label text="Server View" />
+      <VBox spacing="10.0">
+         <children>
+            <HBox spacing="10.0">
+               <children>
+                  <Button text="Fried Rice" />
+                  <Button text="Fried Rice" />
+                  <Button text="Fried Rice" />
+                  <Button text="Fried Rice" />
+               </children>
+            </HBox>
+            <HBox spacing="10.0">
+               <children>
+                  <Button text="Fried Rice" />
+                  <Button text="Fried Rice" />
+                  <Button text="Fried Rice" />
+                  <Button text="Fried Rice" />
+               </children>
+            </HBox>
+            <HBox spacing="10.0">
+               <children>
+                  <Button text="Family Meal" />
+                  <Button text="Fried Rice" />
+                  <Button text="Fried Rice" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox spacing="10.0">
+         <children>
+            <VBox fx:id="orderView">
+               <children>
+               </children>
+            </VBox>
+            <Button text="New Meal" />
+            <HBox spacing="10.0">
+               <children>
+                  <Button text="Back" />
+                  <Button text="Next" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
-</VBox>
+</HBox>
