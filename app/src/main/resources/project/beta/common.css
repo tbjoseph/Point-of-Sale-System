@@ -1,0 +1,15 @@
+.root {
+    cherry: #E02229;
+    cream: #F5F5F5;
+    cream2: #E5E5E5;
+    cream3: #D5D5D5;
+    slate: #090909;
+    slate2: #1C1C1C;
+    -fx-background-color: slate;
+    -fx-text-fill: cream;
+    -fx-font-size: 14;
+}
+
+* {
+    -fx-text-fill: inherit;
+}

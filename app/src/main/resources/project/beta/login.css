@@ -1,0 +1,33 @@
+.button {
+    -fx-background-color: cherry;
+    -fx-text-fill: cream;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+}
+
+.root {
+    -fx-background-color: slate;
+    -fx-text-fill: cream;
+}
+
+.label {
+    -fx-font-size: 14;
+    -fx-text-fill: cream;
+}
+
+.text-field {
+    -fx-background-color: slate2;
+    -fx-text-fill: cream;
+    -fx-prompt-text-fill: cream3;
+    -fx-font-size: 14;
+}
+
+#header {
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+}
+
+#errorText {
+    -fx-text-fill: cherry;
+    -fx-font-weight: bold;
+}
