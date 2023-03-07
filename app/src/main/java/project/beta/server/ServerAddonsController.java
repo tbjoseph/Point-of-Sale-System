@@ -1,8 +1,5 @@
 package project.beta.server;
 
-import javax.swing.RootPaneContainer;
-
-import javafx.scene.control.Button;
 import project.beta.BackendDAO;
 
 public class ServerAddonsController {

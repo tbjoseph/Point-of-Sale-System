@@ -14,12 +14,12 @@
     -fx-text-fill: cream;
 }
 #root{
-    -fx-background-color: grey;
+    -fx-background-color: slate2;
     -fx-pref-width: 100%;
     -fx-pref-height: 100%;
 }
 .label{
-    -fx-background-color: Black;
+    /* -fx-background-color: Black; */
     -fx-background-radius: 15%;
     -fx-text-fill: cream;
     -fx-font-size: 14;
