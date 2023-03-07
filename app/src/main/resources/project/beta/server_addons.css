@@ -1,0 +1,43 @@
+.button{
+    -fx-background-color: cherry;
+    -fx-text-fill: cream2;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-background-radius: 15%;
+    -fx-spacing: 10px;
+    -fx-padding: 10px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+}
+.button:hover{
+    -fx-background-color: #ca1e24;
+    -fx-text-fill: cream;
+}
+#root{
+    -fx-background-color: grey;
+    -fx-pref-width: 100%;
+    -fx-pref-height: 100%;
+}
+.label{
+    -fx-background-color: Black;
+    -fx-background-radius: 15%;
+    -fx-text-fill: cream;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-border-radius: 15%;
+}
+/* VBox {
+    -fx-border-color: black;
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-color: green;
+}
+
+HBox{
+    -fx-hgrow: always; /* set horizontal grow priority to always 
+    -fx-background-color: purple;
+}
+HBox > *{
+    -fx-hgrow: always; /* set horizontal grow priority to always 
+} */
