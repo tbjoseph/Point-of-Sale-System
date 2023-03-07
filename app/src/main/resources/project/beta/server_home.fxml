@@ -10,42 +10,45 @@
       <VBox spacing="10.0">
          <children>
             <!-- sides -->
+            <Label text="Sides" />
             <HBox spacing="10.0">
                <children>
-                  <Button text="Super Greens" onAction="#buttonPress" />
-                  <Button text="Chow Mein" onAction="#buttonPress" />
-                  <Button text="Fried Rice" onAction="#buttonPress" />
-                  <Button text="White Rice" onAction="#buttonPress" />
-                  <Button text="Brown Rice" onAction="#buttonPress" />
+                  <Button text="Super Greens" onAction="#addSide" />
+                  <Button text="Chow Mein" onAction="#addSide" />
+                  <Button text="Fried Rice" onAction="#addSide" />
+                  <Button text="White Rice" onAction="#addSide" />
+                  <Button text="Brown Rice" onAction="#addSide" />
                </children>
             </HBox>
 
             <!-- entrees -->
+            <Label text="Entrees" />
             <HBox spacing="10.0">
                <children>
-                  <Button text="Orange Chicken" onAction="#buttonPress" />
-                  <Button text="Black Pepper Steak" onAction="#buttonPress" />
-                  <Button text="Teriyaki Chicken" onAction="#buttonPress" />
-                  <Button text="Broccoli Beef" onAction="#buttonPress" />
+                  <Button text="Orange Chicken" onAction="#addEntree" />
+                  <Button text="Black Pepper Steak" onAction="#addEntree" />
+                  <Button text="Teriyaki Chicken" onAction="#addEntree" />
+                  <Button text="Broccoli Beef" onAction="#addEntree" />
                </children>
             </HBox>
             <HBox spacing="10.0">
                <children>
-                  <Button text="Honey Walnut Shrimp" onAction="#buttonPress" />
-                  <Button text="Kung Pao Chicken" onAction="#buttonPress" />
-                  <Button text="Beijing Beef" onAction="#buttonPress" />
-                  <Button text="Mushroom Beef" onAction="#buttonPress" />
+                  <Button text="Honey Walnut Shrimp" onAction="#addEntree" />
+                  <Button text="Kung Pao Chicken" onAction="#addEntree" />
+                  <Button text="Beijing Beef" onAction="#addEntree" />
+                  <Button text="Mushroom Beef" onAction="#addEntree" />
                </children>
             </HBox>
             <HBox spacing="10.0">
                <children>
-                  <Button text="Sweet Fire Chicken" onAction="#buttonPress" />
-                  <Button text="String Bean Chicken" onAction="#buttonPress" />
-                  <Button text="Black Pepper Chicken" onAction="#buttonPress" />
+                  <Button text="Sweet Fire Chicken" onAction="#addEntree" />
+                  <Button text="String Bean Chicken" onAction="#addEntree" />
+                  <Button text="Black Pepper Chicken" onAction="#addEntree" />
                </children>
             </HBox>
 
             <!-- modifiers -->
+            <Label text="Modifiers" />
             <HBox spacing="10.0">
                <children>
                   <Button text="Family Meal" />
