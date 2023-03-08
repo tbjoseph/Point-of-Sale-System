@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.manager.ManagerController">
+    <!-- <LineChart fx:id="lineChart" layoutX="26.0" layoutY="34.0" prefHeight="300.0" prefWidth="548.0">
+        <xAxis>
+            <NumberAxis label="X-Axis" />
+        </xAxis>
+        <yAxis>
+            <NumberAxis label="Y-Axis" />
+        </yAxis>
+    </LineChart> -->
+   <HBox alignment="CENTER" spacing="20">
+        <Button text="Menu" onAction="#showMenuTable"/>
+        <Button text="Inventory" onAction="#showInventoryTable"/>
+    </HBox>
+    <TableView fx:id="inventoryTable" layoutX="26.0" layoutY="34.0" prefHeight="300.0" prefWidth="548.0">
+        <columns>
+            <TableColumn fx:id="inventoryTableIdCol" prefWidth="75.0" text="inventory_id" />
+            <TableColumn fx:id="itemNameCol" prefWidth="75.0" text="item_name" />
+            <TableColumn fx:id="quantityCol" prefWidth="75.0" text="quantity" />
+            <TableColumn fx:id="shipmentCol" prefWidth="75.0" text="shipment_size" />
+        </columns>
+    </TableView>
+    <TableView fx:id="menuTable" layoutX="26.0" layoutY="34.0" prefHeight="300.0" prefWidth="548.0">
+        <columns>
+            <TableColumn fx:id="menuIdCol" prefWidth="75.0" text="menu_id" />
+            <TableColumn fx:id="nameCol" prefWidth="75.0" text="name" />
+            <TableColumn fx:id="inventoryIdCol" prefWidth="75.0" text="inventory_id" />
+            <TableColumn fx:id="mealTypeCol" prefWidth="75.0" text="meal_type" />
+            <TableColumn fx:id="descriptionCol" prefWidth="75.0" text="description" />
+        </columns>
+    </TableView>
+    <HBox alignment="CENTER" spacing="10.0">
+        <children>
+            <TextField fx:id="menuIdField" promptText="Menu ID" />
+            <TextField fx:id="menuNameField" promptText="Menu Name" />
+            <TextField fx:id="inventoryIdField"  promptText="Inventory ID" />
+            <TextField fx:id="mealTypeField" promptText="Meal Type" />
+            <TextField fx:id="descriptionField" promptText="Description" />
+            <Label fx:id="errorText" text="" />
+            <Button text="Add" onAction="#addMenuItem" />
+        </children>
+    </HBox>
+
+</VBox>
+
