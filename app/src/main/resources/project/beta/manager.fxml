@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.StackPane?>
 
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.manager.ManagerController">
@@ -25,32 +26,36 @@
         <Button text="Menu" onAction="#showMenuTable"/>
         <Button text="Inventory" onAction="#showInventoryTable"/>
     </HBox>
-    <TableView fx:id="inventoryTable" layoutX="26.0" layoutY="34.0" prefHeight="300.0" prefWidth="548.0">
+    <StackPane> <TableView fx:id="inventoryTable" layoutX="26.0" layoutY="34.0" prefHeight="300.0" prefWidth="548.0">
         <columns>
-            <TableColumn fx:id="inventoryTableIdCol" prefWidth="75.0" text="inventory_id" />
+            <TableColumn fx:id="inventoryIdTableCol" prefWidth="75.0" text="inventory_id" />
             <TableColumn fx:id="itemNameCol" prefWidth="75.0" text="item_name" />
             <TableColumn fx:id="quantityCol" prefWidth="75.0" text="quantity" />
-            <TableColumn fx:id="shipmentCol" prefWidth="75.0" text="shipment_size" />
+            <TableColumn fx:id="shipmentSizeCol" prefWidth="75.0" text="shipment_size" />
         </columns>
     </TableView>
     <TableView fx:id="menuTable" layoutX="26.0" layoutY="34.0" prefHeight="300.0" prefWidth="548.0">
         <columns>
-            <TableColumn fx:id="menuIdCol" prefWidth="75.0" text="menu_id" />
+            <TableColumn fx:id="index" prefWidth="75.0" text="id" />
             <TableColumn fx:id="nameCol" prefWidth="75.0" text="name" />
-            <TableColumn fx:id="inventoryIdCol" prefWidth="75.0" text="inventory_id" />
             <TableColumn fx:id="mealTypeCol" prefWidth="75.0" text="meal_type" />
             <TableColumn fx:id="descriptionCol" prefWidth="75.0" text="description" />
+            <TableColumn fx:id="priceSmall" prefWidth="75.0" text="price_small" />
+            <TableColumn fx:id="priceMedium" prefWidth="75.0" text="price_med" />
+            <TableColumn fx:id="priceLarge" prefWidth="75.0" text="price_large" />
         </columns>
     </TableView>
+    </StackPane>
     <HBox alignment="CENTER" spacing="10.0">
         <children>
-            <TextField fx:id="menuIdField" promptText="Menu ID" />
             <TextField fx:id="menuNameField" promptText="Menu Name" />
-            <TextField fx:id="inventoryIdField"  promptText="Inventory ID" />
             <TextField fx:id="mealTypeField" promptText="Meal Type" />
             <TextField fx:id="descriptionField" promptText="Description" />
+            <TextField fx:id="priceSmallField" promptText="Price Small" />
+            <TextField fx:id="priceMediumField" promptText="Price Medium" />
+            <TextField fx:id="priceLargeField" promptText="Price Large" />
             <Label fx:id="errorText" text="" />
-            <Button text="Add" onAction="#addMenuItem" />
+            <Button text="Add" prefWidth="200.0" onAction="#addMenuItem" />
         </children>
     </HBox>
 

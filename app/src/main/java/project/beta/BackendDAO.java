@@ -1,5 +1,6 @@
 package project.beta;
 
+import project.beta.manager.ManagerController.Inventory;
 import project.beta.manager.ManagerController.Menu;
 
 import java.io.IOException;
@@ -107,17 +108,16 @@ public class BackendDAO {
      * @throws IOException
      * @throws SQLException
      */
-    public void addMenuItem(Integer menuIdString, String menuNameString, Integer inventoryIdField,
-            String mealTypeField, String descriptionField) throws IOException, SQLException {
+    public void addMenuItem(String menuNameString, String mealTypeField, String descriptionField, Float price_small, Float price_med, Float price_large) throws IOException, SQLException {
         try {
-            String query = "INSERT INTO menu_items (menu_id, name, inventory_id, meal_type, description) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO menu_items (name, meal_type, description, price_small, price_med, price_large) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setInt(1, menuIdString);
-            stmt.setString(2, menuNameString);
-            stmt.setInt(3, inventoryIdField);
-            stmt.setString(4, mealTypeField);
-            stmt.setString(5, descriptionField);
-
+            stmt.setString(1, menuNameString);
+            stmt.setString(2, mealTypeField);
+            stmt.setString(3, descriptionField);
+            stmt.setFloat(4, price_small);
+            stmt.setFloat(5, price_med);
+            stmt.setFloat(6, price_large);
             // Execute the statement and update the table
             stmt.executeQuery();
         } catch (SQLException e) {
@@ -128,22 +128,46 @@ public class BackendDAO {
     public void updateMenu(Menu menu) {
         try {
             // Create an SQL statement to update the data
-            String query = "UPDATE menu_items SET name=?, inventory_id=?, meal_type=?, description=? WHERE menu_id=?";
+            String query = "UPDATE menu_items SET name=?, meal_type=?, description=?, price_small=?, price_med=?, price_large=? WHERE id = ?";
 
             // Prepare the statement and set the parameters
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1, menu.getName());
-            stmt.setInt(2, menu.getInventoryId());
-            stmt.setString(3, menu.getMealType());
-            stmt.setString(4, menu.getDescription());
-            stmt.setInt(5, menu.getMenuId());
-
+            stmt.setString(2, menu.getMealType());
+            stmt.setString(3, menu.getDescription());
+            stmt.setFloat(4, menu.getPriceSmall());
+            stmt.setFloat(5, menu.getPriceMedium());
+            stmt.setFloat(6, menu.getPriceLarge());
+            stmt.setLong(7, menu.getIndex());
             // Execute the statement and check the number of rows affected
             int rows = stmt.executeUpdate();
             if (rows == 1) {
                 System.out.println("Menu item updated successfully");
             } else {
                 System.out.println("Failed to update menu item");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateInventory(Inventory inventory) {
+        try {
+            // Create an SQL statement to update the data
+            String query = "UPDATE inventory_items SET item_name=?, quantity=?, shipment_size=? WHERE inventory_id = ?";
+
+            // Prepare the statement and set the parameters
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, inventory.getItemName());
+            stmt.setInt(2, inventory.getQuantity());
+            stmt.setInt(3, inventory.getShipmentSize());
+            stmt.setLong(4, inventory.getInventoryId());
+            // Execute the statement and check the number of rows affected
+            int rows = stmt.executeUpdate();
+            if (rows == 1) {
+                System.out.println("Inventory item updated successfully");
+            } else {
+                System.out.println("Failed to update inventory item");
             }
         } catch (SQLException e) {
             e.printStackTrace();
