@@ -9,6 +9,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * BackendDAO is a class that handles all communication with the database.
@@ -45,20 +48,25 @@ public class BackendDAO {
     }
 
     /**
-     * Executes a query and returns the ResultSet
+     * Submits an order and adds it to the database
      * 
-     * @param query - query to execute
-     * @return ResultSet of the query
+     * @param paymentMethod - the method of payment
+     * @param date          - the date of the order
+     * @param price         - the price of the order
      */
-    public ResultSet executeQuery(String query) {
+    public void submitOrder(String paymentMethod, LocalDateTime date, float price) {
         try {
-            java.sql.Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-            return resultSet;
-        } catch (Exception e) {
-            System.err.println(e);
+            String query = "INSERT INTO order_history (order_date, price, payment_method) VALUES (?, ?, ?)";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            Timestamp timestamp = Timestamp.valueOf(date);
+            stmt.setTimestamp(1, timestamp);
+            stmt.setFloat(2, price);
+            stmt.setString(3, paymentMethod);
+            // Execute the statement and update the table
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
     }
 
     /**
@@ -69,25 +77,23 @@ public class BackendDAO {
      * @return true if the username and password are valid, false otherwise
      */
     public boolean login(String username, String password) {
-        if (username == null || password == null) {
-            return false;
-        }
-        try {
-            PreparedStatement statement = connection
-                    .prepareStatement("SELECT permission FROM Employees WHERE name = ?");
-            statement.setString(1, username);
-            System.out.println(statement);
-            ResultSet rs = statement.executeQuery();
-            System.out.println(rs);
-            while (rs.next()) {
-                System.out.println(rs.getString("permission"));
-                return true;
-            }
-        } catch (SQLException e) {
-            System.err.println(e);
-            return false;
-        }
-        return false;
+        return true;
+        // if (username == null || password == null) {
+        // return false;
+        // }
+        // try {
+        // PreparedStatement statement = connection
+        // .prepareStatement("SELECT permission FROM Employees WHERE name = ?");
+        // statement.setString(1, username);
+        // ResultSet rs = statement.executeQuery();
+        // while (rs.next()) {
+        // return true;
+        // }
+        // } catch (SQLException e) {
+        // System.err.println(e);
+        // return false;
+        // }
+        // return false;
     }
 
     /**
@@ -98,14 +104,16 @@ public class BackendDAO {
      * @throws SQLException if the query fails
      */
     public String getPermission(String username) throws SQLException {
-        // query to back end with username to get the permissions.
-        PreparedStatement statement = connection.prepareStatement("SELECT permission FROM Employees WHERE name = ?");
-        statement.setString(1, username);
-        ResultSet rs = statement.executeQuery();
-        while (rs.next()) {
-            return rs.getString("permission");
-        }
-        return null;
+        return "Manager";
+        // // query to back end with username to get the permissions.
+        // PreparedStatement statement = connection.prepareStatement("SELECT permission
+        // FROM Employees WHERE name = ?");
+        // statement.setString(1, username);
+        // ResultSet rs = statement.executeQuery();
+        // while (rs.next()) {
+        // return rs.getString("permission");
+        // }
+        // return null;
     }
 
     /**
@@ -117,10 +125,9 @@ public class BackendDAO {
      * @param price_small      - price of the small menu item
      * @param price_med        - price of the medium menu item
      * @param price_large      - price of the large menu item
-     * @throws SQLException if the query fails
      */
     public void addMenuItem(String menuNameString, String mealTypeField, String descriptionField, Float price_small,
-            Float price_med, Float price_large) throws SQLException {
+            Float price_med, Float price_large) {
         try {
             String query = "INSERT INTO menu_items (name, meal_type, description, price_small, price_med, price_large) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = connection.prepareStatement(query);
@@ -131,7 +138,7 @@ public class BackendDAO {
             stmt.setFloat(5, price_med);
             stmt.setFloat(6, price_large);
             // Execute the statement and update the table
-            stmt.executeQuery();
+            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -196,4 +203,25 @@ public class BackendDAO {
         }
     }
 
+    /**
+     * Gets the menu items from the database
+     * 
+     * @return the menu items from the database
+     * @throws SQLException if the query fails
+     */
+    public ResultSet getMenuItems() throws SQLException {
+        Statement stmt = connection.createStatement();
+        return stmt.executeQuery("SELECT * FROM menu_items");
+    }
+
+    /**
+     * Gets the inventory items from the database
+     * 
+     * @return the inventory items from the database
+     * @throws SQLException if the query fails
+     */
+    public ResultSet getInventoryItems() throws SQLException {
+        Statement stmt = connection.createStatement();
+        return stmt.executeQuery("SELECT * FROM inventory_items");
+    }
 }

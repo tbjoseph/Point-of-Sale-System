@@ -10,7 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import project.beta.manager.ManagerController;
+import project.beta.server.OrderView;
 import project.beta.server.ServerController;
+import project.beta.server.ServerHomeController;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -55,8 +57,9 @@ public class LoginController {
             if (permissionLevel.equals("Employee")) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("server_home.fxml"));
                 Parent root = loader.load();
-                ServerController serverController = loader.getController();
+                ServerHomeController serverController = loader.getController();
                 serverController.setDAO(dao);
+                serverController.setOrders(new OrderView());
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(getClass().getResource("common.css").toExternalForm());

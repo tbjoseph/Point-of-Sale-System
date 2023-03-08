@@ -6,8 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import project.beta.server.OrderView;
-import project.beta.server.OrderItem.OrderItemType;
+import project.beta.BackendDAO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -39,6 +38,8 @@ public class ServerHomeController {
     private int sidesCountNeeded;
     private int entreesCount;
     private int entreesCountNeeded;
+
+    private BackendDAO dao;
 
     /**
      * Add a side item to the current order.
@@ -203,13 +204,16 @@ public class ServerHomeController {
     public void nextScreen(ActionEvent event) throws IOException {
         // change the scene to the drinks and appetizer screen
         // TODO: pass the current order to the next screen
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("server_addons.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../server_addons.fxml"));
         Parent root = loader.load();
-        ServerController serverController = loader.getController();
+        ServerAddonsController serverController = loader.getController();
+        serverController.setDAO(dao);
+        serverController.setOrders(view);
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("common.css").toExternalForm());
-        scene.getStylesheets().add(getClass().getResource("server_addons.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("../server_addons.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -220,10 +224,28 @@ public class ServerHomeController {
     public void initialize() {
         currItem = new OrderItem(
                 new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
-        view = new OrderView();
         sidesCount = 0;
         sidesCountNeeded = 1;
         entreesCount = 0;
         entreesCountNeeded = 1;
+    }
+
+    /**
+     * Pass down the DAO to use for this controller
+     * 
+     * @param dao - the DAO to use for this controller
+     */
+    public void setDAO(BackendDAO dao) {
+        this.dao = dao;
+    }
+
+    /**
+     * Pass down the order view to use for this controller
+     * 
+     * @param view - the order view to use for this controller
+     */
+    public void setOrders(OrderView view) {
+        this.view = view;
+        view.updateView(viewBox);
     }
 }

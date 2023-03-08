@@ -24,11 +24,6 @@ public class ServerAddonsController {
     OrderView view;
 
     public ServerAddonsController() {
-        view = new OrderView();
-    }
-
-    public void initialize() {
-        view.updateView(orderView);
     }
 
     /**
@@ -55,8 +50,10 @@ public class ServerAddonsController {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("../server_home.fxml"));
         Parent root = loader.load();
-        ServerController serverController = loader.getController();
+        ServerHomeController serverController = loader.getController();
         serverController.setDAO(dao);
+        serverController.setOrders(view);
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
@@ -77,6 +74,8 @@ public class ServerAddonsController {
         Parent root = loader.load();
         ServerController serverController = loader.getController();
         serverController.setDAO(dao);
+        serverController.setOrders(view);
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
@@ -92,5 +91,15 @@ public class ServerAddonsController {
      */
     public void setDAO(BackendDAO dao) {
         this.dao = dao;
+    }
+
+    /**
+     * Sets the order view from the previous screen
+     * 
+     * @param view - the order view
+     */
+    public void setOrders(OrderView view) {
+        this.view = view;
+        view.updateView(orderView);
     }
 }

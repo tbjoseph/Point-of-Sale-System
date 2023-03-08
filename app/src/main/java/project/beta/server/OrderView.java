@@ -102,4 +102,13 @@ public class OrderView {
             view.getChildren().add(orderBlock);
         }
     }
+
+    /**
+     * Returns the current orders.
+     * 
+     * @return The current orders.
+     */
+    public ArrayList<OrderItem> getOrders() {
+        return order;
+    }
 }

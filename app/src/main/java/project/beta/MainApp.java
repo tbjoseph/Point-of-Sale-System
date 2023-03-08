@@ -45,7 +45,7 @@ public class MainApp extends Application {
     /**
      * Main method for the application.
      * 
-     * @param args
+     * @param args the command line arguments
      */
     public static void main(String[] args) {
         launch(args);

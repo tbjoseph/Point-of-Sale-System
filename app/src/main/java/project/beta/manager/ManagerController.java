@@ -373,8 +373,7 @@ public class ManagerController {
         inventoryTable.setVisible(false);
         inventoryTable.getItems().clear();
         try {
-            String query = "SELECT * FROM menu_items";
-            ResultSet rs = dao.executeQuery(query);
+            ResultSet rs = dao.getMenuItems();
 
             index.setCellValueFactory(new PropertyValueFactory<Menu, Long>("index"));
             nameCol.setCellValueFactory(new PropertyValueFactory<Menu, String>("name"));
@@ -412,7 +411,7 @@ public class ManagerController {
         inventoryTable.getItems().clear();
         try {
             String query = "SELECT * FROM inventory_items";
-            ResultSet rs = dao.executeQuery(query);
+            ResultSet rs = dao.getInventoryItems();
 
             inventoryIdTableCol.setCellValueFactory(new PropertyValueFactory<Inventory, Long>("inventoryId"));
             itemNameCol.setCellValueFactory(new PropertyValueFactory<Inventory, String>("itemName"));
@@ -435,10 +434,9 @@ public class ManagerController {
      * Add a menu item to the database
      * 
      * @param event - the event that triggered this method
-     * @throws IOException
-     * @throws SQLException
+     * @throws SQLException - if there is an error with the database
      */
-    public void addMenuItem(ActionEvent event) throws IOException, SQLException {
+    public void addMenuItem(ActionEvent event) throws SQLException {
         String menuNameString = this.menuNameField.getText();
         String mealTypeString = this.mealTypeField.getText();
         String descriptionString = this.descriptionField.getText();

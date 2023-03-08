@@ -15,48 +15,48 @@
             <Label text="Sides" />
             <HBox spacing="10.0">
                <children>
-                  <Button text="Super Greens" onAction="#addSide" />
-                  <Button text="Chow Mein" onAction="#addSide" />
-                  <Button text="Fried Rice" onAction="#addSide" />
-                  <Button text="White Steamed Rice" onAction="#addSide" />
-                  <Button text="Brown Steamed Rice" onAction="#addSide" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Super Greens" onAction="#addSide" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Chow Mein" onAction="#addSide" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Fried Rice" onAction="#addSide" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="White Steamed Rice" onAction="#addSide" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Brown Steamed Rice" onAction="#addSide" />
                </children>
             </HBox>
 
             <!-- entrees -->
             <Label text="Entrees" />
-            <HBox spacing="10.0">
+            <HBox maxHeight="Infinity" VBox.vgrow="ALWAYS" spacing="10.0">
                <children>
-                  <Button text="The Original Orange Chicken" onAction="#addEntree" />
-                  <Button text="Black Pepper Angus Steak" onAction="#addEntree" />
-                  <Button text="Grilled Teriyaki Chicken" onAction="#addEntree" />
-                  <Button text="Broccoli Beef" onAction="#addEntree" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="The Original Orange Chicken" onAction="#addEntree" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Black Pepper Angus Steak" onAction="#addEntree" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Grilled Teriyaki Chicken" onAction="#addEntree" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Broccoli Beef" onAction="#addEntree" />
                </children>
             </HBox>
-            <HBox spacing="10.0">
+            <HBox maxHeight="Infinity" VBox.vgrow="ALWAYS" spacing="10.0">
                <children>
-                  <Button text="Honey Walnut Shrimp" onAction="#addEntree" />
-                  <Button text="Kung Pao Chicken" onAction="#addEntree" />
-                  <Button text="Beijing Beef" onAction="#addEntree" />
-                  <Button text="Mushroom Chicken" onAction="#addEntree" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Honey Walnut Shrimp" onAction="#addEntree" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Kung Pao Chicken" onAction="#addEntree" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Beijing Beef" onAction="#addEntree" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Mushroom Chicken" onAction="#addEntree" />
                </children>
             </HBox>
-            <HBox spacing="10.0">
+            <HBox maxHeight="Infinity" VBox.vgrow="ALWAYS" spacing="10.0">
                <children>
-                  <Button text="SweetFire Chicken Breast" onAction="#addEntree" />
-                  <Button text="String Bean Chicken Breast" onAction="#addEntree" />
-                  <Button text="Black Pepper Chicken" onAction="#addEntree" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="SweetFire Chicken Breast" onAction="#addEntree" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="String Bean Chicken Breast" onAction="#addEntree" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Black Pepper Chicken" onAction="#addEntree" />
                </children>
             </HBox>
 
             <!-- modifiers -->
             <Label text="Modifiers" />
-            <HBox spacing="10.0">
+            <HBox maxHeight="Infinity" VBox.vgrow="ALWAYS" spacing="10.0">
                <children>
-                  <Button text="Bowl" fx:id="bowlButton" onAction="#bowlMode" />
-                  <Button text="Plate" fx:id="plateButton" onAction="#plateMode" />
-                  <Button text="Bigger Plate" fx:id="biggerPlateButton" onAction="#biggerPlateMode" />
-                  <Button text="2 Sides" fx:id="twoSides" onAction="#twoSides" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Bowl" fx:id="bowlButton" onAction="#bowlMode" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Plate" fx:id="plateButton" onAction="#plateMode" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Bigger Plate" fx:id="biggerPlateButton" onAction="#biggerPlateMode" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="2 Sides" fx:id="twoSides" onAction="#twoSides" />
                </children>
             </HBox>
          </children>
@@ -68,7 +68,8 @@
             </VBox>
             <HBox spacing="10.0">
                <children>
-                  <Button text="Next" onAction="#nextScreen" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" fx:id="inactiveButton" text="Back" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Next" onAction="#nextScreen" />
                </children>
             </HBox>
          </children>
