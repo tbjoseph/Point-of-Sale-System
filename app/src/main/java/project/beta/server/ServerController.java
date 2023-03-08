@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import java.time.LocalDateTime;
 
 import project.beta.server.ServerController;
+import project.beta.types.MenuItem;
 import project.beta.types.OrderItem;
 import project.beta.types.OrderView;
 
@@ -108,7 +109,9 @@ public class ServerController {
                     break;
 
                 case A_LA_CARTE:
-                    priceSum += 4.10;
+                    for (MenuItem menuItem : item.menuItems) {
+                        priceSum += menuItem.priceSmall;
+                    }
                     break;
 
                 default:

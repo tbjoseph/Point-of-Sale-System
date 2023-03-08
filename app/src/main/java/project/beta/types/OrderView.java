@@ -97,8 +97,8 @@ public class OrderView {
             }
 
             // looping through food items of the order and printing them out as labels
-            for (String name : item.menuItems) {
-                Label foodItem = new Label(indent + name);
+            for (MenuItem i : item.menuItems) {
+                Label foodItem = new Label(indent + i.name);
                 orderItems.getChildren().add(foodItem);
             }
 

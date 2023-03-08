@@ -46,9 +46,21 @@ public class ServerAddonsController {
     public void addItem(ActionEvent event) {
         Button bt = (Button) event.getSource();
         String name = bt.getText();
-        String[] names = { name };
+        MenuItem[] names = { new MenuItem(21, name, "drink", "Your choice of fountain drink.", 2.10f, 2.30f, 2.50f) };
         OrderItem item = new OrderItem(names, 1, OrderItem.OrderItemType.A_LA_CARTE);
         view.addOrderItem(item);
+        view.updateView(orderView);
+    }
+
+    /**
+     * adds an item to the order view
+     * 
+     * @param event the event that triggered the method
+     */
+    public void addItem(MenuItem item) {
+        MenuItem[] items = { item };
+        OrderItem oItem = new OrderItem(items, 1, OrderItem.OrderItemType.A_LA_CARTE);
+        view.addOrderItem(oItem);
         view.updateView(orderView);
     }
 
@@ -107,15 +119,13 @@ public class ServerAddonsController {
         for (MenuItem item : dao.getMenuItems()) {
             Button button = new Button(item.name);
             button.setOnAction(e -> {
-                this.addItem(e);
+                this.addItem(item);
             });
-            HBox.setHgrow(button, Priority.ALWAYS);
-            VBox.setVgrow(button, Priority.ALWAYS);
-            button.maxHeight(Double.MAX_VALUE);
-            button.maxWidth(Double.MAX_VALUE);
 
             switch (item.mealType) {
                 case "appetizer":
+                    HBox.setHgrow(button, Priority.ALWAYS);
+                    button.maxWidth(Double.MAX_VALUE);
                     addonsCont.getChildren().add(button);
                     break;
 

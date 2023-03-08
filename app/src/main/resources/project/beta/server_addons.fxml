@@ -16,9 +16,9 @@
                         <Label text="Appetizers"/>
                         <HBox fx:id="addonsCont">
                             <children>
-                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Spring Roll"/>
+                                <!-- <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Spring Roll"/>
                                 <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Veggie Spring Roll"/>
-                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Cream Cheese Rangoon"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Cream Cheese Rangoon"/> -->
                             </children>
                         </HBox>
                     </children>

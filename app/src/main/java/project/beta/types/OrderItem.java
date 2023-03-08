@@ -31,7 +31,7 @@ public class OrderItem {
         A_LA_CARTE
     }
 
-    public ArrayList<String> menuItems;
+    public ArrayList<MenuItem> menuItems;
     public int amount;
     public OrderItemType type;
 
@@ -42,8 +42,8 @@ public class OrderItem {
      * @param amount    the quantity of the order
      * @param type      the type of the order
      */
-    public OrderItem(String[] menuItems, int amount, OrderItemType type) {
-        this.menuItems = new ArrayList<String>(Arrays.asList(menuItems));
+    public OrderItem(MenuItem[] menuItems, int amount, OrderItemType type) {
+        this.menuItems = new ArrayList<MenuItem>(Arrays.asList(menuItems));
         this.amount = amount;
         this.type = type;
     }

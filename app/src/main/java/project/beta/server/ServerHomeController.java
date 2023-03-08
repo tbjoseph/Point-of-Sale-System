@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -64,12 +65,9 @@ public class ServerHomeController {
      * 
      * @param event Used to get the button name of the side item.
      */
-    public void addSide(ActionEvent event) {
-        Button sideButton = (Button) event.getSource();
-        String sideName = sideButton.getText();
-
+    public void addSide(MenuItem item) {
         if (sidesCount < sidesCountNeeded) {
-            currItem.menuItems.add(sideName);
+            currItem.menuItems.add(item);
             sidesCount++;
         }
 
@@ -79,7 +77,7 @@ public class ServerHomeController {
             view.addOrderItem(currItem);
             view.updateView(viewBox);
             currItem = new OrderItem(
-                    new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
+                    new MenuItem[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
 
             // set to default values
             sidesCount = 0;
@@ -100,12 +98,9 @@ public class ServerHomeController {
      * 
      * @param event Used to get the button name of the entree.
      */
-    public void addEntree(ActionEvent event) {
-        Button entreeButton = (Button) event.getSource();
-        String entreeName = entreeButton.getText();
-
+    public void addEntree(MenuItem item) {
         if (entreesCount < entreesCountNeeded) {
-            currItem.menuItems.add(entreeName);
+            currItem.menuItems.add(item);
             entreesCount++;
         }
 
@@ -115,7 +110,7 @@ public class ServerHomeController {
             view.addOrderItem(currItem);
             view.updateView(viewBox);
             currItem = new OrderItem(
-                    new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
+                    new MenuItem[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
 
             // set to default values
             sidesCount = 0;
@@ -144,7 +139,7 @@ public class ServerHomeController {
             twoSides.setStyle("-fx-background-color: cherry;");
 
             currItem = new OrderItem(
-                    new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
+                    new MenuItem[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
 
             // set to default values
             sidesCount = 0;
@@ -167,7 +162,7 @@ public class ServerHomeController {
             twoSides.setStyle("-fx-background-color: cherry;");
 
             currItem = new OrderItem(
-                    new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
+                    new MenuItem[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
 
             // set to default values
             sidesCount = 0;
@@ -190,7 +185,7 @@ public class ServerHomeController {
             twoSides.setStyle("-fx-background-color: cherry;");
 
             currItem = new OrderItem(
-                    new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
+                    new MenuItem[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
 
             // set to default values
             sidesCount = 0;
@@ -221,7 +216,6 @@ public class ServerHomeController {
      */
     public void nextScreen(ActionEvent event) throws IOException {
         // change the scene to the drinks and appetizer screen
-        // TODO: pass the current order to the next screen
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../server_addons.fxml"));
         Parent root = loader.load();
         ServerAddonsController serverController = loader.getController();
@@ -241,7 +235,7 @@ public class ServerHomeController {
      */
     public void initialize() {
         currItem = new OrderItem(
-                new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
+                new MenuItem[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
         sidesCount = 0;
         sidesCountNeeded = 1;
         entreesCount = 0;
@@ -268,9 +262,8 @@ public class ServerHomeController {
                 case "entree":
                 case "premium entree":
                     button.setOnAction(e -> {
-                        this.addEntree(e);
+                        this.addEntree(item);
                     });
-                    entreesCont.getChildren().add(button);
                     GridPane.setColumnIndex(button, column);
                     GridPane.setRowIndex(button, row);
                     GridPane.setHgrow(button, Priority.ALWAYS);
@@ -280,10 +273,11 @@ public class ServerHomeController {
                         column = 0;
                         row += 1;
                     }
+                    entreesCont.getChildren().add(button);
                     break;
                 case "side":
                     button.setOnAction(e -> {
-                        this.addSide(e);
+                        this.addSide(item);
                     });
                     HBox.setHgrow(button, Priority.ALWAYS);
                     sidesCont.getChildren().add(button);
@@ -292,7 +286,10 @@ public class ServerHomeController {
                 default:
                     break;
             }
+            button.autosize();
         }
+        entreesCont.autosize();
+        sidesCont.autosize();
     }
 
     /**

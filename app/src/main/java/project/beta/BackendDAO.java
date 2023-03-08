@@ -210,7 +210,7 @@ public class BackendDAO {
      */
     public ArrayList<MenuItem> getMenuItems() throws SQLException {
         Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM menu_items");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM menu_items ORDER BY id");
         ArrayList<MenuItem> menuItems = new ArrayList<>();
         while (rs.next()) {
             MenuItem menuItem = new MenuItem(rs.getLong("id"), rs.getString("name"), rs.getString("meal_type"),
@@ -229,6 +229,6 @@ public class BackendDAO {
      */
     public ResultSet getInventoryItems() throws SQLException {
         Statement stmt = connection.createStatement();
-        return stmt.executeQuery("SELECT * FROM inventory_items");
+        return stmt.executeQuery("SELECT * FROM inventory_items ORDER BY inventory_id");
     }
 }
