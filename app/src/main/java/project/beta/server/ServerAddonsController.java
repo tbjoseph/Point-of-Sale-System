@@ -3,16 +3,12 @@ package project.beta.server;
 import javafx.event.ActionEvent;
 import project.beta.BackendDAO;
 import javafx.scene.control.Button;
-import project.beta.server.OrderView;
-import project.beta.server.OrderItem;
 import javafx.scene.layout.VBox;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -30,6 +26,11 @@ public class ServerAddonsController {
         view.updateView(orderView);
     }
 
+    /**
+     * adds an item to the order view
+     * 
+     * @param event
+     */
     public void addItem(ActionEvent event) {
         Button bt = (Button) event.getSource();
         String name = bt.getText();
@@ -39,6 +40,12 @@ public class ServerAddonsController {
         view.updateView(orderView);
     }
 
+    /**
+     * moves the page back to the entree/side screen
+     * 
+     * @param event
+     * @throws IOException
+     */
     public void back(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("../server_home.fxml"));
@@ -53,6 +60,12 @@ public class ServerAddonsController {
         stage.show();
     }
 
+    /**
+     * moves the page over to the payment screen
+     * 
+     * @param event
+     * @throws IOException
+     */
     public void next(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("../server_checkout.fxml"));
