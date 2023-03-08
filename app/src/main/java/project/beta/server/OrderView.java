@@ -1,6 +1,5 @@
 package project.beta.server;
 
-import project.beta.server.OrderItem;
 import java.util.ArrayList;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
@@ -9,9 +8,14 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.event.EventHandler;
 
+/**
+ * OrderView is a class that displays the current order to the view box.
+ * 
+ * @author Joshua Downey, Matthew Gimlin
+ */
 public class OrderView {
     private static ArrayList<OrderItem> order;
-    
+
     public OrderView() {
         order = new ArrayList<OrderItem>();
     }
@@ -48,7 +52,7 @@ public class OrderView {
                     updateView(view);
                 }
             });
-            
+
             // view must be updated after decrementing
             minusButton.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
@@ -59,7 +63,7 @@ public class OrderView {
                     updateView(view);
                 }
             });
-            
+
             orderBlock.getChildren().addAll(orderItems, plusButton, amount, minusButton);
 
             // meals display the meal type with the sides and entrees indented below
@@ -72,7 +76,7 @@ public class OrderView {
                     orderItems.getChildren().add(typeLabel);
                     indent = "    ";
                     break;
-                
+
                 case PLATE:
                     typeLabel = new Label("Plate");
                     orderItems.getChildren().add(typeLabel);
@@ -84,13 +88,13 @@ public class OrderView {
                     orderItems.getChildren().add(typeLabel);
                     indent = "    ";
                     break;
-                
+
                 default:
                     break;
             }
-            
+
             // looping through food items of the order and printing them out as labels
-            for(String name : item.menuItems) {
+            for (String name : item.menuItems) {
                 Label foodItem = new Label(indent + name);
                 orderItems.getChildren().add(foodItem);
             }

@@ -12,6 +12,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+/**
+ * ServerAddonsController is a class that controls the addons screen.
+ * 
+ * @author Joshua Downey
+ */
 public class ServerAddonsController {
     private BackendDAO dao;
     @FXML
