@@ -14,6 +14,9 @@ import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
+/**
+ * Controller class for the server home screen. Generates an order and passes it to the next screen.
+ */
 public class ServerHomeController {
     @FXML
     private VBox viewBox;
@@ -197,6 +200,12 @@ public class ServerHomeController {
         }
     }
 
+    /**
+     * Changes the scene to the next page, server addons.
+     * 
+     * @param event Used to get the current stage.
+     * @throws IOException
+     */
     public void nextScreen(ActionEvent event) throws IOException {
         // change the scene to the drinks and appetizer screen
         // TODO: pass the current order to the next screen
