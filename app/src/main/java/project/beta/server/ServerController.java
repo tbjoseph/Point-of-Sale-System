@@ -16,13 +16,18 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-
 
 import project.beta.server.ServerController;
+import project.beta.types.MenuItem;
+import project.beta.types.OrderItem;
+import project.beta.types.OrderView;
 
-
+/**
+ * Controller class for the server home screen. Generates an order and passes it
+ * to the next screen.
+ * 
+ * @author Timothy Joseph
+ */
 public class ServerController {
     private BackendDAO dao;
     private OrderView orders;
@@ -32,7 +37,6 @@ public class ServerController {
 
     /**
      * Constructor for ServerController
-     * @author Timothy Joseph
      */
     public ServerController() {
 
@@ -40,17 +44,17 @@ public class ServerController {
 
     /**
      * Back button to get to addons
-     * @author Timothy Joseph
-     * @param event
-     * @throws IOException
+     * 
+     * @param event the event that triggered the function
+     * @throws IOException if the file is not found
      */
     public void backButton(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../server_addons.fxml"));
         Parent root = loader.load();
 
-        ServerController serverController = loader.getController();
+        ServerAddonsController serverController = loader.getController();
         serverController.setDAO(dao);
-
+        serverController.setOrders(orders);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -62,17 +66,17 @@ public class ServerController {
 
     /**
      * Post checkout function to get to home
-     * @author Timothy Joseph
-     * @param event
-     * @throws IOException
+     * 
+     * @param event the event that triggered the function
+     * @throws IOException if the file is not found
      */
     public void goToHome(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../server_home.fxml"));
         Parent root = loader.load();
 
-        ServerController serverController = loader.getController();
+        ServerHomeController serverController = loader.getController();
         serverController.setDAO(dao);
-
+        serverController.setOrders(new OrderView());
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -83,36 +87,19 @@ public class ServerController {
     }
 
     /**
-     * Return current date
-     * @author Timothy Joseph
-     * @return
-     */
-    public String getDate() {
-        // Get the current date and time
-        LocalDateTime now = LocalDateTime.now();
-
-        // Format the date and time using a DateTimeFormatter
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedDateTime = now.format(formatter);
-
-        // Return the formatted date and time
-        return formattedDateTime;
-    }
-
-    /**
      * Return total price
-     * @author Timothy Joseph
-     * @return
+     * 
+     * @return priceSum the total price
      */
     public float getPrice() {
         float priceSum = 0;
-        
+
         for (OrderItem item : orders.getOrders()) {
             switch (item.type) {
                 case BOWL:
                     priceSum += 6.80;
                     break;
-                
+
                 case PLATE:
                     priceSum += 7.60;
                     break;
@@ -122,9 +109,11 @@ public class ServerController {
                     break;
 
                 case A_LA_CARTE:
-                    priceSum += 4.10;
+                    for (MenuItem menuItem : item.menuItems) {
+                        priceSum += menuItem.priceSmall;
+                    }
                     break;
-                
+
                 default:
                     break;
             }
@@ -135,21 +124,13 @@ public class ServerController {
 
     /**
      * Update data base for cash payment
-     * @author Timothy Joseph
-     * @param event
+     * 
+     * @param event the event that triggered the function
      */
     public void processCash(ActionEvent event) {
         try {
-            String paymentMethod = "cash";
-            String date = getDate();
-            float price = getPrice();
-            
             // Add order to order history
-            String queryBeginning = "INSERT INTO order_history (order_date, price, payment_method) ";
-            String queryEnd = "VALUES ('" + date + "', " + price + ", '" + paymentMethod + "')";
-            
-            dao.executeQuery(queryBeginning + queryEnd);
-
+            dao.submitOrder("cash", LocalDateTime.now(), getPrice());
             // Decrease inventory items
             // dao.executeQuery("f");
 
@@ -162,20 +143,12 @@ public class ServerController {
 
     /**
      * Update data base for card payment
-     * @author Timothy Joseph
-     * @param event
+     * 
+     * @param event the event that triggered the function
      */
     public void processCard(ActionEvent event) {
         try {
-            String paymentMethod = "card";
-            String date = getDate();
-            float price = getPrice();
-            
-            // Add order to order history
-            String queryBeginning = "INSERT INTO order_history (order_date, price, payment_method) ";
-            String queryEnd = "VALUES ('" + date + "', " + price + ", '" + paymentMethod + "')";
-            
-            dao.executeQuery(queryBeginning + queryEnd);
+            dao.submitOrder("card", LocalDateTime.now(), getPrice());
 
             // Decrease inventory items
             // dao.executeQuery("f");
@@ -189,20 +162,12 @@ public class ServerController {
 
     /**
      * Update data base for dining payment
-     * @author Timothy Joseph
-     * @param event
+     * 
+     * @param event the event that triggered the function
      */
     public void processDining(ActionEvent event) {
         try {
-            String paymentMethod = "dining_dollars";
-            String date = getDate();
-            float price = getPrice();
-            
-            // Add order to order history
-            String queryBeginning = "INSERT INTO order_history (order_date, price, payment_method) ";
-            String queryEnd = "VALUES ('" + date + "', " + price + ", '" + paymentMethod + "')";
-            
-            dao.executeQuery(queryBeginning + queryEnd);
+            dao.submitOrder("dining_dollars", LocalDateTime.now(), getPrice());
 
             // Decrease inventory items
             // dao.executeQuery("f");
@@ -216,20 +181,12 @@ public class ServerController {
 
     /**
      * Update data base for meal plan payment
-     * @author Timothy Joseph
-     * @param event
+     * 
+     * @param event the event that triggered the function
      */
     public void processMealPlan(ActionEvent event) {
         try {
-            String paymentMethod = "meal_plan_both";
-            String date = getDate();
-            float price = getPrice();
-            
-            // Add order to order history
-            String queryBeginning = "INSERT INTO order_history (order_date, price, payment_method) ";
-            String queryEnd = "VALUES ('" + date + "', " + price + ", '" + paymentMethod + "')";
-            
-            dao.executeQuery(queryBeginning + queryEnd);
+            dao.submitOrder("meal_plan_both", LocalDateTime.now(), getPrice());
 
             // Decrease inventory items
             // dao.executeQuery("f");
@@ -243,10 +200,20 @@ public class ServerController {
 
     /**
      * Pass down the DAO to use for this controller
-     * @author Timothy Joseph
-     * @param dao - the DAO to use for this controller
+     * 
+     * @param dao the DAO to use for this controller
      */
     public void setDAO(BackendDAO dao) {
         this.dao = dao;
+    }
+
+    /**
+     * Pass down the orders to use for this controller
+     * 
+     * @param orders the orders to use for this controller
+     */
+    public void setOrders(OrderView orders) {
+        this.orders = orders;
+        orders.updateView(orderView);
     }
 }

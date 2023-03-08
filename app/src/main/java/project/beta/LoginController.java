@@ -10,7 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import project.beta.manager.ManagerController;
-import project.beta.server.ServerController;
+import project.beta.server.ServerHomeController;
+import project.beta.types.OrderView;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -31,6 +32,13 @@ public class LoginController {
     private BackendDAO dao;
 
     /**
+     * A default constructor for the controller. Initialization is done in the
+     * initialize method.
+     */
+    public LoginController() {
+    }
+
+    /**
      * Initialize the controller. This should only be called once,
      * as it will create a new DAO if one does not exist.
      */
@@ -43,9 +51,9 @@ public class LoginController {
     /**
      * Try to login with the form data
      * 
-     * @param event - the event that triggered this method
-     * @throws IOException  - if the FXML file cannot be found
-     * @throws SQLException - if the database cannot be accessed
+     * @param event the event that triggered this method
+     * @throws IOException  if the FXML file cannot be found
+     * @throws SQLException if the database cannot be accessed
      */
     public void tryLogin(ActionEvent event) throws IOException, SQLException {
         String username = this.username.getText();
@@ -55,8 +63,9 @@ public class LoginController {
             if (permissionLevel.equals("Employee")) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("server_home.fxml"));
                 Parent root = loader.load();
-                ServerController serverController = loader.getController();
+                ServerHomeController serverController = loader.getController();
                 serverController.setDAO(dao);
+                serverController.setOrders(new OrderView());
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(getClass().getResource("common.css").toExternalForm());
@@ -89,7 +98,7 @@ public class LoginController {
      * Set the DAO to use for this controller.
      * Mainly used for testing
      * 
-     * @param dao - the DAO to use for this controller
+     * @param dao the DAO to use for this controller
      */
     public void setDAO(BackendDAO dao) {
         this.dao = dao;

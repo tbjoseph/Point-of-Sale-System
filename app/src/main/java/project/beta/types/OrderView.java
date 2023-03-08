@@ -1,4 +1,4 @@
-package project.beta.server;
+package project.beta.types;
 
 import java.util.ArrayList;
 import javafx.scene.layout.VBox;
@@ -14,8 +14,11 @@ import javafx.event.EventHandler;
  * @author Joshua Downey, Matthew Gimlin
  */
 public class OrderView {
-    private static ArrayList<OrderItem> order;
+    private ArrayList<OrderItem> order;
 
+    /**
+     * Constructs a new OrderView object.
+     */
     public OrderView() {
         order = new ArrayList<OrderItem>();
     }
@@ -94,12 +97,21 @@ public class OrderView {
             }
 
             // looping through food items of the order and printing them out as labels
-            for (String name : item.menuItems) {
-                Label foodItem = new Label(indent + name);
+            for (MenuItem i : item.menuItems) {
+                Label foodItem = new Label(indent + i.name);
                 orderItems.getChildren().add(foodItem);
             }
 
             view.getChildren().add(orderBlock);
         }
+    }
+
+    /**
+     * Returns the current orders.
+     * 
+     * @return The current orders.
+     */
+    public ArrayList<OrderItem> getOrders() {
+        return order;
     }
 }

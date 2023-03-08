@@ -2,7 +2,12 @@ package project.beta.server;
 
 import javafx.event.ActionEvent;
 import project.beta.BackendDAO;
+import project.beta.types.MenuItem;
+import project.beta.types.OrderItem;
+import project.beta.types.OrderView;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -11,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * ServerAddonsController is a class that controls the addons screen.
@@ -23,40 +29,55 @@ public class ServerAddonsController {
     VBox orderView;
     OrderView view;
 
-    public ServerAddonsController() {
-        view = new OrderView();
-    }
+    @FXML
+    private HBox addonsCont;
 
-    public void initialize() {
-        view.updateView(orderView);
+    /**
+     * A default constructor for ServerAddonsController
+     */
+    public ServerAddonsController() {
     }
 
     /**
      * adds an item to the order view
      * 
-     * @param event
+     * @param event the event that triggered the method
      */
     public void addItem(ActionEvent event) {
         Button bt = (Button) event.getSource();
         String name = bt.getText();
-        String[] names = { name };
+        MenuItem[] names = { new MenuItem(21, name, "drink", "Your choice of fountain drink.", 2.10f, 2.30f, 2.50f) };
         OrderItem item = new OrderItem(names, 1, OrderItem.OrderItemType.A_LA_CARTE);
         view.addOrderItem(item);
         view.updateView(orderView);
     }
 
     /**
+     * adds an item to the order view
+     * 
+     * @param event the event that triggered the method
+     */
+    public void addItem(MenuItem item) {
+        MenuItem[] items = { item };
+        OrderItem oItem = new OrderItem(items, 1, OrderItem.OrderItemType.A_LA_CARTE);
+        view.addOrderItem(oItem);
+        view.updateView(orderView);
+    }
+
+    /**
      * moves the page back to the entree/side screen
      * 
-     * @param event
-     * @throws IOException
+     * @param event the event that triggered the method
+     * @throws IOException if the file is not found
      */
     public void back(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("../server_home.fxml"));
         Parent root = loader.load();
-        ServerController serverController = loader.getController();
+        ServerHomeController serverController = loader.getController();
         serverController.setDAO(dao);
+        serverController.setOrders(view);
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
@@ -68,8 +89,8 @@ public class ServerAddonsController {
     /**
      * moves the page over to the payment screen
      * 
-     * @param event
-     * @throws IOException
+     * @param event the event that triggered the method
+     * @throws IOException if the file is not found
      */
     public void next(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
@@ -77,6 +98,8 @@ public class ServerAddonsController {
         Parent root = loader.load();
         ServerController serverController = loader.getController();
         serverController.setDAO(dao);
+        serverController.setOrders(view);
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
@@ -86,11 +109,53 @@ public class ServerAddonsController {
     }
 
     /**
+     * Dynamically creates buttons for each menu item based on the database.
+     * 
+     * @throws SQLException if a database error occurs.
+     */
+    public void createButtons() throws SQLException {
+        addonsCont.getChildren().clear();
+        // create buttons for each menu item
+        for (MenuItem item : dao.getMenuItems()) {
+            Button button = new Button(item.name);
+            button.setOnAction(e -> {
+                this.addItem(item);
+            });
+
+            switch (item.mealType) {
+                case "appetizer":
+                    HBox.setHgrow(button, Priority.ALWAYS);
+                    button.maxWidth(Double.MAX_VALUE);
+                    addonsCont.getChildren().add(button);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    /**
      * Pass down the DAO to use for this controller
      * 
-     * @param dao - the DAO to use for this controller
+     * @param dao the DAO to use for this controller
      */
     public void setDAO(BackendDAO dao) {
         this.dao = dao;
+        try {
+            createButtons();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Sets the order view from the previous screen
+     * 
+     * @param view the order view
+     */
+    public void setOrders(OrderView view) {
+        this.view = view;
+        view.updateView(orderView);
     }
 }

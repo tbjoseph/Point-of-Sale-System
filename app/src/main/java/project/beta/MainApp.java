@@ -13,6 +13,12 @@ import javafx.stage.Stage;
  * @author Griffith Thomas
  */
 public class MainApp extends Application {
+    /**
+     * A default constructor for the application. We don't need any extra state here
+     */
+    public MainApp() {
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = null;
@@ -45,7 +51,7 @@ public class MainApp extends Application {
     /**
      * Main method for the application.
      * 
-     * @param args
+     * @param args the command line arguments
      */
     public static void main(String[] args) {
         launch(args);
