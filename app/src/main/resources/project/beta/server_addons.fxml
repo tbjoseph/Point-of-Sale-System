@@ -16,9 +16,9 @@
                         <Label text="Appetizers"/>
                         <HBox>
                             <children>
-                                <Button onAction="#addAppetizer" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Spring Roll"/>
-                                <Button onAction="#addAppetizer" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Veggie Spring Roll"/>
-                                <Button onAction="#addAppetizer" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Cream Cheese Rangoon"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Spring Roll"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Veggie Spring Roll"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Cream Cheese Rangoon"/>
                             </children>
                         </HBox>
                     </children>
@@ -28,44 +28,44 @@
                         <Label text="Drinks"/>
                         <HBox VBox.vgrow="ALWAYS">
                             <children>
-                                <Button onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Dr Pepper"/>
-                                <Button onAction="#addDrink" onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Coca Cola"/>
-                                <Button onAction="#addDrink" onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Diet Coke"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Dr Pepper"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Coca Cola"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Diet Coke"/>
                             </children>
                         </HBox>
                         <HBox VBox.vgrow="ALWAYS">
                             <children>
-                                <Button onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Barq's Root Beer"/>
-                                <Button onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Fanta Orange"/>
-                                <Button onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Minute Maid Lemonade"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Barq's Root Beer"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Fanta Orange"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Minute Maid Lemonade"/>
                             </children>
                         </HBox>
                         <HBox VBox.vgrow="ALWAYS">
                             <children>
-                                <Button onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Powerade Mountain Berry Blast"/>
-                                <Button onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Sprite"/>
-                                <Button onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Coca Cola Cherry"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Powerade Mountain Berry Blast"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Sprite"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Coca Cola Cherry"/>
                             </children>
                         </HBox>
                         <HBox VBox.vgrow="ALWAYS">
                             <children>
-                                <Button onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Sweet Tea"/>
-                                <Button onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Fuze Raspberry Iced Tea"/>
-                                <Button onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Powerade Fruit Punch"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Sweet Tea"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Fuze Raspberry Iced Tea"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Powerade Fruit Punch"/>
                             </children>
                         </HBox>
                         <HBox VBox.vgrow="ALWAYS">
                             <children>
-                                <Button onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Dasani"/>
-                                <Button onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Minute Maid Apple Juice"/>
-                                <Button onAction="#addDrink" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Coca Cola"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Dasani"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Minute Maid Apple Juice"/>
+                                <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity" text="Coca Cola"/>
                             </children>
                         </HBox>
                         <HBox VBox.vgrow="ALWAYS">
                             <children>
-                                <Button onAction="#addDrink" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Coke Mexico"/>
-                                <Button onAction="#addDrink" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Coke Zero"/>
-                                <Button onAction="#addDrink" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Sanzo Lychee Sparkling Water"/>
+                                <Button onAction="#addItem" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Coke Mexico"/>
+                                <Button onAction="#addItem" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Coke Zero"/>
+                                <Button onAction="#addItem" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Sanzo Lychee Sparkling Water"/>
                             </children>
                         </HBox>
                     </children>
@@ -74,11 +74,11 @@
             <VBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
                 <children>
                     <Label text="Order View"/>
-                    <VBox minHeight="400" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS">
+                    <VBox fx:id="orderView" minHeight="400" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS">
                     </VBox>
                     <HBox>
-                        <Button maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Back"/>
-                        <Button maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Next"/>
+                        <Button onAction="#back" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Back"/>
+                        <Button onAction="#next" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Next"/>
                     </HBox>
                 </children>
             </VBox>
