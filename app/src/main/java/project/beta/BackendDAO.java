@@ -3,7 +3,6 @@ package project.beta;
 import project.beta.manager.ManagerController.Inventory;
 import project.beta.manager.ManagerController.Menu;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -41,6 +40,7 @@ public class BackendDAO {
         try {
             connection = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315331_beta",
                     username, password);
+            // connection = null;
         } catch (Exception e) {
             System.err.println(e);
             System.exit(1);
@@ -77,23 +77,22 @@ public class BackendDAO {
      * @return true if the username and password are valid, false otherwise
      */
     public boolean login(String username, String password) {
-        return true;
-        // if (username == null || password == null) {
-        // return false;
-        // }
-        // try {
-        // PreparedStatement statement = connection
-        // .prepareStatement("SELECT permission FROM Employees WHERE name = ?");
-        // statement.setString(1, username);
-        // ResultSet rs = statement.executeQuery();
-        // while (rs.next()) {
-        // return true;
-        // }
-        // } catch (SQLException e) {
-        // System.err.println(e);
-        // return false;
-        // }
-        // return false;
+        if (username == null || password == null) {
+            return false;
+        }
+        try {
+            PreparedStatement statement = connection
+                    .prepareStatement("SELECT permission FROM Employees WHERE name = ?");
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+            return false;
+        }
+        return false;
     }
 
     /**
@@ -104,16 +103,14 @@ public class BackendDAO {
      * @throws SQLException if the query fails
      */
     public String getPermission(String username) throws SQLException {
-        return "Manager";
-        // // query to back end with username to get the permissions.
-        // PreparedStatement statement = connection.prepareStatement("SELECT permission
-        // FROM Employees WHERE name = ?");
-        // statement.setString(1, username);
-        // ResultSet rs = statement.executeQuery();
-        // while (rs.next()) {
-        // return rs.getString("permission");
-        // }
-        // return null;
+        // query to back end with username to get the permissions.
+        PreparedStatement statement = connection.prepareStatement("SELECT permission FROM Employees WHERE name = ?");
+        statement.setString(1, username);
+        ResultSet rs = statement.executeQuery();
+        while (rs.next()) {
+            return rs.getString("permission");
+        }
+        return null;
     }
 
     /**

@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import project.beta.manager.ManagerController;
 import project.beta.server.OrderView;
-import project.beta.server.ServerController;
 import project.beta.server.ServerHomeController;
 
 import java.io.IOException;

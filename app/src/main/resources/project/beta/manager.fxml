@@ -22,29 +22,30 @@
             <NumberAxis label="Y-Axis" />
         </yAxis>
     </LineChart> -->
-   <HBox alignment="CENTER" spacing="20">
-        <Button text="Menu" onAction="#showMenuTable"/>
-        <Button text="Inventory" onAction="#showInventoryTable"/>
+   <HBox fx:id="header" alignment="CENTER">
+        <Button fx:id="headerButton" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Menu" onAction="#showMenuTable"/>
+        <Button fx:id="headerButton2" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Inventory" onAction="#showInventoryTable"/>
     </HBox>
-    <StackPane> <TableView fx:id="inventoryTable" layoutX="26.0" layoutY="34.0" prefHeight="300.0" prefWidth="548.0">
-        <columns>
-            <TableColumn fx:id="inventoryIdTableCol" prefWidth="75.0" text="inventory_id" />
-            <TableColumn fx:id="itemNameCol" prefWidth="75.0" text="item_name" />
-            <TableColumn fx:id="quantityCol" prefWidth="75.0" text="quantity" />
-            <TableColumn fx:id="shipmentSizeCol" prefWidth="75.0" text="shipment_size" />
-        </columns>
-    </TableView>
-    <TableView fx:id="menuTable" layoutX="26.0" layoutY="34.0" prefHeight="300.0" prefWidth="548.0">
-        <columns>
-            <TableColumn fx:id="index" prefWidth="75.0" text="id" />
-            <TableColumn fx:id="nameCol" prefWidth="75.0" text="name" />
-            <TableColumn fx:id="mealTypeCol" prefWidth="75.0" text="meal_type" />
-            <TableColumn fx:id="descriptionCol" prefWidth="75.0" text="description" />
-            <TableColumn fx:id="priceSmall" prefWidth="75.0" text="price_small" />
-            <TableColumn fx:id="priceMedium" prefWidth="75.0" text="price_med" />
-            <TableColumn fx:id="priceLarge" prefWidth="75.0" text="price_large" />
-        </columns>
-    </TableView>
+    <StackPane VBox.vgrow="ALWAYS" maxHeight="Infinity"> 
+        <TableView fx:id="inventoryTable" layoutX="26.0" layoutY="34.0">
+            <columns>
+                <TableColumn fx:id="inventoryIdTableCol" prefWidth="200.0" text="Inventory ID" />
+                <TableColumn fx:id="itemNameCol" prefWidth="500.0" text="Item Name" />
+                <TableColumn fx:id="quantityCol" prefWidth="150.0" text="Quantity" />
+                <TableColumn fx:id="shipmentSizeCol" prefWidth="150.0" text="Shipment Size" />
+            </columns>
+        </TableView>
+        <TableView fx:id="menuTable" layoutX="26.0" layoutY="34.0">
+            <columns>
+                <TableColumn fx:id="index" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="nameCol" prefWidth="200.0" text="Name" />
+                <TableColumn fx:id="mealTypeCol" prefWidth="200.0" text="Meal Type" />
+                <TableColumn fx:id="descriptionCol" prefWidth="300.0" text="Description" />
+                <TableColumn fx:id="priceSmall" prefWidth="75.0" text="Small Price" />
+                <TableColumn fx:id="priceMedium" prefWidth="75.0" text="Medium Price" />
+                <TableColumn fx:id="priceLarge" prefWidth="75.0" text="Large Price" />
+            </columns>
+        </TableView>
     </StackPane>
     <HBox alignment="CENTER" spacing="10.0">
         <children>
