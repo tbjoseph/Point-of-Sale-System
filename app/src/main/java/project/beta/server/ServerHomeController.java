@@ -1,12 +1,19 @@
 package project.beta.server;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import project.beta.BackendDAO;
+import project.beta.types.MenuItem;
+import project.beta.types.OrderItem;
+import project.beta.types.OrderView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,6 +37,11 @@ public class ServerHomeController {
     private Button biggerPlateButton;
     @FXML
     private Button twoSides;
+
+    @FXML
+    private HBox sidesCont;
+    @FXML
+    private GridPane entreesCont;
 
     private OrderItem currItem;
     private OrderView view;
@@ -237,12 +249,64 @@ public class ServerHomeController {
     }
 
     /**
+     * Dynamically creates buttons for each menu item based on the database.
+     * 
+     * @throws SQLException if a database error occurs.
+     */
+    public void createButtons() throws SQLException {
+        sidesCont.getChildren().clear();
+        entreesCont.getChildren().clear();
+        // create buttons for each menu item
+        int column = 0;
+        int row = 0;
+        for (MenuItem item : dao.getMenuItems()) {
+            Button button = new Button(item.name);
+            button.maxHeight(Double.MAX_VALUE);
+            button.maxWidth(Double.MAX_VALUE);
+
+            switch (item.mealType) {
+                case "entree":
+                case "premium entree":
+                    button.setOnAction(e -> {
+                        this.addEntree(e);
+                    });
+                    entreesCont.getChildren().add(button);
+                    GridPane.setColumnIndex(button, column);
+                    GridPane.setRowIndex(button, row);
+                    GridPane.setHgrow(button, Priority.ALWAYS);
+                    GridPane.setVgrow(button, Priority.ALWAYS);
+                    column += 1;
+                    if (column == 4) {
+                        column = 0;
+                        row += 1;
+                    }
+                    break;
+                case "side":
+                    button.setOnAction(e -> {
+                        this.addSide(e);
+                    });
+                    HBox.setHgrow(button, Priority.ALWAYS);
+                    sidesCont.getChildren().add(button);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    /**
      * Pass down the DAO to use for this controller
      * 
      * @param dao the DAO to use for this controller
      */
     public void setDAO(BackendDAO dao) {
         this.dao = dao;
+        try {
+            createButtons();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

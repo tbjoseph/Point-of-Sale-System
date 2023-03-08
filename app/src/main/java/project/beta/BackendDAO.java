@@ -1,7 +1,6 @@
 package project.beta;
 
 import project.beta.manager.ManagerController.Inventory;
-import project.beta.manager.ManagerController.Menu;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +10,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import project.beta.types.MenuItem;
 
 /**
  * BackendDAO is a class that handles all communication with the database.
@@ -146,7 +148,7 @@ public class BackendDAO {
      * 
      * @param menu menu item to update
      */
-    public void updateMenu(Menu menu) {
+    public void updateMenu(MenuItem menu) {
         try {
             // Create an SQL statement to update the data
             String query = "UPDATE menu_items SET name=?, meal_type=?, description=?, price_small=?, price_med=?, price_large=? WHERE id = ?";
@@ -206,9 +208,17 @@ public class BackendDAO {
      * @return the menu items from the database
      * @throws SQLException if the query fails
      */
-    public ResultSet getMenuItems() throws SQLException {
+    public ArrayList<MenuItem> getMenuItems() throws SQLException {
         Statement stmt = connection.createStatement();
-        return stmt.executeQuery("SELECT * FROM menu_items");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM menu_items");
+        ArrayList<MenuItem> menuItems = new ArrayList<>();
+        while (rs.next()) {
+            MenuItem menuItem = new MenuItem(rs.getLong("id"), rs.getString("name"), rs.getString("meal_type"),
+                    rs.getString("description"), rs.getFloat("price_small"), rs.getFloat("price_med"),
+                    rs.getFloat("price_large"));
+            menuItems.add(menuItem);
+        }
+        return menuItems;
     }
 
     /**

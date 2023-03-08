@@ -1,4 +1,4 @@
-package project.beta.server;
+package project.beta.types;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,9 +31,9 @@ public class OrderItem {
         A_LA_CARTE
     }
 
-    ArrayList<String> menuItems;
-    int amount;
-    OrderItemType type;
+    public ArrayList<String> menuItems;
+    public int amount;
+    public OrderItemType type;
 
     /**
      * Constructs new OrderItem object.

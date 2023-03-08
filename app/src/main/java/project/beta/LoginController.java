@@ -10,8 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import project.beta.manager.ManagerController;
-import project.beta.server.OrderView;
 import project.beta.server.ServerHomeController;
+import project.beta.types.OrderView;
 
 import java.io.IOException;
 import java.sql.SQLException;

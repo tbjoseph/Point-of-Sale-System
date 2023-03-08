@@ -12,6 +12,8 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.FloatStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import project.beta.manager.ManagerController;
+import project.beta.types.MenuItem;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -34,21 +36,21 @@ public class ManagerController {
     private TableColumn<Inventory, Integer> shipmentSizeCol;
 
     @FXML
-    private TableView<Menu> menuTable;
+    private TableView<MenuItem> menuTable;
     @FXML
-    private TableColumn<Menu, Long> index;
+    private TableColumn<MenuItem, Long> index;
     @FXML
-    private TableColumn<Menu, String> nameCol;
+    private TableColumn<MenuItem, String> nameCol;
     @FXML
-    private TableColumn<Menu, String> mealTypeCol;
+    private TableColumn<MenuItem, String> mealTypeCol;
     @FXML
-    private TableColumn<Menu, String> descriptionCol;
+    private TableColumn<MenuItem, String> descriptionCol;
     @FXML
-    private TableColumn<Menu, Float> priceSmall;
+    private TableColumn<MenuItem, Float> priceSmall;
     @FXML
-    private TableColumn<Menu, Float> priceMedium;
+    private TableColumn<MenuItem, Float> priceMedium;
     @FXML
-    private TableColumn<Menu, Float> priceLarge;
+    private TableColumn<MenuItem, Float> priceLarge;
 
     @FXML
     private TextField menuNameField;
@@ -67,124 +69,6 @@ public class ManagerController {
     private Label errorText;
 
     private BackendDAO dao;
-
-    /**
-     * Represents a menu item
-     * 
-     * @author Daxton Gilliam
-     */
-    public class Menu {
-        private Long index;
-        /**
-         * the name of the menu item
-         */
-        public String name;
-        /**
-         * the meal type of the menu item
-         */
-        public String mealType;
-        /**
-         * the description of the menu item
-         */
-        public String description;
-        /**
-         * the small price of the menu item
-         */
-        public float priceSmall;
-        /**
-         * the medium price of the menu item
-         */
-        public float priceMedium;
-        /**
-         * the large price of the menu item
-         */
-        public float priceLarge;
-
-        /**
-         * Create a new menu item
-         * 
-         * @param index       the index of the menu item
-         * @param name        the name of the menu item
-         * @param mealType    the type of meal
-         * @param description the description of the menu item
-         * @param priceSmall  the price of the small size of the menu item
-         * @param priceMedium the price of the medium size of the menu item
-         * @param priceLarge  the price of the large size of the menu item
-         */
-        public Menu(Long index, String name, String mealType, String description, float priceSmall, float priceMedium,
-                float priceLarge) {
-            this.index = index;
-            this.name = name;
-            this.mealType = mealType;
-            this.description = description;
-            this.priceSmall = priceSmall;
-            this.priceMedium = priceMedium;
-            this.priceLarge = priceLarge;
-        }
-
-        /**
-         * Required for use in a PropertyValueFactory
-         * 
-         * @return the index
-         */
-        public Long getIndex() {
-            return index;
-        }
-
-        /**
-         * Required for use in a PropertyValueFactory
-         * 
-         * @return the name
-         */
-        public String getName() {
-            return name;
-        }
-
-        /**
-         * Required for use in a PropertyValueFactory
-         * 
-         * @return the meal type
-         */
-        public String getMealType() {
-            return mealType;
-        }
-
-        /**
-         * Required for use in a PropertyValueFactory
-         * 
-         * @return the description
-         */
-        public String getDescription() {
-            return description;
-        }
-
-        /**
-         * Required for use in a PropertyValueFactory
-         * 
-         * @return the small price
-         */
-        public float getPriceSmall() {
-            return this.priceSmall;
-        }
-
-        /**
-         * Required for use in a PropertyValueFactory
-         * 
-         * @return the medium price
-         */
-        public float getPriceMedium() {
-            return this.priceMedium;
-        }
-
-        /**
-         * Required for use in a PropertyValueFactory
-         * 
-         * @return the large price
-         */
-        public float getPriceLarge() {
-            return this.priceLarge;
-        }
-    }
 
     /**
      * Represents an inventory item
@@ -277,7 +161,7 @@ public class ManagerController {
     }
 
     /**
-     * Initializes both the inventory and menu tables, querying the database for
+     * Initializes both the inventory and MenuItem tables, querying the database for
      * the most recent data.
      */
     public void initTable() {
@@ -289,44 +173,44 @@ public class ManagerController {
 
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         nameCol.setOnEditCommit(event -> {
-            Menu menu = event.getRowValue();
-            menu.name = event.getNewValue();
-            dao.updateMenu(menu);
+            MenuItem MenuItem = event.getRowValue();
+            MenuItem.name = event.getNewValue();
+            dao.updateMenu(MenuItem);
         });
 
         mealTypeCol.setCellFactory(TextFieldTableCell.forTableColumn());
         mealTypeCol.setOnEditCommit(event -> {
-            Menu menu = event.getRowValue();
-            menu.mealType = event.getNewValue();
-            dao.updateMenu(menu);
+            MenuItem MenuItem = event.getRowValue();
+            MenuItem.mealType = event.getNewValue();
+            dao.updateMenu(MenuItem);
         });
 
         descriptionCol.setCellFactory(TextFieldTableCell.forTableColumn());
         descriptionCol.setOnEditCommit(event -> {
-            Menu menu = event.getRowValue();
-            menu.description = event.getNewValue();
-            dao.updateMenu(menu);
+            MenuItem MenuItem = event.getRowValue();
+            MenuItem.description = event.getNewValue();
+            dao.updateMenu(MenuItem);
         });
 
         priceSmall.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
         priceSmall.setOnEditCommit(event -> {
-            Menu menu = event.getRowValue();
-            menu.priceSmall = event.getNewValue();
-            dao.updateMenu(menu);
+            MenuItem MenuItem = event.getRowValue();
+            MenuItem.priceSmall = event.getNewValue();
+            dao.updateMenu(MenuItem);
         });
 
         priceMedium.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
         priceMedium.setOnEditCommit(event -> {
-            Menu menu = event.getRowValue();
-            menu.priceMedium = event.getNewValue();
-            dao.updateMenu(menu);
+            MenuItem MenuItem = event.getRowValue();
+            MenuItem.priceMedium = event.getNewValue();
+            dao.updateMenu(MenuItem);
         });
 
         priceLarge.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
         priceLarge.setOnEditCommit(event -> {
-            Menu menu = event.getRowValue();
-            menu.priceLarge = event.getNewValue();
-            dao.updateMenu(menu);
+            MenuItem MenuItem = event.getRowValue();
+            MenuItem.priceLarge = event.getNewValue();
+            dao.updateMenu(MenuItem);
         });
 
         inventoryTable.setEditable(true);
@@ -354,7 +238,7 @@ public class ManagerController {
     }
 
     /**
-     * Updates the menu table with the new menu items from the database.
+     * Updates the MenuItem table with the new MenuItem items from the database.
      * 
      * @param event the event that triggered this method
      */
@@ -364,25 +248,15 @@ public class ManagerController {
         inventoryTable.setVisible(false);
         inventoryTable.getItems().clear();
         try {
-            ResultSet rs = dao.getMenuItems();
-
-            index.setCellValueFactory(new PropertyValueFactory<Menu, Long>("index"));
-            nameCol.setCellValueFactory(new PropertyValueFactory<Menu, String>("name"));
-            mealTypeCol.setCellValueFactory(new PropertyValueFactory<Menu, String>("mealType"));
-            descriptionCol.setCellValueFactory(new PropertyValueFactory<Menu, String>("description"));
-            priceSmall.setCellValueFactory(new PropertyValueFactory<Menu, Float>("priceSmall"));
-            priceMedium.setCellValueFactory(new PropertyValueFactory<Menu, Float>("priceMedium"));
-            priceLarge.setCellValueFactory(new PropertyValueFactory<Menu, Float>("priceLarge"));
-            while (rs.next()) {
-                Long index = rs.getLong("id");
-                String name = rs.getString("name");
-                String mealType = rs.getString("meal_type");
-                String description = rs.getString("description");
-                Float price_small = rs.getFloat("price_small");
-                Float price_medium = rs.getFloat("price_med");
-                Float price_large = rs.getFloat("price_large");
-                Menu menu = new Menu(index, name, mealType, description, price_small, price_medium, price_large);
-                menuTable.getItems().add(menu);
+            index.setCellValueFactory(new PropertyValueFactory<MenuItem, Long>("index"));
+            nameCol.setCellValueFactory(new PropertyValueFactory<MenuItem, String>("name"));
+            mealTypeCol.setCellValueFactory(new PropertyValueFactory<MenuItem, String>("mealType"));
+            descriptionCol.setCellValueFactory(new PropertyValueFactory<MenuItem, String>("description"));
+            priceSmall.setCellValueFactory(new PropertyValueFactory<MenuItem, Float>("priceSmall"));
+            priceMedium.setCellValueFactory(new PropertyValueFactory<MenuItem, Float>("priceMedium"));
+            priceLarge.setCellValueFactory(new PropertyValueFactory<MenuItem, Float>("priceLarge"));
+            for (MenuItem item : dao.getMenuItems()) {
+                menuTable.getItems().add(item);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -421,7 +295,7 @@ public class ManagerController {
     }
 
     /**
-     * Add a menu item to the database
+     * Add a MenuItem item to the database
      * 
      * @param event the event that triggered this method
      * @throws SQLException if there is an error with the database

@@ -14,7 +14,7 @@
                 <VBox>
                     <children>
                         <Label text="Appetizers"/>
-                        <HBox>
+                        <HBox fx:id="addonsCont">
                             <children>
                                 <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Spring Roll"/>
                                 <Button onAction="#addItem" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Veggie Spring Roll"/>

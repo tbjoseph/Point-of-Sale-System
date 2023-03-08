@@ -2,7 +2,12 @@ package project.beta.server;
 
 import javafx.event.ActionEvent;
 import project.beta.BackendDAO;
+import project.beta.types.MenuItem;
+import project.beta.types.OrderItem;
+import project.beta.types.OrderView;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -11,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * ServerAddonsController is a class that controls the addons screen.
@@ -22,6 +28,9 @@ public class ServerAddonsController {
     @FXML
     VBox orderView;
     OrderView view;
+
+    @FXML
+    private HBox addonsCont;
 
     /**
      * A default constructor for ServerAddonsController
@@ -88,12 +97,46 @@ public class ServerAddonsController {
     }
 
     /**
+     * Dynamically creates buttons for each menu item based on the database.
+     * 
+     * @throws SQLException if a database error occurs.
+     */
+    public void createButtons() throws SQLException {
+        addonsCont.getChildren().clear();
+        // create buttons for each menu item
+        for (MenuItem item : dao.getMenuItems()) {
+            Button button = new Button(item.name);
+            button.setOnAction(e -> {
+                this.addItem(e);
+            });
+            HBox.setHgrow(button, Priority.ALWAYS);
+            VBox.setVgrow(button, Priority.ALWAYS);
+            button.maxHeight(Double.MAX_VALUE);
+            button.maxWidth(Double.MAX_VALUE);
+
+            switch (item.mealType) {
+                case "appetizer":
+                    addonsCont.getChildren().add(button);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    /**
      * Pass down the DAO to use for this controller
      * 
      * @param dao the DAO to use for this controller
      */
     public void setDAO(BackendDAO dao) {
         this.dao = dao;
+        try {
+            createButtons();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

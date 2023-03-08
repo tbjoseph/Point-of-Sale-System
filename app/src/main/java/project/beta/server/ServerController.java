@@ -18,6 +18,8 @@ import javafx.fxml.FXML;
 import java.time.LocalDateTime;
 
 import project.beta.server.ServerController;
+import project.beta.types.OrderItem;
+import project.beta.types.OrderView;
 
 /**
  * Controller class for the server home screen. Generates an order and passes it

@@ -1,4 +1,4 @@
-package project.beta.server;
+package project.beta.types;
 
 import java.util.ArrayList;
 import javafx.scene.layout.VBox;
