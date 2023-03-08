@@ -12,7 +12,6 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.FloatStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import project.beta.manager.ManagerController;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -76,21 +75,41 @@ public class ManagerController {
      */
     public class Menu {
         private Long index;
-        private String name;
-        private String mealType;
-        private String description;
-        private float priceSmall;
-        private float priceMedium;
-        private float priceLarge;
+        /**
+         * the name of the menu item
+         */
+        public String name;
+        /**
+         * the meal type of the menu item
+         */
+        public String mealType;
+        /**
+         * the description of the menu item
+         */
+        public String description;
+        /**
+         * the small price of the menu item
+         */
+        public float priceSmall;
+        /**
+         * the medium price of the menu item
+         */
+        public float priceMedium;
+        /**
+         * the large price of the menu item
+         */
+        public float priceLarge;
 
         /**
-         * @param index       - the index of the menu item
-         * @param name        - the name of the menu item
-         * @param mealType    - the type of meal
-         * @param description - the description of the menu item
-         * @param priceSmall  - the price of the small size of the menu item
-         * @param priceMedium - the price of the medium size of the menu item
-         * @param priceLarge  - the price of the large size of the menu item
+         * Create a new menu item
+         * 
+         * @param index       the index of the menu item
+         * @param name        the name of the menu item
+         * @param mealType    the type of meal
+         * @param description the description of the menu item
+         * @param priceSmall  the price of the small size of the menu item
+         * @param priceMedium the price of the medium size of the menu item
+         * @param priceLarge  the price of the large size of the menu item
          */
         public Menu(Long index, String name, String mealType, String description, float priceSmall, float priceMedium,
                 float priceLarge) {
@@ -104,6 +123,8 @@ public class ManagerController {
         }
 
         /**
+         * Required for use in a PropertyValueFactory
+         * 
          * @return the index
          */
         public Long getIndex() {
@@ -111,6 +132,8 @@ public class ManagerController {
         }
 
         /**
+         * Required for use in a PropertyValueFactory
+         * 
          * @return the name
          */
         public String getName() {
@@ -118,13 +141,8 @@ public class ManagerController {
         }
 
         /**
-         * @param name - the name to set
-         */
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        /**
+         * Required for use in a PropertyValueFactory
+         * 
          * @return the meal type
          */
         public String getMealType() {
@@ -132,13 +150,8 @@ public class ManagerController {
         }
 
         /**
-         * @param mealType - the meal type to set
-         */
-        public void setMealType(String mealType) {
-            this.mealType = mealType;
-        }
-
-        /**
+         * Required for use in a PropertyValueFactory
+         * 
          * @return the description
          */
         public String getDescription() {
@@ -146,13 +159,8 @@ public class ManagerController {
         }
 
         /**
-         * @param description - the description to set
-         */
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        /**
+         * Required for use in a PropertyValueFactory
+         * 
          * @return the small price
          */
         public float getPriceSmall() {
@@ -160,13 +168,8 @@ public class ManagerController {
         }
 
         /**
-         * @param priceSmall - the small price to set
-         */
-        public void setPriceSmall(float priceSmall) {
-            this.priceSmall = priceSmall;
-        }
-
-        /**
+         * Required for use in a PropertyValueFactory
+         * 
          * @return the medium price
          */
         public float getPriceMedium() {
@@ -174,24 +177,12 @@ public class ManagerController {
         }
 
         /**
-         * @param priceMedium - the medium price to set
-         */
-        public void setPriceMedium(float priceMedium) {
-            this.priceMedium = priceMedium;
-        }
-
-        /**
+         * Required for use in a PropertyValueFactory
+         * 
          * @return the large price
          */
         public float getPriceLarge() {
             return this.priceLarge;
-        }
-
-        /**
-         * @param priceLarge - the large price to set
-         */
-        public void setPriceLarge(float priceLarge) {
-            this.priceLarge = priceLarge;
         }
     }
 
@@ -201,16 +192,30 @@ public class ManagerController {
      * @author Daxton Gilliam
      */
     public class Inventory {
-        private long inventoryId;
-        private String itemName;
-        private int quantity;
-        private int shipmentSize;
+        /**
+         * The inventory id of the inventory item
+         */
+        public long inventoryId;
+        /**
+         * The item name of the inventory item
+         */
+        public String itemName;
+        /**
+         * The quantity of the inventory item
+         */
+        public int quantity;
+        /**
+         * The shipment size of the inventory item
+         */
+        public int shipmentSize;
 
         /**
-         * @param inventoryId  - the id of the inventory item
-         * @param itemName     - the name of the inventory item
-         * @param quantity     - the quantity of the inventory item
-         * @param shipmentSize - the size of the shipment of the inventory item
+         * Constructor for the inventory item
+         * 
+         * @param inventoryId  the id of the inventory item
+         * @param itemName     the name of the inventory item
+         * @param quantity     the quantity of the inventory item
+         * @param shipmentSize the size of the shipment of the inventory item
          */
         public Inventory(long inventoryId, String itemName, int quantity, int shipmentSize) {
             this.inventoryId = inventoryId;
@@ -220,6 +225,8 @@ public class ManagerController {
         }
 
         /**
+         * Required for use in a PropertyValueFactory
+         * 
          * @return the inventoryId
          */
         public long getInventoryId() {
@@ -227,13 +234,8 @@ public class ManagerController {
         }
 
         /**
-         * @param inventoryId - the inventoryId to set
-         */
-        public void setInventoryId(long inventoryId) {
-            this.inventoryId = inventoryId;
-        }
-
-        /**
+         * Required for use in a PropertyValueFactory
+         * 
          * @return the itemName
          */
         public String getItemName() {
@@ -241,13 +243,8 @@ public class ManagerController {
         }
 
         /**
-         * @param itemName - the itemName to set
-         */
-        public void setItemName(String itemName) {
-            this.itemName = itemName;
-        }
-
-        /**
+         * Required for use in a PropertyValueFactory
+         * 
          * @return the quantity
          */
         public int getQuantity() {
@@ -255,31 +252,25 @@ public class ManagerController {
         }
 
         /**
-         * @param quantity - the quantity to set
-         */
-        public void setQuantity(int quantity) {
-            this.quantity = quantity;
-        }
-
-        /**
+         * Required for use in a PropertyValueFactory
+         * 
          * @return the shipmentSize
          */
         public int getShipmentSize() {
             return shipmentSize;
         }
+    }
 
-        /**
-         * @param shipmentSize - the shipmentSize to set
-         */
-        public void setShipmentSize(int shipmentSize) {
-            this.shipmentSize = shipmentSize;
-        }
+    /**
+     * A default constructor for the controller.
+     */
+    public ManagerController() {
     }
 
     /**
      * Pass down the DAO to use for this controller
      * 
-     * @param dao - the DAO to use for this controller
+     * @param dao the DAO to use for this controller
      */
     public void setDAO(BackendDAO dao) {
         this.dao = dao;
@@ -299,42 +290,42 @@ public class ManagerController {
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         nameCol.setOnEditCommit(event -> {
             Menu menu = event.getRowValue();
-            menu.setName(event.getNewValue());
+            menu.name = event.getNewValue();
             dao.updateMenu(menu);
         });
 
         mealTypeCol.setCellFactory(TextFieldTableCell.forTableColumn());
         mealTypeCol.setOnEditCommit(event -> {
             Menu menu = event.getRowValue();
-            menu.setMealType(event.getNewValue());
+            menu.mealType = event.getNewValue();
             dao.updateMenu(menu);
         });
 
         descriptionCol.setCellFactory(TextFieldTableCell.forTableColumn());
         descriptionCol.setOnEditCommit(event -> {
             Menu menu = event.getRowValue();
-            menu.setDescription(event.getNewValue());
+            menu.description = event.getNewValue();
             dao.updateMenu(menu);
         });
 
         priceSmall.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
         priceSmall.setOnEditCommit(event -> {
             Menu menu = event.getRowValue();
-            menu.setPriceSmall(event.getNewValue());
+            menu.priceSmall = event.getNewValue();
             dao.updateMenu(menu);
         });
 
         priceMedium.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
         priceMedium.setOnEditCommit(event -> {
             Menu menu = event.getRowValue();
-            menu.setPriceMedium(event.getNewValue());
+            menu.priceMedium = event.getNewValue();
             dao.updateMenu(menu);
         });
 
         priceLarge.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
         priceLarge.setOnEditCommit(event -> {
             Menu menu = event.getRowValue();
-            menu.setPriceLarge(event.getNewValue());
+            menu.priceLarge = event.getNewValue();
             dao.updateMenu(menu);
         });
 
@@ -343,21 +334,21 @@ public class ManagerController {
         itemNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         itemNameCol.setOnEditCommit(event -> {
             Inventory inventory = event.getRowValue();
-            inventory.setItemName(event.getNewValue());
+            inventory.itemName = event.getNewValue();
             dao.updateInventory(inventory);
         });
 
         quantityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         quantityCol.setOnEditCommit(event -> {
             Inventory inventory = event.getRowValue();
-            inventory.setQuantity(event.getNewValue());
+            inventory.quantity = event.getNewValue();
             dao.updateInventory(inventory);
         });
 
         shipmentSizeCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         shipmentSizeCol.setOnEditCommit(event -> {
             Inventory inventory = event.getRowValue();
-            inventory.setShipmentSize(event.getNewValue());
+            inventory.shipmentSize = event.getNewValue();
             dao.updateInventory(inventory);
         });
     }
@@ -365,7 +356,7 @@ public class ManagerController {
     /**
      * Updates the menu table with the new menu items from the database.
      * 
-     * @param event - the event that triggered this method
+     * @param event the event that triggered this method
      */
     public void showMenuTable(ActionEvent event) {
         menuTable.setVisible(true);
@@ -402,7 +393,7 @@ public class ManagerController {
      * Updates the inventory table in the UI with the current inventory items
      * in the database.
      * 
-     * @param event - the event that triggered this method
+     * @param event the event that triggered this method
      */
     public void showInventoryTable(ActionEvent event) {
         menuTable.setVisible(false);
@@ -410,7 +401,6 @@ public class ManagerController {
         inventoryTable.setVisible(true);
         inventoryTable.getItems().clear();
         try {
-            String query = "SELECT * FROM inventory_items";
             ResultSet rs = dao.getInventoryItems();
 
             inventoryIdTableCol.setCellValueFactory(new PropertyValueFactory<Inventory, Long>("inventoryId"));
@@ -433,8 +423,8 @@ public class ManagerController {
     /**
      * Add a menu item to the database
      * 
-     * @param event - the event that triggered this method
-     * @throws SQLException - if there is an error with the database
+     * @param event the event that triggered this method
+     * @throws SQLException if there is an error with the database
      */
     public void addMenuItem(ActionEvent event) throws SQLException {
         String menuNameString = this.menuNameField.getText();

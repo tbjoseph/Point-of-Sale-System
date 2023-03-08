@@ -42,6 +42,12 @@ public class ServerHomeController {
     private BackendDAO dao;
 
     /**
+     * A default constructor for the controller. No initialization is done here.
+     */
+    public ServerHomeController() {
+    }
+
+    /**
      * Add a side item to the current order.
      * 
      * @param event Used to get the button name of the side item.
@@ -199,7 +205,7 @@ public class ServerHomeController {
      * Changes the scene to the next page, server addons.
      * 
      * @param event Used to get the current stage.
-     * @throws IOException
+     * @throws IOException if the file cannot be loaded.
      */
     public void nextScreen(ActionEvent event) throws IOException {
         // change the scene to the drinks and appetizer screen
@@ -233,7 +239,7 @@ public class ServerHomeController {
     /**
      * Pass down the DAO to use for this controller
      * 
-     * @param dao - the DAO to use for this controller
+     * @param dao the DAO to use for this controller
      */
     public void setDAO(BackendDAO dao) {
         this.dao = dao;
@@ -242,7 +248,7 @@ public class ServerHomeController {
     /**
      * Pass down the order view to use for this controller
      * 
-     * @param view - the order view to use for this controller
+     * @param view the order view to use for this controller
      */
     public void setOrders(OrderView view) {
         this.view = view;

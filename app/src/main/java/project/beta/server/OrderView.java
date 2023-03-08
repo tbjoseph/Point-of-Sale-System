@@ -14,8 +14,11 @@ import javafx.event.EventHandler;
  * @author Joshua Downey, Matthew Gimlin
  */
 public class OrderView {
-    private static ArrayList<OrderItem> order;
+    private ArrayList<OrderItem> order;
 
+    /**
+     * Constructs a new OrderView object.
+     */
     public OrderView() {
         order = new ArrayList<OrderItem>();
     }

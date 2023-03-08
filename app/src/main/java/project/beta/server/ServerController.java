@@ -42,8 +42,8 @@ public class ServerController {
     /**
      * Back button to get to addons
      * 
-     * @param event - the event that triggered the function
-     * @throws IOException - if the file is not found
+     * @param event the event that triggered the function
+     * @throws IOException if the file is not found
      */
     public void backButton(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../server_addons.fxml"));
@@ -64,8 +64,8 @@ public class ServerController {
     /**
      * Post checkout function to get to home
      * 
-     * @param event - the event that triggered the function
-     * @throws IOException - if the file is not found
+     * @param event the event that triggered the function
+     * @throws IOException if the file is not found
      */
     public void goToHome(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../server_home.fxml"));
@@ -86,7 +86,7 @@ public class ServerController {
     /**
      * Return total price
      * 
-     * @return priceSum - the total price
+     * @return priceSum the total price
      */
     public float getPrice() {
         float priceSum = 0;
@@ -120,7 +120,7 @@ public class ServerController {
     /**
      * Update data base for cash payment
      * 
-     * @param event - the event that triggered the function
+     * @param event the event that triggered the function
      */
     public void processCash(ActionEvent event) {
         try {
@@ -139,7 +139,7 @@ public class ServerController {
     /**
      * Update data base for card payment
      * 
-     * @param event - the event that triggered the function
+     * @param event the event that triggered the function
      */
     public void processCard(ActionEvent event) {
         try {
@@ -158,7 +158,7 @@ public class ServerController {
     /**
      * Update data base for dining payment
      * 
-     * @param event - the event that triggered the function
+     * @param event the event that triggered the function
      */
     public void processDining(ActionEvent event) {
         try {
@@ -177,7 +177,7 @@ public class ServerController {
     /**
      * Update data base for meal plan payment
      * 
-     * @param event - the event that triggered the function
+     * @param event the event that triggered the function
      */
     public void processMealPlan(ActionEvent event) {
         try {
@@ -196,7 +196,7 @@ public class ServerController {
     /**
      * Pass down the DAO to use for this controller
      * 
-     * @param dao - the DAO to use for this controller
+     * @param dao the DAO to use for this controller
      */
     public void setDAO(BackendDAO dao) {
         this.dao = dao;
@@ -205,7 +205,7 @@ public class ServerController {
     /**
      * Pass down the orders to use for this controller
      * 
-     * @param orders - the orders to use for this controller
+     * @param orders the orders to use for this controller
      */
     public void setOrders(OrderView orders) {
         this.orders = orders;

@@ -33,6 +33,13 @@ public class LoginController {
     private BackendDAO dao;
 
     /**
+     * A default constructor for the controller. Initialization is done in the
+     * initialize method.
+     */
+    public LoginController() {
+    }
+
+    /**
      * Initialize the controller. This should only be called once,
      * as it will create a new DAO if one does not exist.
      */
@@ -45,9 +52,9 @@ public class LoginController {
     /**
      * Try to login with the form data
      * 
-     * @param event - the event that triggered this method
-     * @throws IOException  - if the FXML file cannot be found
-     * @throws SQLException - if the database cannot be accessed
+     * @param event the event that triggered this method
+     * @throws IOException  if the FXML file cannot be found
+     * @throws SQLException if the database cannot be accessed
      */
     public void tryLogin(ActionEvent event) throws IOException, SQLException {
         String username = this.username.getText();
@@ -92,7 +99,7 @@ public class LoginController {
      * Set the DAO to use for this controller.
      * Mainly used for testing
      * 
-     * @param dao - the DAO to use for this controller
+     * @param dao the DAO to use for this controller
      */
     public void setDAO(BackendDAO dao) {
         this.dao = dao;

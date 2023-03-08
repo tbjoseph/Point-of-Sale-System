@@ -23,13 +23,16 @@ public class ServerAddonsController {
     VBox orderView;
     OrderView view;
 
+    /**
+     * A default constructor for ServerAddonsController
+     */
     public ServerAddonsController() {
     }
 
     /**
      * adds an item to the order view
      * 
-     * @param event
+     * @param event the event that triggered the method
      */
     public void addItem(ActionEvent event) {
         Button bt = (Button) event.getSource();
@@ -43,8 +46,8 @@ public class ServerAddonsController {
     /**
      * moves the page back to the entree/side screen
      * 
-     * @param event
-     * @throws IOException
+     * @param event the event that triggered the method
+     * @throws IOException if the file is not found
      */
     public void back(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
@@ -65,8 +68,8 @@ public class ServerAddonsController {
     /**
      * moves the page over to the payment screen
      * 
-     * @param event
-     * @throws IOException
+     * @param event the event that triggered the method
+     * @throws IOException if the file is not found
      */
     public void next(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
@@ -87,7 +90,7 @@ public class ServerAddonsController {
     /**
      * Pass down the DAO to use for this controller
      * 
-     * @param dao - the DAO to use for this controller
+     * @param dao the DAO to use for this controller
      */
     public void setDAO(BackendDAO dao) {
         this.dao = dao;
@@ -96,7 +99,7 @@ public class ServerAddonsController {
     /**
      * Sets the order view from the previous screen
      * 
-     * @param view - the order view
+     * @param view the order view
      */
     public void setOrders(OrderView view) {
         this.view = view;
