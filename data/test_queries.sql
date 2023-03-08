@@ -46,3 +46,8 @@ SELECT SUM(total_price) from shipment_history;
 
 -- List all shipments of Teriyaki Sauce
 SELECT * FROM shipment_history WHERE item_name = 'Teriyaki Sauce';
+
+-- updated join statements
+SELECT o.order_date,m.name FROM order_history o JOIN order_menu_assoc a ON a.order_id = o.id JOIN menu_items m ON m.id = a.menu_item_id limit 10;
+SELECT m.name,i.item_name FROM menu_items m JOIN menu_inventory_assoc a ON a.menu_item_id = m.id JOIN inventory_items i ON i.id = a.inventory_item_id;
+SELECT o.order_date,i.item_name FROM order_history o JOIN order_menu_assoc a ON a.order_id = o.id JOIN menu_items m ON m.id = a.menu_item_id JOIN menu_inventory_assoc b ON b.menu_item_id = m.id JOIN inventory_items i ON i.inventory_id = b.inventory_item_id LIMIT 10;

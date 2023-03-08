@@ -1,7 +1,7 @@
 -- shipment history
 CREATE TABLE shipment_history (
     shipment_id bigserial PRIMARY KEY,
-    inventory_id bigint NOT NULL FOREIGN KEY REFERENCES inventory_items (inventory_id),
+    inventory_id bigint NOT NULL REFERENCES inventory_items (inventory_id),
     shipment_date timestamp NOT NULL,
     item_name varchar(50) NOT NULL,
     quantity int NOT NULL,
