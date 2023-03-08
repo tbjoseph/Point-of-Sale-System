@@ -51,23 +51,23 @@
             <Label text="Modifiers" />
             <HBox spacing="10.0">
                <children>
-                  <Button text="Family Meal" />
-                  <Button text="New Meal" />
-                  <Button text="A La Carte" />
+                  <Button text="Bowl" fx:id="bowlButton" onAction="#bowlMode" />
+                  <Button text="Plate" fx:id="plateButton" onAction="#plateMode" />
+                  <Button text="Bigger Plate" fx:id="biggerPlateButton" onAction="#biggerPlateMode" />
+                  <Button text="2 Sides" fx:id="twoSides" onAction="#twoSides" />
                </children>
             </HBox>
          </children>
       </VBox>
       <VBox spacing="10.0">
          <children>
-            <VBox fx:id="orderView">
-               <children>
-               </children>
+            <Label text="Order View"/>
+            <VBox fx:id="viewBox" minHeight="400" minWidth="200" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS">
             </VBox>
             <HBox spacing="10.0">
                <children>
-                  <Button text="Back" />
-                  <Button text="Next" />
+                  <Button text="Back"/>
+                  <Button text="Next"/>
                </children>
             </HBox>
          </children>
