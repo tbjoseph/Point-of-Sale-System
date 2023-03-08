@@ -7,8 +7,12 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/**
+ * MainApp is the main class for the JavaFX application.
+ * 
+ * @author Griffith Thomas
+ */
 public class MainApp extends Application {
-
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = null;
@@ -38,6 +42,11 @@ public class MainApp extends Application {
         stage.show();
     }
 
+    /**
+     * Main method for the application.
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }

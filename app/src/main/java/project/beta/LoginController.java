@@ -15,6 +15,12 @@ import project.beta.server.ServerController;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * LoginController is the controller for the login screen.
+ * It handles access to the manager and server screens.
+ * 
+ * @author Griffith Thomas
+ */
 public class LoginController {
     @FXML
     private TextField username;
@@ -24,6 +30,10 @@ public class LoginController {
     private Label errorText;
     private BackendDAO dao;
 
+    /**
+     * Initialize the controller. This should only be called once,
+     * as it will create a new DAO if one does not exist.
+     */
     public void initialize() {
         if (dao == null) {
             dao = new BackendDAO();
@@ -34,8 +44,8 @@ public class LoginController {
      * Try to login with the form data
      * 
      * @param event - the event that triggered this method
-     * @throws IOException
-     * @throws SQLException
+     * @throws IOException  - if the FXML file cannot be found
+     * @throws SQLException - if the database cannot be accessed
      */
     public void tryLogin(ActionEvent event) throws IOException, SQLException {
         String username = this.username.getText();
@@ -68,7 +78,7 @@ public class LoginController {
                 stage.show();
                 return;
             }
-            System.err.println("Unknown permission level: "+permissionLevel); 
+            System.err.println("Unknown permission level: " + permissionLevel);
         }
         this.username.setText("");
         this.password.setText("");

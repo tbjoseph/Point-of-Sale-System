@@ -10,9 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-// import javafx.event.ActionEvent;
-// import javafx.scene.control.Menu;
-
+/**
+ * BackendDAO is a class that handles all communication with the database.
+ * 
+ * @author Griffith Thomas
+ */
 public class BackendDAO {
     private Connection connection;
 
@@ -65,10 +67,8 @@ public class BackendDAO {
      * @param username - username to check
      * @param password - password to check
      * @return true if the username and password are valid, false otherwise
-     * @throws SQLException
      */
     public boolean login(String username, String password) {
-        // TODO: implement this
         if (username == null || password == null) {
             return false;
         }
@@ -90,6 +90,13 @@ public class BackendDAO {
         return false;
     }
 
+    /**
+     * Gets the permissions of the user
+     * 
+     * @param username - username to check
+     * @return the permissions of the user
+     * @throws SQLException if the query fails
+     */
     public String getPermission(String username) throws SQLException {
         // query to back end with username to get the permissions.
         PreparedStatement statement = connection.prepareStatement("SELECT permission FROM Employees WHERE name = ?");
@@ -102,13 +109,18 @@ public class BackendDAO {
     }
 
     /**
-     * Try to login with the form data
+     * Gets the inventory items from the database
      * 
-     * @param event - the event that triggered this method
-     * @throws IOException
-     * @throws SQLException
+     * @param menuNameString   - name of the menu item
+     * @param mealTypeField    - meal type of the menu item
+     * @param descriptionField - description of the menu item
+     * @param price_small      - price of the small menu item
+     * @param price_med        - price of the medium menu item
+     * @param price_large      - price of the large menu item
+     * @throws SQLException if the query fails
      */
-    public void addMenuItem(String menuNameString, String mealTypeField, String descriptionField, Float price_small, Float price_med, Float price_large) throws IOException, SQLException {
+    public void addMenuItem(String menuNameString, String mealTypeField, String descriptionField, Float price_small,
+            Float price_med, Float price_large) throws SQLException {
         try {
             String query = "INSERT INTO menu_items (name, meal_type, description, price_small, price_med, price_large) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = connection.prepareStatement(query);
@@ -125,6 +137,11 @@ public class BackendDAO {
         }
     }
 
+    /**
+     * Gets the inventory items from the database
+     * 
+     * @param menu - menu item to update
+     */
     public void updateMenu(Menu menu) {
         try {
             // Create an SQL statement to update the data
@@ -151,6 +168,11 @@ public class BackendDAO {
         }
     }
 
+    /**
+     * Gets the inventory items from the database
+     * 
+     * @param inventory - inventory item to update
+     */
     public void updateInventory(Inventory inventory) {
         try {
             // Create an SQL statement to update the data

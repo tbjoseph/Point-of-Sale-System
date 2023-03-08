@@ -16,6 +16,12 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Controller for the manager view. This class handles all of the actions that
+ * can be performed by the manager.
+ * 
+ * @author Daxton Gilliam
+ */
 public class ManagerController {
     @FXML
     private TableView<Inventory> inventoryTable;
@@ -63,6 +69,11 @@ public class ManagerController {
 
     private BackendDAO dao;
 
+    /**
+     * Represents a menu item
+     * 
+     * @author Daxton Gilliam
+     */
     public class Menu {
         private Long index;
         private String name;
@@ -72,6 +83,15 @@ public class ManagerController {
         private float priceMedium;
         private float priceLarge;
 
+        /**
+         * @param index       - the index of the menu item
+         * @param name        - the name of the menu item
+         * @param mealType    - the type of meal
+         * @param description - the description of the menu item
+         * @param priceSmall  - the price of the small size of the menu item
+         * @param priceMedium - the price of the medium size of the menu item
+         * @param priceLarge  - the price of the large size of the menu item
+         */
         public Menu(Long index, String name, String mealType, String description, float priceSmall, float priceMedium,
                 float priceLarge) {
             this.index = index;
@@ -83,65 +103,115 @@ public class ManagerController {
             this.priceLarge = priceLarge;
         }
 
+        /**
+         * @return the index
+         */
         public Long getIndex() {
             return index;
         }
 
+        /**
+         * @return the name
+         */
         public String getName() {
             return name;
         }
 
+        /**
+         * @param name - the name to set
+         */
         public void setName(String name) {
             this.name = name;
         }
 
+        /**
+         * @return the meal type
+         */
         public String getMealType() {
             return mealType;
         }
 
+        /**
+         * @param mealType - the meal type to set
+         */
         public void setMealType(String mealType) {
             this.mealType = mealType;
         }
 
+        /**
+         * @return the description
+         */
         public String getDescription() {
             return description;
         }
 
+        /**
+         * @param description - the description to set
+         */
         public void setDescription(String description) {
             this.description = description;
         }
 
+        /**
+         * @return the small price
+         */
         public float getPriceSmall() {
             return this.priceSmall;
         }
 
+        /**
+         * @param priceSmall - the small price to set
+         */
         public void setPriceSmall(float priceSmall) {
             this.priceSmall = priceSmall;
         }
 
+        /**
+         * @return the medium price
+         */
         public float getPriceMedium() {
             return this.priceMedium;
         }
 
+        /**
+         * @param priceMedium - the medium price to set
+         */
         public void setPriceMedium(float priceMedium) {
             this.priceMedium = priceMedium;
         }
 
+        /**
+         * @return the large price
+         */
         public float getPriceLarge() {
             return this.priceLarge;
         }
 
+        /**
+         * @param priceLarge - the large price to set
+         */
         public void setPriceLarge(float priceLarge) {
             this.priceLarge = priceLarge;
         }
     }
 
+    /**
+     * Represents an inventory item
+     * 
+     * @author Daxton Gilliam
+     */
     public class Inventory {
         private long inventoryId;
         private String itemName;
         private int quantity;
         private int shipmentSize;
 
+        /**
+         * @param inventoryId  - the id of the inventory item
+         * @param itemName     - the name of the inventory item
+         * @param quantity     - the quantity of the inventory item
+         * @param shipmentSize - the size of the shipment of the inventory item
+         */
         public Inventory(long inventoryId, String itemName, int quantity, int shipmentSize) {
             this.inventoryId = inventoryId;
             this.itemName = itemName;
@@ -149,34 +219,58 @@ public class ManagerController {
             this.shipmentSize = shipmentSize;
         }
 
+        /**
+         * @return the inventoryId
+         */
         public long getInventoryId() {
             return inventoryId;
         }
 
+        /**
+         * @param inventoryId - the inventoryId to set
+         */
         public void setInventoryId(long inventoryId) {
             this.inventoryId = inventoryId;
         }
 
+        /**
+         * @return the itemName
+         */
         public String getItemName() {
             return itemName;
         }
 
+        /**
+         * @param itemName - the itemName to set
+         */
         public void setItemName(String itemName) {
             this.itemName = itemName;
         }
 
+        /**
+         * @return the quantity
+         */
         public int getQuantity() {
             return quantity;
         }
 
+        /**
+         * @param quantity - the quantity to set
+         */
         public void setQuantity(int quantity) {
             this.quantity = quantity;
         }
 
+        /**
+         * @return the shipmentSize
+         */
         public int getShipmentSize() {
             return shipmentSize;
         }
 
+        /**
+         * @param shipmentSize - the shipmentSize to set
+         */
         public void setShipmentSize(int shipmentSize) {
             this.shipmentSize = shipmentSize;
         }
@@ -191,59 +285,16 @@ public class ManagerController {
         this.dao = dao;
     }
 
+    /**
+     * Initializes both the inventory and menu tables, querying the database for
+     * the most recent data.
+     */
     public void initTable() {
-        try {
-            // Create an SQL statement to select the data
-            String query = "SELECT * FROM menu_items";
-
-            // Execute the SQL statement and retrieve the data
-            ResultSet rs = dao.executeQuery(query);
-
-            // Bind the data to the table
-
-            index.setCellValueFactory(new PropertyValueFactory<Menu, Long>("index"));
-            nameCol.setCellValueFactory(new PropertyValueFactory<Menu, String>("name"));
-            mealTypeCol.setCellValueFactory(new PropertyValueFactory<Menu, String>("mealType"));
-            descriptionCol.setCellValueFactory(new PropertyValueFactory<Menu, String>("description"));
-            priceSmall.setCellValueFactory(new PropertyValueFactory<Menu, Float>("priceSmall"));
-            priceMedium.setCellValueFactory(new PropertyValueFactory<Menu, Float>("priceMedium"));
-            priceLarge.setCellValueFactory(new PropertyValueFactory<Menu, Float>("priceLarge"));
-            while (rs.next()) {
-                Long index = rs.getLong("id");
-                String name = rs.getString("name");
-                String mealType = rs.getString("meal_type");
-                String description = rs.getString("description");
-                Float price_small = rs.getFloat("price_small");
-                Float price_medium = rs.getFloat("price_med");
-                Float price_large = rs.getFloat("price_large");
-                Menu menu = new Menu(index, name, mealType, description, price_small, price_medium, price_large);
-                menuTable.getItems().add(menu);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            String query = "SELECT * FROM inventory_items";
-            ResultSet rs = dao.executeQuery(query);
-
-            inventoryIdTableCol.setCellValueFactory(new PropertyValueFactory<Inventory, Long>("inventoryId"));
-            itemNameCol.setCellValueFactory(new PropertyValueFactory<Inventory, String>("itemName"));
-            quantityCol.setCellValueFactory(new PropertyValueFactory<Inventory, Integer>("quantity"));
-            shipmentSizeCol.setCellValueFactory(new PropertyValueFactory<Inventory, Integer>("shipmentSize"));
-            while (rs.next()) {
-                Long inventoryId = rs.getLong("inventory_id");
-                String itemName = rs.getString("item_name");
-                int quantity = rs.getInt("quantity");
-                int shipmentSize = rs.getInt("shipment_size");
-                Inventory item = new Inventory(inventoryId, itemName, quantity, shipmentSize);
-                inventoryTable.getItems().add(item);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        // Initialize the inventory table
+        showInventoryTable(null);
+        showMenuTable(null);
 
         menuTable.setEditable(true);
-
 
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         nameCol.setOnEditCommit(event -> {
@@ -311,6 +362,11 @@ public class ManagerController {
         });
     }
 
+    /**
+     * Updates the menu table with the new menu items from the database.
+     * 
+     * @param event - the event that triggered this method
+     */
     public void showMenuTable(ActionEvent event) {
         menuTable.setVisible(true);
         menuTable.getItems().clear();
@@ -343,6 +399,12 @@ public class ManagerController {
         }
     }
 
+    /**
+     * Updates the inventory table in the UI with the current inventory items
+     * in the database.
+     * 
+     * @param event - the event that triggered this method
+     */
     public void showInventoryTable(ActionEvent event) {
         menuTable.setVisible(false);
         menuTable.getItems().clear();
@@ -370,7 +432,7 @@ public class ManagerController {
     }
 
     /**
-     * Try to login with the form data
+     * Add a menu item to the database
      * 
      * @param event - the event that triggered this method
      * @throws IOException
