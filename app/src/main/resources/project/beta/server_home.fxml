@@ -1,10 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.HBox?>
 
-<VBox alignment="CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.server.ServerController">
+<HBox alignment="CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.server.ServerHomeController">
    <children>
-      <Label text="Server View" />
+      <VBox spacing="10.0">
+         <children>
+            <!-- sides -->
+            <Label text="Sides" />
+            <HBox spacing="10.0">
+               <children>
+                  <Button text="Super Greens" onAction="#addSide" />
+                  <Button text="Chow Mein" onAction="#addSide" />
+                  <Button text="Fried Rice" onAction="#addSide" />
+                  <Button text="White Steamed Rice" onAction="#addSide" />
+                  <Button text="Brown Steamed Rice" onAction="#addSide" />
+               </children>
+            </HBox>
+
+            <!-- entrees -->
+            <Label text="Entrees" />
+            <HBox spacing="10.0">
+               <children>
+                  <Button text="The Original Orange Chicken" onAction="#addEntree" />
+                  <Button text="Black Pepper Angus Steak" onAction="#addEntree" />
+                  <Button text="Grilled Teriyaki Chicken" onAction="#addEntree" />
+                  <Button text="Broccoli Beef" onAction="#addEntree" />
+               </children>
+            </HBox>
+            <HBox spacing="10.0">
+               <children>
+                  <Button text="Honey Walnut Shrimp" onAction="#addEntree" />
+                  <Button text="Kung Pao Chicken" onAction="#addEntree" />
+                  <Button text="Beijing Beef" onAction="#addEntree" />
+                  <Button text="Mushroom Chicken" onAction="#addEntree" />
+               </children>
+            </HBox>
+            <HBox spacing="10.0">
+               <children>
+                  <Button text="SweetFire Chicken Breast" onAction="#addEntree" />
+                  <Button text="String Bean Chicken Breast" onAction="#addEntree" />
+                  <Button text="Black Pepper Chicken" onAction="#addEntree" />
+               </children>
+            </HBox>
+
+            <!-- modifiers -->
+            <Label text="Modifiers" />
+            <HBox spacing="10.0">
+               <children>
+                  <Button text="Bowl" fx:id="bowlButton" onAction="#bowlMode" />
+                  <Button text="Plate" fx:id="plateButton" onAction="#plateMode" />
+                  <Button text="Bigger Plate" fx:id="biggerPlateButton" onAction="#biggerPlateMode" />
+                  <Button text="2 Sides" fx:id="twoSides" onAction="#twoSides" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox spacing="10.0">
+         <children>
+            <Label text="Order View"/>
+            <VBox fx:id="viewBox" minHeight="400" minWidth="200" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS">
+            </VBox>
+            <HBox spacing="10.0">
+               <children>
+                  <Button text="Next" onAction="#nextScreen" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
-</VBox>
+</HBox>
