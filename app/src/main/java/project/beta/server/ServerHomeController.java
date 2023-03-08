@@ -15,7 +15,8 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 
 /**
- * Controller class for the server home screen. Generates an order and passes it to the next screen.
+ * Controller class for the server home screen. Generates an order and passes it
+ * to the next screen.
  * 
  * @author Matthew Gimlin
  */
@@ -52,15 +53,14 @@ public class ServerHomeController {
             currItem.menuItems.add(sideName);
             sidesCount++;
         }
-        
+
         if (currItem.type == OrderItem.OrderItemType.A_LA_CARTE ||
-            (sidesCount == sidesCountNeeded && entreesCount == entreesCountNeeded)) {
+                (sidesCount == sidesCountNeeded && entreesCount == entreesCountNeeded)) {
             // update order view
             view.addOrderItem(currItem);
             view.updateView(viewBox);
             currItem = new OrderItem(
-                new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE
-            );
+                    new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
 
             // set to default values
             sidesCount = 0;
@@ -91,13 +91,12 @@ public class ServerHomeController {
         }
 
         if (currItem.type == OrderItem.OrderItemType.A_LA_CARTE ||
-            (sidesCount == sidesCountNeeded && entreesCount == entreesCountNeeded)) {
+                (sidesCount == sidesCountNeeded && entreesCount == entreesCountNeeded)) {
             // update order view
             view.addOrderItem(currItem);
             view.updateView(viewBox);
             currItem = new OrderItem(
-                new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE
-            );
+                    new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
 
             // set to default values
             sidesCount = 0;
@@ -121,14 +120,12 @@ public class ServerHomeController {
             currItem.type = OrderItem.OrderItemType.BOWL;
             entreesCountNeeded = 1;
             bowlButton.setStyle("-fx-background-color: gray;");
-        }
-        else if (currItem.type == OrderItem.OrderItemType.BOWL) {
+        } else if (currItem.type == OrderItem.OrderItemType.BOWL) {
             bowlButton.setStyle("-fx-background-color: cherry;");
             twoSides.setStyle("-fx-background-color: cherry;");
 
             currItem = new OrderItem(
-                new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE
-            );
+                    new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
 
             // set to default values
             sidesCount = 0;
@@ -146,14 +143,12 @@ public class ServerHomeController {
             currItem.type = OrderItem.OrderItemType.PLATE;
             entreesCountNeeded = 2;
             plateButton.setStyle("-fx-background-color: gray;");
-        }
-        else if (currItem.type == OrderItem.OrderItemType.PLATE) {
+        } else if (currItem.type == OrderItem.OrderItemType.PLATE) {
             plateButton.setStyle("-fx-background-color: cherry;");
             twoSides.setStyle("-fx-background-color: cherry;");
 
             currItem = new OrderItem(
-                new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE
-            );
+                    new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
 
             // set to default values
             sidesCount = 0;
@@ -171,14 +166,12 @@ public class ServerHomeController {
             currItem.type = OrderItem.OrderItemType.BIGGER_PLATE;
             entreesCountNeeded = 3;
             biggerPlateButton.setStyle("-fx-background-color: gray;");
-        }
-        else if (currItem.type == OrderItem.OrderItemType.BIGGER_PLATE) {
+        } else if (currItem.type == OrderItem.OrderItemType.BIGGER_PLATE) {
             biggerPlateButton.setStyle("-fx-background-color: cherry;");
             twoSides.setStyle("-fx-background-color: cherry;");
 
             currItem = new OrderItem(
-                new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE
-            );
+                    new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
 
             // set to default values
             sidesCount = 0;
@@ -195,8 +188,7 @@ public class ServerHomeController {
         if (currItem.type == OrderItem.OrderItemType.A_LA_CARTE || (sidesCountNeeded == 2)) {
             twoSides.setStyle("-fx-background-color: cherry;");
             sidesCountNeeded = 1;
-        }
-        else {
+        } else {
             twoSides.setStyle("-fx-background-color: gray;");
             sidesCountNeeded = 2;
         }
@@ -227,8 +219,7 @@ public class ServerHomeController {
      */
     public void initialize() {
         currItem = new OrderItem(
-            new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE
-        );
+                new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE);
         view = new OrderView();
         sidesCount = 0;
         sidesCountNeeded = 1;
