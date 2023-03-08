@@ -16,8 +16,8 @@
                   <Button text="Super Greens" onAction="#addSide" />
                   <Button text="Chow Mein" onAction="#addSide" />
                   <Button text="Fried Rice" onAction="#addSide" />
-                  <Button text="White Rice" onAction="#addSide" />
-                  <Button text="Brown Rice" onAction="#addSide" />
+                  <Button text="White Steamed Rice" onAction="#addSide" />
+                  <Button text="Brown Steamed Rice" onAction="#addSide" />
                </children>
             </HBox>
 
@@ -25,9 +25,9 @@
             <Label text="Entrees" />
             <HBox spacing="10.0">
                <children>
-                  <Button text="Orange Chicken" onAction="#addEntree" />
-                  <Button text="Black Pepper Steak" onAction="#addEntree" />
-                  <Button text="Teriyaki Chicken" onAction="#addEntree" />
+                  <Button text="The Original Orange Chicken" onAction="#addEntree" />
+                  <Button text="Black Pepper Angus Steak" onAction="#addEntree" />
+                  <Button text="Grilled Teriyaki Chicken" onAction="#addEntree" />
                   <Button text="Broccoli Beef" onAction="#addEntree" />
                </children>
             </HBox>
@@ -36,13 +36,13 @@
                   <Button text="Honey Walnut Shrimp" onAction="#addEntree" />
                   <Button text="Kung Pao Chicken" onAction="#addEntree" />
                   <Button text="Beijing Beef" onAction="#addEntree" />
-                  <Button text="Mushroom Beef" onAction="#addEntree" />
+                  <Button text="Mushroom Chicken" onAction="#addEntree" />
                </children>
             </HBox>
             <HBox spacing="10.0">
                <children>
-                  <Button text="Sweet Fire Chicken" onAction="#addEntree" />
-                  <Button text="String Bean Chicken" onAction="#addEntree" />
+                  <Button text="SweetFire Chicken Breast" onAction="#addEntree" />
+                  <Button text="String Bean Chicken Breast" onAction="#addEntree" />
                   <Button text="Black Pepper Chicken" onAction="#addEntree" />
                </children>
             </HBox>
