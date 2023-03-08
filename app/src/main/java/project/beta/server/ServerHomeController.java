@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 
 /**
  * Controller class for the server home screen. Generates an order and passes it to the next screen.
+ * 
+ * @author Matthew Gimlin
  */
 public class ServerHomeController {
     @FXML
