@@ -43,8 +43,10 @@ public class ServerHomeController {
         Button sideButton = (Button) event.getSource();
         String sideName = sideButton.getText();
 
-        currItem.menuItems.add(sideName);
-        sidesCount++;
+        if (sidesCount < sidesCountNeeded) {
+            currItem.menuItems.add(sideName);
+            sidesCount++;
+        }
         
         if (currItem.type == OrderItem.OrderItemType.A_LA_CARTE ||
             (sidesCount == sidesCountNeeded && entreesCount == entreesCountNeeded)) {
@@ -78,8 +80,10 @@ public class ServerHomeController {
         Button entreeButton = (Button) event.getSource();
         String entreeName = entreeButton.getText();
 
-        currItem.menuItems.add(entreeName);
-        entreesCount++;
+        if (entreesCount < entreesCountNeeded) {
+            currItem.menuItems.add(entreeName);
+            entreesCount++;
+        }
 
         if (currItem.type == OrderItem.OrderItemType.A_LA_CARTE ||
             (sidesCount == sidesCountNeeded && entreesCount == entreesCountNeeded)) {
@@ -111,14 +115,21 @@ public class ServerHomeController {
         if (currItem.type == OrderItem.OrderItemType.A_LA_CARTE) {
             currItem.type = OrderItem.OrderItemType.BOWL;
             entreesCountNeeded = 1;
-
             bowlButton.setStyle("-fx-background-color: gray;");
         }
         else if (currItem.type == OrderItem.OrderItemType.BOWL) {
-            currItem.type = OrderItem.OrderItemType.A_LA_CARTE;
-            entreesCountNeeded = 1;
-
             bowlButton.setStyle("-fx-background-color: cherry;");
+            twoSides.setStyle("-fx-background-color: cherry;");
+
+            currItem = new OrderItem(
+                new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE
+            );
+
+            // set to default values
+            sidesCount = 0;
+            sidesCountNeeded = 1;
+            entreesCount = 0;
+            entreesCountNeeded = 1;
         }
     }
 
@@ -129,14 +140,21 @@ public class ServerHomeController {
         if (currItem.type == OrderItem.OrderItemType.A_LA_CARTE) {
             currItem.type = OrderItem.OrderItemType.PLATE;
             entreesCountNeeded = 2;
-
             plateButton.setStyle("-fx-background-color: gray;");
         }
         else if (currItem.type == OrderItem.OrderItemType.PLATE) {
-            currItem.type = OrderItem.OrderItemType.A_LA_CARTE;
-            entreesCountNeeded = 1;
-
             plateButton.setStyle("-fx-background-color: cherry;");
+            twoSides.setStyle("-fx-background-color: cherry;");
+
+            currItem = new OrderItem(
+                new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE
+            );
+
+            // set to default values
+            sidesCount = 0;
+            sidesCountNeeded = 1;
+            entreesCount = 0;
+            entreesCountNeeded = 1;
         }
     }
 
@@ -147,14 +165,21 @@ public class ServerHomeController {
         if (currItem.type == OrderItem.OrderItemType.A_LA_CARTE) {
             currItem.type = OrderItem.OrderItemType.BIGGER_PLATE;
             entreesCountNeeded = 3;
-
             biggerPlateButton.setStyle("-fx-background-color: gray;");
         }
         else if (currItem.type == OrderItem.OrderItemType.BIGGER_PLATE) {
-            currItem.type = OrderItem.OrderItemType.A_LA_CARTE;
-            entreesCountNeeded = 1;
-
             biggerPlateButton.setStyle("-fx-background-color: cherry;");
+            twoSides.setStyle("-fx-background-color: cherry;");
+
+            currItem = new OrderItem(
+                new String[0], 1, OrderItem.OrderItemType.A_LA_CARTE
+            );
+
+            // set to default values
+            sidesCount = 0;
+            sidesCountNeeded = 1;
+            entreesCount = 0;
+            entreesCountNeeded = 1;
         }
     }
 
