@@ -3,16 +3,17 @@ package project.beta.server;
 import project.beta.BackendDAO;
 
 import javafx.event.ActionEvent;
-// import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
-// import javafx.scene.control.Label;
-// import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javafx.fxml.FXML;
 
 import java.time.LocalDateTime;
@@ -33,13 +34,21 @@ public class ServerController {
     private OrderView orders;
 
     @FXML
-    private VBox orderView;
+    private VBox viewBox;
+    @FXML
+    private VBox errorPane;
+    @FXML
+    private Label errorText;
 
     /**
      * Constructor for ServerController
      */
     public ServerController() {
 
+    }
+
+    public void initialize() {
+        errorPane.setVisible(false);
     }
 
     /**
@@ -68,22 +77,25 @@ public class ServerController {
      * Post checkout function to get to home
      * 
      * @param event the event that triggered the function
-     * @throws IOException if the file is not found
      */
-    public void goToHome(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../server_home.fxml"));
-        Parent root = loader.load();
+    public void goToHome(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../server_home.fxml"));
+            Parent root = loader.load();
 
-        ServerHomeController serverController = loader.getController();
-        serverController.setDAO(dao);
-        serverController.setOrders(new OrderView());
+            ServerHomeController serverController = loader.getController();
+            serverController.setDAO(dao);
+            serverController.setOrders(new OrderView());
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
-        scene.getStylesheets().add(getClass().getResource("../server_home.css").toExternalForm());
-        stage.setScene(scene);
-        stage.show();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("../server_home.css").toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            handleError(e);
+        }
     }
 
     /**
@@ -136,8 +148,8 @@ public class ServerController {
 
             goToHome(event);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            handleError(e);
         }
     }
 
@@ -155,8 +167,8 @@ public class ServerController {
 
             goToHome(event);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            handleError(e);
         }
     }
 
@@ -174,8 +186,8 @@ public class ServerController {
 
             goToHome(event);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            handleError(e);
         }
     }
 
@@ -193,8 +205,8 @@ public class ServerController {
 
             goToHome(event);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            handleError(e);
         }
     }
 
@@ -214,6 +226,39 @@ public class ServerController {
      */
     public void setOrders(OrderView orders) {
         this.orders = orders;
-        orders.updateView(orderView);
+        orders.updateView(viewBox);
+    }
+
+    /**
+     * Handles a SQLException by printing the error to the console and setting the
+     * errorText label.
+     * 
+     * @param exception - the exception to handle
+     */
+    private void handleError(SQLException exception) {
+        errorPane.setVisible(true);
+        errorText.textProperty().set("Warning: an error occurred with the database. See the log for details.");
+        exception.printStackTrace();
+    }
+
+    /**
+     * Handles an IOException by printing the error to the console and setting the
+     * errorText label.
+     * 
+     * @param exception - the exception to handle
+     */
+    private void handleError(IOException exception) {
+        errorPane.setVisible(true);
+        errorText.textProperty().set("Warning: an error when changing scenes. See the log for details.");
+        exception.printStackTrace();
+    }
+
+    /**
+     * Closes the error pane.
+     * 
+     * @param event - the event that triggered the function
+     */
+    public void closeErrorPane(ActionEvent event) {
+        errorPane.setVisible(false);
     }
 }

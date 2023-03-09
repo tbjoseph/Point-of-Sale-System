@@ -1,9 +1,0 @@
-#inactive_btn {
-    -fx-background-color: slate2;
-    -fx-text-fill: cream;
-}
-
-#active_btn {
-    -fx-background-color: cherry;
-    -fx-text-fill: cream;
-}

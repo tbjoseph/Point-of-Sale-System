@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import project.beta.manager.ManagerController;
@@ -26,7 +27,7 @@ public class LoginController {
     @FXML
     private TextField username;
     @FXML
-    private TextField password;
+    private PasswordField password;
     @FXML
     private Label errorText;
     private BackendDAO dao;
@@ -44,7 +45,15 @@ public class LoginController {
      */
     public void initialize() {
         if (dao == null) {
-            dao = new BackendDAO();
+            try {
+                dao = new BackendDAO();
+            } catch (SQLException e) {
+                errorText.setText(
+                        "Could not connect to database, please test your network connection and restart the application.");
+            } catch (RuntimeException e) {
+                errorText.setText(
+                        "Database credentials are missing, please configure the environment and restart the application.");
+            }
         }
     }
 
@@ -56,11 +65,20 @@ public class LoginController {
      * @throws SQLException if the database cannot be accessed
      */
     public void tryLogin(ActionEvent event) throws IOException, SQLException {
+        // If the DAO is null, we cannot login, but errorText should already be set
+        if (dao == null) {
+            return;
+        }
         String username = this.username.getText();
         String password = this.password.getText();
+
+        // Login and check the permission level
         if (dao.login(username, password)) {
             String permissionLevel = dao.getPermission(username);
+
+            // If the permission level is valid, load the appropriate screen
             if (permissionLevel.equals("Employee")) {
+                // Employee is the same as server
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("server_home.fxml"));
                 Parent root = loader.load();
                 ServerHomeController serverController = loader.getController();
@@ -87,8 +105,12 @@ public class LoginController {
                 stage.show();
                 return;
             }
+
+            // If the permission level is invalid, print an error
             System.err.println("Unknown permission level: " + permissionLevel);
         }
+
+        // If the login failed, clear the form and print an error
         this.username.setText("");
         this.password.setText("");
         this.errorText.setText("Invalid username or password");

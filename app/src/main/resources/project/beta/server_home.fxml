@@ -5,101 +5,67 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<HBox alignment="CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.server.ServerHomeController">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.server.ServerHomeController">
    <children>
-      <VBox HBox.hgrow="ALWAYS" maxWidth="Infinity" spacing="10.0">
+      <VBox GridPane.columnIndex="0" GridPane.vgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity">
          <children>
             <!-- sides -->
-            <Label text="Sides" />
-            <HBox HBox.hgrow="ALWAYS" maxWidth="Infinity" fx:id="sidesCont" spacing="10.0">
+            <Label styleClass="header" text="Sides" />
+            <HBox prefHeight="100.0" fx:id="sidesCont">
                <children>
-                  <!-- <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Super Greens" onAction="#addSide" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Chow Mein" onAction="#addSide" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Fried Rice" onAction="#addSide" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="White Steamed Rice" onAction="#addSide" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Brown Steamed Rice" onAction="#addSide" /> -->
                </children>
             </HBox>
 
             <!-- entrees -->
-            <Label text="Entrees" />
-            <!-- <HBox maxHeight="Infinity" VBox.vgrow="ALWAYS" spacing="10.0">
-               <children>
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="The Original Orange Chicken" onAction="#addEntree" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Black Pepper Angus Steak" onAction="#addEntree" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Grilled Teriyaki Chicken" onAction="#addEntree" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Broccoli Beef" onAction="#addEntree" />
-               </children>
-            </HBox>
-            <HBox maxHeight="Infinity" VBox.vgrow="ALWAYS" spacing="10.0">
-               <children>
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Honey Walnut Shrimp" onAction="#addEntree" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Kung Pao Chicken" onAction="#addEntree" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Beijing Beef" onAction="#addEntree" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Mushroom Chicken" onAction="#addEntree" />
-               </children>
-            </HBox>
-            <HBox maxHeight="Infinity" VBox.vgrow="ALWAYS" spacing="10.0">
-               <children>
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="SweetFire Chicken Breast" onAction="#addEntree" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="String Bean Chicken Breast" onAction="#addEntree" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Black Pepper Chicken" onAction="#addEntree" />
-               </children>
-            </HBox> -->
+            <Label styleClass="header" text="Entrees" />
             <GridPane fx:id="entreesCont" maxHeight="Infinity" VBox.vgrow="ALWAYS">
                <children>
-                  <!-- <Button GridPane.columnIndex="0" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" text="The Original Orange Chicken" onAction="#addEntree" />
-                  <Button GridPane.columnIndex="1" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" text="Black Pepper Angus Steak" onAction="#addEntree" />
-                  <Button GridPane.columnIndex="2" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" text="Grilled Teriyaki Chicken" onAction="#addEntree" />
-                  <Button GridPane.columnIndex="3" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" text="Broccoli Beef" onAction="#addEntree" />
-                  <Button GridPane.columnIndex="0" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity" text="Honey Walnut Shrimp" onAction="#addEntree" />
-                  <Button GridPane.columnIndex="1" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity" text="Kung Pao Chicken" onAction="#addEntree" />
-                  <Button GridPane.columnIndex="2" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity" text="Beijing Beef" onAction="#addEntree" />
-                  <Button GridPane.columnIndex="3" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity" text="Mushroom Chicken" onAction="#addEntree" />
-                  <Button GridPane.columnIndex="0" GridPane.rowIndex="2" maxWidth="Infinity" maxHeight="Infinity" text="SweetFire Chicken Breast" onAction="#addEntree" />
-                  <Button GridPane.columnIndex="1" GridPane.rowIndex="2" maxWidth="Infinity" maxHeight="Infinity" text="String Bean Chicken Breast" onAction="#addEntree" />
-                  <Button GridPane.columnIndex="2" GridPane.rowIndex="2" maxWidth="Infinity" maxHeight="Infinity" text="Black Pepper Chicken" onAction="#addEntree" /> -->
                </children>
                <columnConstraints>
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity" />
+                  <ColumnConstraints hgrow="ALWAYS"/>
+                  <ColumnConstraints hgrow="ALWAYS"/>
+                  <ColumnConstraints hgrow="ALWAYS"/>
+                  <ColumnConstraints hgrow="ALWAYS"/>
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints maxHeight="Infinity" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="Infinity" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="Infinity" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="Infinity" vgrow="ALWAYS" />
+                  <RowConstraints vgrow="ALWAYS"/>
+                  <RowConstraints vgrow="ALWAYS"/>
+                  <RowConstraints vgrow="ALWAYS"/>
                </rowConstraints>
             </GridPane>
 
             <!-- modifiers -->
-            <Label text="Modifiers" />
-            <HBox prefHeight="100.0" spacing="10.0">
+            <Label styleClass="header" text="Modifiers" />
+            <HBox prefHeight="100.0">
                <children>
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Bowl" fx:id="bowlButton" onAction="#bowlMode" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Plate" fx:id="plateButton" onAction="#plateMode" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Bigger Plate" fx:id="biggerPlateButton" onAction="#biggerPlateMode" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="2 Sides" fx:id="twoSides" onAction="#twoSides" />
+                  <Button wrapText="true" HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Bowl" fx:id="bowlButton" onAction="#bowlMode" />
+                  <Button wrapText="true" HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Plate" fx:id="plateButton" onAction="#plateMode" />
+                  <Button wrapText="true" HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="Bigger Plate" fx:id="biggerPlateButton" onAction="#biggerPlateMode" />
+                  <Button wrapText="true" HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS" text="2 Sides" fx:id="twoSides" onAction="#twoSides" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <VBox HBox.hgrow="ALWAYS" maxWidth="Infinity" spacing="10.0">
+      <VBox GridPane.columnIndex="1" GridPane.vgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity">
          <children>
-            <Label text="Order View"/>
+            <Label styleClass="header" text="Order View"/>
             <VBox fx:id="viewBox" minHeight="400" minWidth="200" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS">
             </VBox>
-            <HBox spacing="10.0">
+            <HBox  prefHeight="100.0">
                <children>
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" fx:id="inactiveButton" text="Back" />
-                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Next" onAction="#nextScreen" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" fx:id="inactiveButton" text="Back" />
+                  <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="Infinity" text="Next" onAction="#nextScreen" />
                </children>
             </HBox>
          </children>
       </VBox>
    </children>
-</HBox>
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" percentWidth="70.0" />
+      <ColumnConstraints hgrow="SOMETIMES" percentWidth="30.0" />
+   </columnConstraints>
+</GridPane>

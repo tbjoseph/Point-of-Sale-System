@@ -1,6 +1,8 @@
 package project.beta.manager;
 
 import project.beta.BackendDAO;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -12,10 +14,12 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.FloatStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import project.beta.manager.ManagerController;
+import project.beta.types.InventoryItem;
 import project.beta.types.MenuItem;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.function.Consumer;
 
 /**
  * Controller for the manager view. This class handles all of the actions that
@@ -25,15 +29,15 @@ import java.sql.SQLException;
  */
 public class ManagerController {
     @FXML
-    private TableView<Inventory> inventoryTable;
+    private TableView<InventoryItem> inventoryTable;
     @FXML
-    private TableColumn<Inventory, Long> inventoryIdTableCol;
+    private TableColumn<InventoryItem, Long> inventoryIdTableCol;
     @FXML
-    private TableColumn<Inventory, String> itemNameCol;
+    private TableColumn<InventoryItem, String> itemNameCol;
     @FXML
-    private TableColumn<Inventory, Integer> quantityCol;
+    private TableColumn<InventoryItem, Integer> quantityCol;
     @FXML
-    private TableColumn<Inventory, Integer> shipmentSizeCol;
+    private TableColumn<InventoryItem, Integer> shipmentSizeCol;
 
     @FXML
     private TableView<MenuItem> menuTable;
@@ -71,81 +75,6 @@ public class ManagerController {
     private BackendDAO dao;
 
     /**
-     * Represents an inventory item
-     * 
-     * @author Daxton Gilliam
-     */
-    public class Inventory {
-        /**
-         * The inventory id of the inventory item
-         */
-        public long inventoryId;
-        /**
-         * The item name of the inventory item
-         */
-        public String itemName;
-        /**
-         * The quantity of the inventory item
-         */
-        public int quantity;
-        /**
-         * The shipment size of the inventory item
-         */
-        public int shipmentSize;
-
-        /**
-         * Constructor for the inventory item
-         * 
-         * @param inventoryId  the id of the inventory item
-         * @param itemName     the name of the inventory item
-         * @param quantity     the quantity of the inventory item
-         * @param shipmentSize the size of the shipment of the inventory item
-         */
-        public Inventory(long inventoryId, String itemName, int quantity, int shipmentSize) {
-            this.inventoryId = inventoryId;
-            this.itemName = itemName;
-            this.quantity = quantity;
-            this.shipmentSize = shipmentSize;
-        }
-
-        /**
-         * Required for use in a PropertyValueFactory
-         * 
-         * @return the inventoryId
-         */
-        public long getInventoryId() {
-            return inventoryId;
-        }
-
-        /**
-         * Required for use in a PropertyValueFactory
-         * 
-         * @return the itemName
-         */
-        public String getItemName() {
-            return itemName;
-        }
-
-        /**
-         * Required for use in a PropertyValueFactory
-         * 
-         * @return the quantity
-         */
-        public int getQuantity() {
-            return quantity;
-        }
-
-        /**
-         * Required for use in a PropertyValueFactory
-         * 
-         * @return the shipmentSize
-         */
-        public int getShipmentSize() {
-            return shipmentSize;
-        }
-    }
-
-    /**
      * A default constructor for the controller.
      */
     public ManagerController() {
@@ -161,79 +90,96 @@ public class ManagerController {
     }
 
     /**
-     * Initializes both the inventory and MenuItem tables, querying the database for
+     * Initializes both the inventoryItem and MenuItem tables, querying the database
+     * for
      * the most recent data.
      */
     public void initTable() {
-        // Initialize the inventory table
+        // Initialize the inventoryItem table
         showInventoryTable(null);
         showMenuTable(null);
 
         menuTable.setEditable(true);
 
+        // lambdas used to handle errors thrown by the DAO
+        Consumer<MenuItem> updateMenu = (m) -> {
+            try {
+                dao.updateMenu(m);
+            } catch (SQLException e) {
+                handleError(e);
+            }
+        };
+        Consumer<InventoryItem> updateInventory = (i) -> {
+            try {
+                dao.updateInventory(i);
+            } catch (SQLException e) {
+                handleError(e);
+            }
+        };
+
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         nameCol.setOnEditCommit(event -> {
             MenuItem MenuItem = event.getRowValue();
             MenuItem.name = event.getNewValue();
-            dao.updateMenu(MenuItem);
+            updateMenu.accept(MenuItem);
         });
 
         mealTypeCol.setCellFactory(TextFieldTableCell.forTableColumn());
         mealTypeCol.setOnEditCommit(event -> {
             MenuItem MenuItem = event.getRowValue();
             MenuItem.mealType = event.getNewValue();
-            dao.updateMenu(MenuItem);
+            updateMenu.accept(MenuItem);
         });
 
         descriptionCol.setCellFactory(TextFieldTableCell.forTableColumn());
         descriptionCol.setOnEditCommit(event -> {
             MenuItem MenuItem = event.getRowValue();
             MenuItem.description = event.getNewValue();
-            dao.updateMenu(MenuItem);
+            updateMenu.accept(MenuItem);
         });
 
         priceSmall.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
         priceSmall.setOnEditCommit(event -> {
             MenuItem MenuItem = event.getRowValue();
             MenuItem.priceSmall = event.getNewValue();
-            dao.updateMenu(MenuItem);
+            updateMenu.accept(MenuItem);
         });
 
         priceMedium.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
         priceMedium.setOnEditCommit(event -> {
             MenuItem MenuItem = event.getRowValue();
             MenuItem.priceMedium = event.getNewValue();
-            dao.updateMenu(MenuItem);
+            updateMenu.accept(MenuItem);
         });
 
         priceLarge.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
         priceLarge.setOnEditCommit(event -> {
             MenuItem MenuItem = event.getRowValue();
             MenuItem.priceLarge = event.getNewValue();
-            dao.updateMenu(MenuItem);
+            updateMenu.accept(MenuItem);
         });
 
         inventoryTable.setEditable(true);
 
         itemNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         itemNameCol.setOnEditCommit(event -> {
-            Inventory inventory = event.getRowValue();
-            inventory.itemName = event.getNewValue();
-            dao.updateInventory(inventory);
+            InventoryItem inventoryItem = event.getRowValue();
+            inventoryItem.itemName = event.getNewValue();
+            updateInventory.accept(inventoryItem);
         });
 
         quantityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         quantityCol.setOnEditCommit(event -> {
-            Inventory inventory = event.getRowValue();
-            inventory.quantity = event.getNewValue();
-            dao.updateInventory(inventory);
+            InventoryItem inventoryItem = event.getRowValue();
+            inventoryItem.quantity = event.getNewValue();
+            updateInventory.accept(inventoryItem);
         });
 
         shipmentSizeCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         shipmentSizeCol.setOnEditCommit(event -> {
-            Inventory inventory = event.getRowValue();
-            inventory.shipmentSize = event.getNewValue();
-            dao.updateInventory(inventory);
+            InventoryItem inventoryItem = event.getRowValue();
+            inventoryItem.shipmentSize = event.getNewValue();
+            updateInventory.accept(inventoryItem);
         });
     }
 
@@ -249,7 +195,7 @@ public class ManagerController {
         inventoryTable.getItems().clear();
         try {
             index.setCellValueFactory(new PropertyValueFactory<MenuItem, Long>("index"));
-            nameCol.setCellValueFactory(new PropertyValueFactory<MenuItem, String>("name"));
+            nameCol.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().name));
             mealTypeCol.setCellValueFactory(new PropertyValueFactory<MenuItem, String>("mealType"));
             descriptionCol.setCellValueFactory(new PropertyValueFactory<MenuItem, String>("description"));
             priceSmall.setCellValueFactory(new PropertyValueFactory<MenuItem, Float>("priceSmall"));
@@ -259,12 +205,13 @@ public class ManagerController {
                 menuTable.getItems().add(item);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleError(e);
         }
     }
 
     /**
-     * Updates the inventory table in the UI with the current inventory items
+     * Updates the inventoryItem table in the UI with the current inventoryItem
+     * items
      * in the database.
      * 
      * @param event the event that triggered this method
@@ -277,20 +224,20 @@ public class ManagerController {
         try {
             ResultSet rs = dao.getInventoryItems();
 
-            inventoryIdTableCol.setCellValueFactory(new PropertyValueFactory<Inventory, Long>("inventoryId"));
-            itemNameCol.setCellValueFactory(new PropertyValueFactory<Inventory, String>("itemName"));
-            quantityCol.setCellValueFactory(new PropertyValueFactory<Inventory, Integer>("quantity"));
-            shipmentSizeCol.setCellValueFactory(new PropertyValueFactory<Inventory, Integer>("shipmentSize"));
+            inventoryIdTableCol.setCellValueFactory(new PropertyValueFactory<InventoryItem, Long>("inventoryId"));
+            itemNameCol.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("itemName"));
+            quantityCol.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("quantity"));
+            shipmentSizeCol.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("shipmentSize"));
             while (rs.next()) {
                 Long inventoryId = rs.getLong("inventory_id");
                 String itemName = rs.getString("item_name");
                 int quantity = rs.getInt("quantity");
                 int shipmentSize = rs.getInt("shipment_size");
-                Inventory item = new Inventory(inventoryId, itemName, quantity, shipmentSize);
+                InventoryItem item = new InventoryItem(inventoryId, itemName, quantity, shipmentSize);
                 inventoryTable.getItems().add(item);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleError(e);
         }
     }
 
@@ -298,17 +245,31 @@ public class ManagerController {
      * Add a MenuItem item to the database
      * 
      * @param event the event that triggered this method
-     * @throws SQLException if there is an error with the database
      */
-    public void addMenuItem(ActionEvent event) throws SQLException {
-        String menuNameString = this.menuNameField.getText();
-        String mealTypeString = this.mealTypeField.getText();
-        String descriptionString = this.descriptionField.getText();
-        Float priceSmallFloat = Float.parseFloat(this.priceSmallField.getText());
-        Float priceMediumFloat = Float.parseFloat(this.priceMediumField.getText());
-        Float priceLargeFloat = Float.parseFloat(this.priceLargeField.getText());
-        dao.addMenuItem(menuNameString, mealTypeString, descriptionString, priceSmallFloat, priceMediumFloat,
-                priceLargeFloat);
-        showMenuTable(event);
+    public void addMenuItem(ActionEvent event) {
+        try {
+            String menuNameString = this.menuNameField.getText();
+            String mealTypeString = this.mealTypeField.getText();
+            String descriptionString = this.descriptionField.getText();
+            Float priceSmallFloat = Float.parseFloat(this.priceSmallField.getText());
+            Float priceMediumFloat = Float.parseFloat(this.priceMediumField.getText());
+            Float priceLargeFloat = Float.parseFloat(this.priceLargeField.getText());
+            dao.addMenuItem(menuNameString, mealTypeString, descriptionString, priceSmallFloat, priceMediumFloat,
+                    priceLargeFloat);
+            showMenuTable(event);
+        } catch (SQLException e) {
+            handleError(e);
+        }
+    }
+
+    /**
+     * Handles a SQLException by printing the error to the console and setting the
+     * errorText label.
+     * 
+     * @param exception - the exception to handle
+     */
+    private void handleError(SQLException exception) {
+        errorText.textProperty().set("Warning: an error occurred with the database. See the log for details.");
+        exception.printStackTrace();
     }
 }

@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import project.beta.BackendDAO;
 import project.beta.types.MenuItem;
 import project.beta.types.OrderItem;
@@ -255,8 +256,10 @@ public class ServerHomeController {
         int row = 0;
         for (MenuItem item : dao.getMenuItems()) {
             Button button = new Button(item.name);
-            button.maxHeight(Double.MAX_VALUE);
-            button.maxWidth(Double.MAX_VALUE);
+            button.setMaxHeight(Double.MAX_VALUE);
+            button.setMaxWidth(Double.MAX_VALUE);
+            button.setWrapText(true);
+            button.setTextAlignment(TextAlignment.CENTER);
 
             switch (item.mealType) {
                 case "entree":

@@ -2,11 +2,14 @@ package project.beta.types;
 
 import java.util.ArrayList;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 
 /**
  * OrderView is a class that displays the current order to the view box.
@@ -68,28 +71,32 @@ public class OrderView {
             });
 
             orderBlock.getChildren().addAll(orderItems, plusButton, amount, minusButton);
+            orderBlock.setPrefHeight(20);
+            orderItems.setMaxWidth(Double.MAX_VALUE);
+            orderItems.setMaxHeight(20);
+            plusButton.setMaxHeight(20);
+            amount.setMaxHeight(20);
+            minusButton.setMaxHeight(20);
+            orderBlock.setAlignment(Pos.CENTER_LEFT);
+            HBox.setHgrow(orderItems, Priority.ALWAYS);
 
             // meals display the meal type with the sides and entrees indented below
             // a la carte items have no special indents
             Label typeLabel;
-            String indent = "";
             switch (item.type) {
                 case BOWL:
                     typeLabel = new Label("Bowl");
                     orderItems.getChildren().add(typeLabel);
-                    indent = "    ";
                     break;
 
                 case PLATE:
                     typeLabel = new Label("Plate");
                     orderItems.getChildren().add(typeLabel);
-                    indent = "    ";
                     break;
 
                 case BIGGER_PLATE:
                     typeLabel = new Label("Bigger Plate");
                     orderItems.getChildren().add(typeLabel);
-                    indent = "    ";
                     break;
 
                 default:
@@ -98,7 +105,10 @@ public class OrderView {
 
             // looping through food items of the order and printing them out as labels
             for (MenuItem i : item.menuItems) {
-                Label foodItem = new Label(indent + i.name);
+                Label foodItem = new Label(i.name);
+                foodItem.setMaxWidth(Double.MAX_VALUE);
+                foodItem.setPrefHeight(20);
+                foodItem.setStyle("-fx-padding: 0 0 0 20;");
                 orderItems.getChildren().add(foodItem);
             }
 
