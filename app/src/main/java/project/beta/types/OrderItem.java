@@ -31,8 +31,17 @@ public class OrderItem {
         A_LA_CARTE
     }
 
+    /**
+     * The menu items in the order.
+     */
     public ArrayList<MenuItem> menuItems;
+    /**
+     * The quantity of the order.
+     */
     public int amount;
+    /**
+     * The type of the order.
+     */
     public OrderItemType type;
 
     /**

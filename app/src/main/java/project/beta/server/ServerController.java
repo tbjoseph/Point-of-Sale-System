@@ -40,12 +40,15 @@ public class ServerController {
     private Label errorText;
 
     /**
-     * Constructor for ServerController
+     * Constructor for ServerController. Initialization is done in initialize()
      */
     public ServerController() {
 
     }
 
+    /**
+     * Initialize the controller
+     */
     public void initialize() {
         errorPane.setVisible(false);
     }

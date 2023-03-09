@@ -40,7 +40,7 @@ public class ServerAddonsController {
     }
 
     /**
-     * adds an item to the order view
+     * adds a drink to the order view
      * 
      * @param event the event that triggered the method
      */
@@ -56,7 +56,7 @@ public class ServerAddonsController {
     /**
      * adds an item to the order view
      * 
-     * @param event the event that triggered the method
+     * @param item the menu item to add
      */
     public void addItem(MenuItem item) {
         MenuItem[] items = { item };

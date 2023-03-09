@@ -63,7 +63,7 @@ public class ServerHomeController {
     /**
      * Add a side item to the current order.
      * 
-     * @param event Used to get the button name of the side item.
+     * @param item The item to add to the order.
      */
     public void addSide(MenuItem item) {
         if (sidesCount < sidesCountNeeded) {
@@ -96,7 +96,7 @@ public class ServerHomeController {
     /**
      * Add an entree to the current order.
      * 
-     * @param event Used to get the button name of the entree.
+     * @param item The item to add to the order.
      */
     public void addEntree(MenuItem item) {
         if (entreesCount < entreesCountNeeded) {
