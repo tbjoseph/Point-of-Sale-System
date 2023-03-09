@@ -90,7 +90,7 @@ public class BackendDAO {
             orderID++;
         }
 
-        /**
+        /** May need to change design
          * Examine order_ids (outer array) and their respective menu_items (inner array) until hash is empty:
          *      For a given menu_item, count number of instances, and save count as quantity
          *      Add the order-menu_item pair to assoc table via SQL query. Format is (order_id, menu_item_id, quantity)
