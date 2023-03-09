@@ -2,7 +2,6 @@ package project.beta.types;
 
 import java.util.ArrayList;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.control.Label;

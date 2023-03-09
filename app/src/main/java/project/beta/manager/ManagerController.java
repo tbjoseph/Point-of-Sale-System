@@ -1,8 +1,7 @@
 package project.beta.manager;
 
 import project.beta.BackendDAO;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -195,12 +194,12 @@ public class ManagerController {
         inventoryTable.getItems().clear();
         try {
             index.setCellValueFactory(new PropertyValueFactory<MenuItem, Long>("index"));
-            nameCol.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().name));
-            mealTypeCol.setCellValueFactory(new PropertyValueFactory<MenuItem, String>("mealType"));
-            descriptionCol.setCellValueFactory(new PropertyValueFactory<MenuItem, String>("description"));
-            priceSmall.setCellValueFactory(new PropertyValueFactory<MenuItem, Float>("priceSmall"));
-            priceMedium.setCellValueFactory(new PropertyValueFactory<MenuItem, Float>("priceMedium"));
-            priceLarge.setCellValueFactory(new PropertyValueFactory<MenuItem, Float>("priceLarge"));
+            nameCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<String>(r.getValue().name));
+            mealTypeCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<String>(r.getValue().mealType));
+            descriptionCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<String>(r.getValue().description));
+            priceSmall.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Float>(r.getValue().priceSmall));
+            priceMedium.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Float>(r.getValue().priceMedium));
+            priceLarge.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Float>(r.getValue().priceLarge));
             for (MenuItem item : dao.getMenuItems()) {
                 menuTable.getItems().add(item);
             }
@@ -224,10 +223,10 @@ public class ManagerController {
         try {
             ResultSet rs = dao.getInventoryItems();
 
-            inventoryIdTableCol.setCellValueFactory(new PropertyValueFactory<InventoryItem, Long>("inventoryId"));
-            itemNameCol.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("itemName"));
-            quantityCol.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("quantity"));
-            shipmentSizeCol.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("shipmentSize"));
+            inventoryIdTableCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Long>(r.getValue().inventoryId));
+            itemNameCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<String>(r.getValue().itemName));
+            quantityCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Integer>(r.getValue().quantity));
+            shipmentSizeCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Integer>(r.getValue().shipmentSize));
             while (rs.next()) {
                 Long inventoryId = rs.getLong("inventory_id");
                 String itemName = rs.getString("item_name");

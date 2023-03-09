@@ -12,7 +12,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.StackPane?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.manager.ManagerController">
     <!-- <LineChart fx:id="lineChart" layoutX="26.0" layoutY="34.0" prefHeight="300.0" prefWidth="548.0">
         <xAxis>
@@ -30,7 +29,7 @@
         <TableView fx:id="inventoryTable" layoutX="26.0" layoutY="34.0">
             <columns>
                 <TableColumn fx:id="inventoryIdTableCol" prefWidth="200.0" text="Inventory ID" />
-                <TableColumn fx:id="itemNameCol" prefWidth="500.0" text="Item Name" />
+                <TableColumn fx:id="itemNameCol" prefWidth="200.0" text="Item Name" />
                 <TableColumn fx:id="quantityCol" prefWidth="150.0" text="Quantity" />
                 <TableColumn fx:id="shipmentSizeCol" prefWidth="150.0" text="Shipment Size" />
             </columns>
@@ -59,6 +58,4 @@
             <Button text="Add" prefWidth="200.0" onAction="#addMenuItem" />
         </children>
     </HBox>
-
 </VBox>
-
