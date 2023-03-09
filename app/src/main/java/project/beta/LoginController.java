@@ -87,7 +87,6 @@ public class LoginController {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(getClass().getResource("common.css").toExternalForm());
-                scene.getStylesheets().add(getClass().getResource("server_home.css").toExternalForm());
                 stage.setScene(scene);
                 stage.show();
                 return;

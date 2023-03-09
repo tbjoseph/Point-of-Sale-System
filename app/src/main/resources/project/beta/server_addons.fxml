@@ -58,7 +58,7 @@
         <VBox GridPane.columnIndex="1" GridPane.vgrow="ALWAYS">
             <children>
                 <Label styleClass="header" text="Order View"/>
-                <VBox fx:id="viewBox" minHeight="400" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS">
+                <VBox fx:id="viewBox" minHeight="400" spacing="3.0" VBox.vgrow="ALWAYS">
                 </VBox>
                 <HBox prefHeight="100.0">
                     <Button onAction="#back" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Back"/>

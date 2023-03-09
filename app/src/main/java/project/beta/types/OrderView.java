@@ -5,6 +5,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.event.EventHandler;
@@ -42,7 +43,16 @@ public class OrderView {
     public void updateView(VBox view) {
         view.getChildren().clear();
 
+        boolean first = true;
         for (OrderItem item : order) {
+            // add a separator between order items
+            if (first) {
+                first = false;
+            } else {
+                Separator divider = new Separator();
+                view.getChildren().add(divider);
+            }
+
             // order blocks all have same structure
             HBox orderBlock = new HBox();
             VBox orderItems = new VBox();
@@ -69,7 +79,8 @@ public class OrderView {
                 }
             });
 
-            orderBlock.getChildren().addAll(orderItems, plusButton, amount, minusButton);
+            orderBlock.getChildren().addAll(orderItems, minusButton, amount, plusButton);
+            orderBlock.getStyleClass().add("order-item");
             orderBlock.setPrefHeight(20);
             orderItems.setMaxWidth(Double.MAX_VALUE);
             orderItems.setMaxHeight(20);
@@ -81,20 +92,21 @@ public class OrderView {
 
             // meals display the meal type with the sides and entrees indented below
             // a la carte items have no special indents
-            Label typeLabel;
+            Label typeLabel = new Label();
+            typeLabel.getStyleClass().add("order-item-type");
             switch (item.type) {
                 case BOWL:
-                    typeLabel = new Label("Bowl");
+                    typeLabel.textProperty().set("Bowl");
                     orderItems.getChildren().add(typeLabel);
                     break;
 
                 case PLATE:
-                    typeLabel = new Label("Plate");
+                    typeLabel.textProperty().set("Plate");
                     orderItems.getChildren().add(typeLabel);
                     break;
 
                 case BIGGER_PLATE:
-                    typeLabel = new Label("Bigger Plate");
+                    typeLabel.textProperty().set("Bigger Plate");
                     orderItems.getChildren().add(typeLabel);
                     break;
 

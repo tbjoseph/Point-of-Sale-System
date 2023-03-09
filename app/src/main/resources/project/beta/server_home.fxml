@@ -53,7 +53,7 @@
       <VBox GridPane.columnIndex="1" GridPane.vgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity">
          <children>
             <Label styleClass="header" text="Order View"/>
-            <VBox fx:id="viewBox" minHeight="400" minWidth="200" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS">
+            <VBox fx:id="viewBox" minHeight="400" minWidth="200" spacing="3.0" VBox.vgrow="ALWAYS">
             </VBox>
             <HBox  prefHeight="100.0">
                <children>

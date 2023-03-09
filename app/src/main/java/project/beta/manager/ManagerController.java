@@ -4,6 +4,7 @@ import project.beta.BackendDAO;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -67,6 +68,11 @@ public class ManagerController {
     private TextField priceMediumField;
     @FXML
     private TextField priceLargeField;
+
+    @FXML
+    private Button headerMenu;
+    @FXML
+    private Button headerInventory;
 
     @FXML
     private Label errorText;
@@ -190,8 +196,11 @@ public class ManagerController {
     public void showMenuTable(ActionEvent event) {
         menuTable.setVisible(true);
         menuTable.getItems().clear();
+        headerMenu.getStyleClass().add("active");
         inventoryTable.setVisible(false);
         inventoryTable.getItems().clear();
+        headerInventory.getStyleClass().remove("active");
+
         try {
             index.setCellValueFactory(new PropertyValueFactory<MenuItem, Long>("index"));
             nameCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<String>(r.getValue().name));
@@ -218,8 +227,11 @@ public class ManagerController {
     public void showInventoryTable(ActionEvent event) {
         menuTable.setVisible(false);
         menuTable.getItems().clear();
+        headerMenu.getStyleClass().remove("active");
         inventoryTable.setVisible(true);
         inventoryTable.getItems().clear();
+        headerInventory.getStyleClass().add("active");
+
         try {
             ResultSet rs = dao.getInventoryItems();
 

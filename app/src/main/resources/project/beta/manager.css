@@ -61,10 +61,14 @@
     -fx-background-color: slate3;
 }
 
-#headerButton,
-#headerButton2 {
-    -fx-margin: 0;
+.button.header-button {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
     -fx-border-radius: 0;
+}
+
+.button.header-button.active {
+    -fx-background-color: slate3;
 }
 
 #header {

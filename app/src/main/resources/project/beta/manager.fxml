@@ -22,8 +22,8 @@
         </yAxis>
     </LineChart> -->
    <HBox fx:id="header" alignment="CENTER">
-        <Button fx:id="headerButton" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Menu" onAction="#showMenuTable"/>
-        <Button fx:id="headerButton2" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Inventory" onAction="#showInventoryTable"/>
+        <Button fx:id="headerMenu" styleClass="header-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Menu" onAction="#showMenuTable"/>
+        <Button fx:id="headerInventory" styleClass="header-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Inventory" onAction="#showInventoryTable"/>
     </HBox>
     <StackPane VBox.vgrow="ALWAYS" maxHeight="Infinity"> 
         <TableView fx:id="inventoryTable" layoutX="26.0" layoutY="34.0">
