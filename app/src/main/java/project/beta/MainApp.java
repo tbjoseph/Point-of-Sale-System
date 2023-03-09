@@ -23,14 +23,8 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = null;
 
-        // Load the FXML file, handling exceptions manually
-        // to get them printed to the console
-        try {
-            root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        } catch (Exception e) {
-            System.err.println(e);
-            System.exit(1);
-        }
+        // Load the FXML file
+        root = FXMLLoader.load(getClass().getResource("login.fxml"));
 
         // Create the scene and set the stage
         Scene scene = new Scene(root);

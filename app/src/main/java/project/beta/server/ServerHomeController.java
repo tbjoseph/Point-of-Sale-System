@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import project.beta.BackendDAO;
 import project.beta.types.MenuItem;
 import project.beta.types.OrderItem;
@@ -63,7 +63,7 @@ public class ServerHomeController {
     /**
      * Add a side item to the current order.
      * 
-     * @param event Used to get the button name of the side item.
+     * @param item The item to add to the order.
      */
     public void addSide(MenuItem item) {
         if (sidesCount < sidesCountNeeded) {
@@ -96,7 +96,7 @@ public class ServerHomeController {
     /**
      * Add an entree to the current order.
      * 
-     * @param event Used to get the button name of the entree.
+     * @param item The item to add to the order.
      */
     public void addEntree(MenuItem item) {
         if (entreesCount < entreesCountNeeded) {
@@ -225,7 +225,6 @@ public class ServerHomeController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
-        scene.getStylesheets().add(getClass().getResource("../server_addons.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -255,8 +254,10 @@ public class ServerHomeController {
         int row = 0;
         for (MenuItem item : dao.getMenuItems()) {
             Button button = new Button(item.name);
-            button.maxHeight(Double.MAX_VALUE);
-            button.maxWidth(Double.MAX_VALUE);
+            button.setMaxHeight(Double.MAX_VALUE);
+            button.setMaxWidth(Double.MAX_VALUE);
+            button.setWrapText(true);
+            button.setTextAlignment(TextAlignment.CENTER);
 
             switch (item.mealType) {
                 case "entree":

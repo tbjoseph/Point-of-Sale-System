@@ -48,23 +48,27 @@
 .table-view .virtual-flow .scroll-bar:horizontal,
 .table-view .virtual-flow .scroll-bar:horizontal .track,
 .table-view .virtual-flow .scroll-bar:horizontal .track-background {
-    -fx-background-color: slate3;
+    -fx-background-color: slate2;
 }
 
 .table-view .virtual-flow .scroll-bar .increment-button,
 .table-view .virtual-flow .scroll-bar .decrement-button {
-    -fx-background-color: slate2;
+    -fx-background-color: transparent;
 }
 
 .table-view .virtual-flow .scroll-bar:vertical .thumb,
 .table-view .virtual-flow .scroll-bar:horizontal .thumb {
-    -fx-background-color: slate;
+    -fx-background-color: slate3;
 }
 
-#headerButton,
-#headerButton2 {
-    -fx-margin: 0;
+.button.header-button {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
     -fx-border-radius: 0;
+}
+
+.button.header-button.active {
+    -fx-background-color: slate3;
 }
 
 #header {

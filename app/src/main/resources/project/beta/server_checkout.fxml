@@ -1,70 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.control.Hyperlink?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
 
-
-
-
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.server.ServerController">
-   <HBox alignment="CENTER" spacing="10.0">
-        <children>
-
-
-            <VBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
-                
-                <VBox VBox.vgrow="ALWAYS" maxWidth="Infinity">
+<StackPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.server.ServerController">
+    <children>
+        <GridPane>
+            <children>
+                <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
                     <children>
-                        <Label text="Payment Screen"/>
-                        <HBox VBox.vgrow="ALWAYS">
+                        <Label styleClass="header" text="Payment Method"/>
+                        <GridPane VBox.vgrow="ALWAYS">
                             <children>
-                                <Button fx:id="active_btn" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Cash" onAction="#processCash"/>
-                                <Label text="     "/>
-                                <Button fx:id="active_btn" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Card" onAction="#processCard"/>
+                                <Button GridPane.columnIndex="0" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" text="Cash" onAction="#processCash"/>
+                                <Button GridPane.columnIndex="1" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity" text="Card" onAction="#processCard"/>
+                                <Button GridPane.columnIndex="0" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity" text="Dining Dollars" onAction="#processDining"/>
+                                <Button GridPane.columnIndex="1" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity" text="Retail Swipe" onAction="#processMealPlan"/>
                             </children>
-                        </HBox>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints vgrow="ALWAYS"/>
+                                <RowConstraints vgrow="ALWAYS"/>
+                            </rowConstraints>
+                        </GridPane>
                     </children>
                 </VBox>
 
-                <Label text=" "/>
-
-                <VBox VBox.vgrow="ALWAYS" maxWidth="Infinity">
+                <VBox GridPane.columnIndex="1" GridPane.vgrow="ALWAYS">
                     <children>
-                        <HBox VBox.vgrow="ALWAYS">
-                            <children>
-                                <Button fx:id="active_btn" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Dining Dollars" onAction="#processDining"/>
-                                <Label text="     "/>
-                                <Button fx:id="active_btn" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Retail Swipe" onAction="#processMealPlan"/>
-                            </children>
+                        <Label styleClass="header" text="Order View"/>
+                        <VBox fx:id="viewBox" minHeight="400" minWidth="200" spacing="3.0" VBox.vgrow="ALWAYS">
+                        </VBox>
+                        <HBox prefHeight="100.0">
+                            <Button maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Back" onAction="#backButton"/>
+                            <Button fx:id="inactiveButton" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Next"/>
                         </HBox>
                     </children>
                 </VBox>
-                
-            </VBox>
+            </children>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="70.0" />
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="30.0" />
+            </columnConstraints>
+        </GridPane>
 
-
-            <VBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
-                <children>
-                    <Label text="Order View"/>
-                    <VBox fx:id="orderView" minHeight="200" maxWidth="Infinity" maxHeight="Infinity" VBox.vgrow="ALWAYS">
-                    </VBox>
-                    <HBox>
-                        <Button fx:id="active_btn" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Back" onAction="#backButton"/>
-                        <Label text=" "/>
-                        <Button fx:id="inactive_btn" maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Next"/>
-                    </HBox>
-                </children>
-            </VBox>
-
-
-        </children>
-    </HBox>
-
-
+        <VBox fx:id="errorPane" alignment="CENTER">
+            <children>
+                <Label fx:id="errorText" layoutX="10.0" layoutY="10.0" text="" />
+                <Button layoutX="10.0" layoutY="10.0" text="Close" onAction="#closeErrorPane"/>
+            </children>
+        </VBox>
+    </children>
 </StackPane>

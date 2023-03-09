@@ -15,19 +15,14 @@
     -fx-text-fill: cream;
 }
 
-.text-field {
+.text-field,
+.password-field {
     -fx-background-color: slate2;
     -fx-text-fill: cream;
     -fx-prompt-text-fill: cream3;
     -fx-font-size: 14;
 }
 
-#header {
+.label.header {
     -fx-font-size: 24;
-    -fx-font-weight: bold;
-}
-
-#errorText {
-    -fx-text-fill: cherry;
-    -fx-font-weight: bold;
 }

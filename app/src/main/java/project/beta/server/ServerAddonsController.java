@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,7 @@ import java.sql.SQLException;
 public class ServerAddonsController {
     private BackendDAO dao;
     @FXML
-    VBox orderView;
+    VBox viewBox;
     OrderView view;
 
     @FXML
@@ -39,29 +40,29 @@ public class ServerAddonsController {
     }
 
     /**
-     * adds an item to the order view
+     * adds a drink to the order view
      * 
      * @param event the event that triggered the method
      */
-    public void addItem(ActionEvent event) {
+    public void addDrink(ActionEvent event) {
         Button bt = (Button) event.getSource();
         String name = bt.getText();
         MenuItem[] names = { new MenuItem(21, name, "drink", "Your choice of fountain drink.", 2.10f, 2.30f, 2.50f) };
         OrderItem item = new OrderItem(names, 1, OrderItem.OrderItemType.A_LA_CARTE);
         view.addOrderItem(item);
-        view.updateView(orderView);
+        view.updateView(viewBox);
     }
 
     /**
      * adds an item to the order view
      * 
-     * @param event the event that triggered the method
+     * @param item the menu item to add
      */
     public void addItem(MenuItem item) {
         MenuItem[] items = { item };
         OrderItem oItem = new OrderItem(items, 1, OrderItem.OrderItemType.A_LA_CARTE);
         view.addOrderItem(oItem);
-        view.updateView(orderView);
+        view.updateView(viewBox);
     }
 
     /**
@@ -81,7 +82,6 @@ public class ServerAddonsController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
-        scene.getStylesheets().add(getClass().getResource("../server_home.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -103,7 +103,6 @@ public class ServerAddonsController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
-        scene.getStylesheets().add(getClass().getResource("../server_checkout.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -121,11 +120,14 @@ public class ServerAddonsController {
             button.setOnAction(e -> {
                 this.addItem(item);
             });
+            button.setWrapText(true);
+            button.setTextAlignment(TextAlignment.CENTER);
 
             switch (item.mealType) {
                 case "appetizer":
                     HBox.setHgrow(button, Priority.ALWAYS);
-                    button.maxWidth(Double.MAX_VALUE);
+                    button.setMaxWidth(Double.MAX_VALUE);
+                    button.setMaxHeight(Double.MAX_VALUE);
                     addonsCont.getChildren().add(button);
                     break;
 
@@ -156,6 +158,6 @@ public class ServerAddonsController {
      */
     public void setOrders(OrderView view) {
         this.view = view;
-        view.updateView(orderView);
+        view.updateView(viewBox);
     }
 }
