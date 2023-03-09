@@ -32,7 +32,8 @@ import project.beta.types.OrderItem;
 public class BackendDAO {
     private Connection connection;
 
-    private HashMap<Integer, ArrayList<Long>> order_menu_assoc = new HashMap<>();
+    private HashMap<Long, ArrayList<Long>> order_menu_assoc;
+    private HashMap<Long, ArrayList<Long>> menu_inventory_assoc;
 
 
     /**
@@ -54,6 +55,9 @@ public class BackendDAO {
         // create connection
         connection = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315331_beta",
                 username, password);
+
+        // create connection hash for menu_inventory_assoc
+        menu_inventory_assoc = construct_menu_inventory_assoc();
     }
 
     /**
@@ -62,6 +66,7 @@ public class BackendDAO {
      * @param paymentMethod the method of payment
      * @param date          the date of the order
      * @param price         the price of the order
+     * @param orders        the OrderView object
      * 
      * @throws SQLException if the query fails
      */
@@ -79,7 +84,8 @@ public class BackendDAO {
          * Make hash table that maps each (temp) order_id to all of their respective menu_item ids. 
          * orderID is not the actual order_id; that will be decided during the SQL query.
          */
-        int orderID = 0;
+        order_menu_assoc = new HashMap<>();
+        Long orderID = 0L;
         for (OrderItem currentOrder : orders.getOrders()) {
             ArrayList<Long> menuOrderIDs = new ArrayList<>();
             for (MenuItem currMenuItem : currentOrder.menuItems) {
@@ -97,7 +103,7 @@ public class BackendDAO {
          *      Delete all instance of that menu_item in current inner array to avoid double counting
          */
 
-         for (Integer key : order_menu_assoc.keySet()) {
+         for (Long key : order_menu_assoc.keySet()) {
             ArrayList<Long> menuOrderIDs = order_menu_assoc.get(key);
 
             // INSERT INTO orders (order_id, menu_item_id, quantity)
@@ -109,6 +115,40 @@ public class BackendDAO {
             
         }
         
+    }
+
+
+    public void decreaseInventory(OrderView orders) throws SQLException {
+
+        ArrayList<Long> inventoryOrderIDs = new ArrayList<>();
+
+        for (OrderItem currentOrder : orders.getOrders()) {
+
+            for (MenuItem currMenuItem : currentOrder.menuItems) {
+
+                ArrayList<Long> arr = menu_inventory_assoc.get(currMenuItem.getIndex());
+                inventoryOrderIDs.addAll(arr);
+
+            }
+            
+        }
+
+        // Long orderID = 0L;
+        // for (OrderItem currentOrder : orders.getOrders()) {
+        //     ArrayList<Long> inventoryOrderIDs = new ArrayList<>();
+        //     for (MenuItem currMenuItem : currentOrder.menuItems) {
+
+        //         for (menu_inventory_assoc.get(currMenuItem.getIndex()))
+
+
+
+        //         inventoryOrderIDs.add(currMenuItem.getIndex());
+        //     }
+            
+        //     order_menu_assoc.put(orderID, menuOrderIDs);
+        //     orderID++;
+        // }
+
     }
 
     /**
@@ -258,6 +298,30 @@ public class BackendDAO {
             menuItems.add(menuItem);
         }
         return menuItems;
+    }
+
+    public HashMap<Long, ArrayList<Long>> construct_menu_inventory_assoc() throws SQLException {
+        Statement stmt = connection.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM menu_inventory_assoc menu_item_id BY id");
+        HashMap<Long, ArrayList<Long>> menu_inventory_assoc = new HashMap<>();
+
+        while (rs.next()) {
+            Long menu_item_id = rs.getLong("menu_item_id");
+            Long inventory_item_id = rs.getLong("inventory_item_id");
+
+            if (menu_inventory_assoc.containsKey(menu_item_id)) {
+                // If the key is already present in the HashMap, retrieve the ArrayList and add the value to it
+                ArrayList<Long> inventory_item_id_list = menu_inventory_assoc.get(menu_item_id);
+                inventory_item_id_list.add(inventory_item_id);
+            } else {
+                // If the key is not present in the HashMap, create a new ArrayList, add the value to it, and put it in the HashMap
+                ArrayList<Long> inventory_item_id_list = new ArrayList<>();
+                inventory_item_id_list.add(inventory_item_id);
+                menu_inventory_assoc.put(menu_item_id, inventory_item_id_list);
+            }
+        }
+
+        return menu_inventory_assoc;
     }
 
     /**
