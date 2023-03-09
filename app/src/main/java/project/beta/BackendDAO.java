@@ -120,6 +120,13 @@ public class BackendDAO {
 
     public void decreaseInventory(OrderView orders) throws SQLException {
 
+        /**
+         * - Initialize list of all Inventory Ids
+         * - Iterate through OrderView list
+         *      - Iterate through each OrderItem in the OrderItem list
+         *          - add each inventory id that maps to the order item id (index) in the hash to the Inventory Id list
+         */
+
         ArrayList<Long> inventoryOrderIDs = new ArrayList<>();
 
         for (OrderItem currentOrder : orders.getOrders()) {
@@ -133,21 +140,15 @@ public class BackendDAO {
             
         }
 
-        // Long orderID = 0L;
-        // for (OrderItem currentOrder : orders.getOrders()) {
-        //     ArrayList<Long> inventoryOrderIDs = new ArrayList<>();
-        //     for (MenuItem currMenuItem : currentOrder.menuItems) {
 
-        //         for (menu_inventory_assoc.get(currMenuItem.getIndex()))
+        /**
+         * - SQL query to decrease quantity of respective inventory_id each time the inventory_id appears in Inventory Id.
+         *   Should be something like this:
+         *         - UPDATE inventory_items SET quantity = quantity - 1
+         *           WHERE inventory_id IN ( {ArrayList of inventory ids} )
+         */
 
 
-
-        //         inventoryOrderIDs.add(currMenuItem.getIndex());
-        //     }
-            
-        //     order_menu_assoc.put(orderID, menuOrderIDs);
-        //     orderID++;
-        // }
 
     }
 
