@@ -9,9 +9,15 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 import project.beta.types.InventoryItem;
 import project.beta.types.MenuItem;
+import project.beta.types.OrderView;
+import project.beta.types.OrderItem;
+
+
 
 /**
  * BackendDAO is a data access object (DAO) that handles all communication with
@@ -25,6 +31,9 @@ import project.beta.types.MenuItem;
  */
 public class BackendDAO {
     private Connection connection;
+
+    private HashMap<Integer, ArrayList<Long>> order_menu_assoc = new HashMap<>();
+
 
     /**
      * Default constructor for BackendDAO. Requires the environment variables
@@ -56,7 +65,7 @@ public class BackendDAO {
      * 
      * @throws SQLException if the query fails
      */
-    public void submitOrder(String paymentMethod, LocalDateTime date, float price) throws SQLException {
+    public void submitOrder(String paymentMethod, LocalDateTime date, float price, OrderView orders) throws SQLException {
         String query = "INSERT INTO order_history (order_date, price, payment_method) VALUES (?, ?, ?)";
         PreparedStatement stmt = connection.prepareStatement(query);
         Timestamp timestamp = Timestamp.valueOf(date);
@@ -65,6 +74,41 @@ public class BackendDAO {
         stmt.setString(3, paymentMethod);
         // Execute the statement and update the table
         stmt.executeUpdate();
+
+        /**
+         * Make hash table that maps each (temp) order_id to all of their respective menu_item ids. 
+         * orderID is not the actual order_id; that will be decided during the SQL query.
+         */
+        int orderID = 0;
+        for (OrderItem currentOrder : orders.getOrders()) {
+            ArrayList<Long> menuOrderIDs = new ArrayList<>();
+            for (MenuItem currMenuItem : currentOrder.menuItems) {
+                menuOrderIDs.add(currMenuItem.getIndex());
+            }
+            
+            order_menu_assoc.put(orderID, menuOrderIDs);
+            orderID++;
+        }
+
+        /**
+         * Examine order_ids (outer array) and their respective menu_items (inner array) until hash is empty:
+         *      For a given menu_item, count number of instances, and save count as quantity
+         *      Add the order-menu_item pair to assoc table via SQL query. Format is (order_id, menu_item_id, quantity)
+         *      Delete all instance of that menu_item in current inner array to avoid double counting
+         */
+
+         for (Integer key : order_menu_assoc.keySet()) {
+            ArrayList<Long> menuOrderIDs = order_menu_assoc.get(key);
+
+            // INSERT INTO orders (order_id, menu_item_id, quantity)
+            // SELECT 'new_order_id', menu_item_id, COUNT(*) AS quantity
+            // FROM orders
+            // WHERE menu_item_id IN (menuItemIDs)
+            // GROUP BY menu_item_id
+
+            
+        }
+        
     }
 
     /**
