@@ -57,7 +57,7 @@ public class BackendDAO {
                 username, password);
 
         // create connection hash for menu_inventory_assoc
-        menu_inventory_assoc = construct_menu_inventory_assoc();
+        construct_menu_inventory_assoc();
     }
 
     /**
@@ -117,7 +117,13 @@ public class BackendDAO {
         
     }
 
-
+    /**
+     * Decreases inventory by the amount of items in orders
+     * 
+     * @param orders        the OrderView object
+     * 
+     * @throws SQLException if the query fails
+     */
     public void decreaseInventory(OrderView orders) throws SQLException {
 
         /**
@@ -140,7 +146,6 @@ public class BackendDAO {
             
         }
 
-
         /**
          * - SQL query to decrease quantity of respective inventory_id each time the inventory_id appears in Inventory Id.
          *   Should be something like this:
@@ -148,9 +153,35 @@ public class BackendDAO {
          *           WHERE inventory_id IN ( {ArrayList of inventory ids} )
          */
 
-
-
     }
+
+    /**
+     * Constructs hash map for menu_inventory_assoc
+     * 
+     * @throws SQLException if the query fails
+     */
+    public void construct_menu_inventory_assoc() throws SQLException {
+        Statement stmt = connection.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM menu_inventory_assoc menu_item_id BY id");
+        menu_inventory_assoc = new HashMap<>();
+
+        while (rs.next()) {
+            Long menu_item_id = rs.getLong("menu_item_id");
+            Long inventory_item_id = rs.getLong("inventory_item_id");
+
+            if (menu_inventory_assoc.containsKey(menu_item_id)) {
+                // If the key is already present in the HashMap, retrieve the ArrayList and add the value to it
+                ArrayList<Long> inventory_item_id_list = menu_inventory_assoc.get(menu_item_id);
+                inventory_item_id_list.add(inventory_item_id);
+            } else {
+                // If the key is not present in the HashMap, create a new ArrayList, add the value to it, and put it in the HashMap
+                ArrayList<Long> inventory_item_id_list = new ArrayList<>();
+                inventory_item_id_list.add(inventory_item_id);
+                menu_inventory_assoc.put(menu_item_id, inventory_item_id_list);
+            }
+        }
+    }
+
 
     /**
      * Checks if the username and password are valid
@@ -299,30 +330,6 @@ public class BackendDAO {
             menuItems.add(menuItem);
         }
         return menuItems;
-    }
-
-    public HashMap<Long, ArrayList<Long>> construct_menu_inventory_assoc() throws SQLException {
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM menu_inventory_assoc menu_item_id BY id");
-        HashMap<Long, ArrayList<Long>> menu_inventory_assoc = new HashMap<>();
-
-        while (rs.next()) {
-            Long menu_item_id = rs.getLong("menu_item_id");
-            Long inventory_item_id = rs.getLong("inventory_item_id");
-
-            if (menu_inventory_assoc.containsKey(menu_item_id)) {
-                // If the key is already present in the HashMap, retrieve the ArrayList and add the value to it
-                ArrayList<Long> inventory_item_id_list = menu_inventory_assoc.get(menu_item_id);
-                inventory_item_id_list.add(inventory_item_id);
-            } else {
-                // If the key is not present in the HashMap, create a new ArrayList, add the value to it, and put it in the HashMap
-                ArrayList<Long> inventory_item_id_list = new ArrayList<>();
-                inventory_item_id_list.add(inventory_item_id);
-                menu_inventory_assoc.put(menu_item_id, inventory_item_id_list);
-            }
-        }
-
-        return menu_inventory_assoc;
     }
 
     /**
