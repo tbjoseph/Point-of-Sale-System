@@ -142,7 +142,7 @@ public class ServerController {
     public void processCash(ActionEvent event) {
         try {
             // Add order to order history
-            dao.submitOrder("cash", LocalDateTime.now(), getPrice());
+            dao.submitOrder("cash", LocalDateTime.now(), getPrice(), orders);
             // Decrease inventory items
             // dao.executeQuery("f");
 
@@ -160,7 +160,7 @@ public class ServerController {
      */
     public void processCard(ActionEvent event) {
         try {
-            dao.submitOrder("card", LocalDateTime.now(), getPrice());
+            dao.submitOrder("card", LocalDateTime.now(), getPrice(), orders);
 
             // Decrease inventory items
             // dao.executeQuery("f");
@@ -179,7 +179,7 @@ public class ServerController {
      */
     public void processDining(ActionEvent event) {
         try {
-            dao.submitOrder("dining_dollars", LocalDateTime.now(), getPrice());
+            dao.submitOrder("dining_dollars", LocalDateTime.now(), getPrice(), orders);
 
             // Decrease inventory items
             // dao.executeQuery("f");
@@ -198,10 +198,33 @@ public class ServerController {
      */
     public void processMealPlan(ActionEvent event) {
         try {
-            dao.submitOrder("meal_plan_both", LocalDateTime.now(), getPrice());
+            dao.submitOrder("meal_plan_both", LocalDateTime.now(), getPrice(), orders);
+            //TODO: add functionality to update order_menu_assoc table.
+            // - Make hash table that maps each (temp) order_id to all of their respective menu_item ids. 
+            //   The actual order_id will be decided in the SQL query.
+            // - Examine order_ids (outer array) and their respective menu_items (inner array) until hash is empty:
+            //      - For a given menu_item, count number of instances, and save count as quantity
+            //      - Add the order-menu_item pair to assoc table via SQL query. Format is (order_id, menu_item_id, quantity)
+            //      - Delete all instance of that menu_item in current inner array to avoid double counting
+            // - Hash should now be empty, ready for next order list
 
-            // Decrease inventory items
-            // dao.executeQuery("f");
+
+            /**
+             * TODO: add functionality to decrease inventory items using menu_inventory_assoc table
+             * - Make hash table that maps each menu_id to all of their respective inventory_item ids
+             * - Initialize list of all Inventory Ids
+             * - Iterate through OrderView list
+             *      - Iterate through each OrderItem in the OrderItem list
+             *          - add each inventory id that maps to the order item id (index) in the hash to the Inventory Id list
+             * - SQL query to decrease quantity of respective inventory_id each time the inventory_id appear in Inventory Id.
+             *   Should be something like this:
+             *         - UPDATE inventory_items SET quantity = quantity - 1
+             *           WHERE inventory_id IN ( {ArrayList of inventory ids} )
+             */
+
+
+            // dao.decreaseInventory;
+
 
             goToHome(event);
 
