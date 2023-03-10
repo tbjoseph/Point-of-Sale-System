@@ -87,7 +87,7 @@ public class BackendDAO {
 
 
     /**
-     * Adds order and menu items to order_menu_assoc
+     * Adds order and menu items to order_menu_assoc 
      * 
      * @param paymentMethod the method of payment
      * @param date          the date of the order
@@ -96,7 +96,7 @@ public class BackendDAO {
      * 
      * @throws SQLException if the query fails
      */
-    public void update_order_menu_assoc(OrderView orders) throws SQLException {
+    public void update_order_menu_assoc(OrderView orders) throws SQLException { //NOT COMPLETE
         /**
          * Make hash table that maps each (temp) order_id to all of their respective menu_item ids. 
          * orderID is not the actual order_id; that will be decided during the SQL query.
@@ -170,7 +170,6 @@ public class BackendDAO {
          *           WHERE inventory_id IN ( {ArrayList of inventory ids} )
          */
 
-         // Assume that the ArrayList<Long> of inventory IDs is named "inventoryIDs"
         for (Long id : inventoryOrderIDs) {
             // Create a PreparedStatement to execute an update query
             String updateQuery = "UPDATE inventory SET quantity = quantity - 1 WHERE inventory_id = ?";
@@ -178,6 +177,12 @@ public class BackendDAO {
             stmt.setLong(1, id);
             stmt.executeUpdate();
         }
+
+        // String updateQuery = "UPDATE inventory SET quantity = quantity - 1 WHERE inventory_id IN (SELECT * FROM UNNEST(?::bigint[]))";
+        // PreparedStatement stmt = connection.prepareStatement(updateQuery);
+        // Array array = connection.createArrayOf("BIGINT", inventoryOrderIDs.toArray());
+        // stmt.setArray(1, array);
+        // stmt.executeUpdate();
 
 
     }
