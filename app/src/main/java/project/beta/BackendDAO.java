@@ -80,6 +80,22 @@ public class BackendDAO {
         // Execute the statement and update the table
         stmt.executeUpdate();
 
+        // update_order_menu_assoc(orders);
+
+    }
+
+
+    /**
+     * Adds order and menu items to order_menu_assoc
+     * 
+     * @param paymentMethod the method of payment
+     * @param date          the date of the order
+     * @param price         the price of the order
+     * @param orders        the OrderView object
+     * 
+     * @throws SQLException if the query fails
+     */
+    public void update_order_menu_assoc(OrderView orders) throws SQLException {
         /**
          * Make hash table that maps each (temp) order_id to all of their respective menu_item ids. 
          * orderID is not the actual order_id; that will be decided during the SQL query.
@@ -103,17 +119,17 @@ public class BackendDAO {
          *      Delete all instance of that menu_item in current inner array to avoid double counting
          */
 
-         for (Long key : order_menu_assoc.keySet()) {
-            ArrayList<Long> menuOrderIDs = order_menu_assoc.get(key);
+        //  for (Long key : order_menu_assoc.keySet()) {
+        //     ArrayList<Long> menuOrderIDs = order_menu_assoc.get(key);
 
-            // INSERT INTO orders (order_id, menu_item_id, quantity)
-            // SELECT 'new_order_id', menu_item_id, COUNT(*) AS quantity
-            // FROM orders
-            // WHERE menu_item_id IN (menuItemIDs)
-            // GROUP BY menu_item_id
+        //     INSERT INTO orders (order_id, menu_item_id, quantity)
+        //     SELECT 'new_order_id', menu_item_id, COUNT(*) AS quantity
+        //     FROM orders
+        //     WHERE menu_item_id IN (menuItemIDs)
+        //     GROUP BY menu_item_id
 
             
-        }
+        // }
         
     }
 
@@ -128,9 +144,9 @@ public class BackendDAO {
 
         /**
          * - Initialize list of all Inventory Ids
-         * - Iterate through OrderView list
-         *      - Iterate through each OrderItem in the OrderItem list
-         *          - add each inventory id that maps to the order item id (index) in the hash to the Inventory Id list
+         * - Iterate through each OrderItem in the OrderView
+         *      - Iterate through each MenuItem in the OrderItem
+         *          - append the MenuItem's list of inventory IDs from the hash to the running list inventoryOrderIDs
          */
 
         ArrayList<Long> inventoryOrderIDs = new ArrayList<>();
@@ -152,6 +168,16 @@ public class BackendDAO {
          *         - UPDATE inventory_items SET quantity = quantity - 1
          *           WHERE inventory_id IN ( {ArrayList of inventory ids} )
          */
+
+         // Assume that the ArrayList<Long> of inventory IDs is named "inventoryIDs"
+        for (Long id : inventoryOrderIDs) {
+            // Create a PreparedStatement to execute an update query
+            String updateQuery = "UPDATE inventory SET quantity = quantity - 1 WHERE inventory_id = ?";
+            PreparedStatement stmt = connection.prepareStatement(updateQuery);
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        }
+
 
     }
 
