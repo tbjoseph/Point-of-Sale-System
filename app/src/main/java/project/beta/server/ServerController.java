@@ -224,7 +224,7 @@ public class ServerController {
              */
 
 
-            // dao.decreaseInventory(orders);
+            dao.decreaseInventory(orders);
 
 
             goToHome(event);
