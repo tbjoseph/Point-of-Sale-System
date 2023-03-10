@@ -56,8 +56,9 @@ public class BackendDAO {
         connection = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315331_beta",
                 username, password);
 
-        // create connection hash for menu_inventory_assoc
-        construct_menu_inventory_assoc();
+
+        // menu_inventory_assoc = null;
+
     }
 
     /**
@@ -187,8 +188,10 @@ public class BackendDAO {
      * @throws SQLException if the query fails
      */
     public void construct_menu_inventory_assoc() throws SQLException {
+        // if (menu_inventory_assoc != null) return;
+
         Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM menu_inventory_assoc menu_item_id BY id");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM menu_inventory_assoc ORDER BY menu_item_id");
         menu_inventory_assoc = new HashMap<>();
 
         while (rs.next()) {
