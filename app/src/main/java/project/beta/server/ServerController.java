@@ -224,7 +224,7 @@ public class ServerController {
              */
 
 
-            dao.decreaseInventory(orders);
+            // dao.decreaseInventory(orders);
 
 
             goToHome(event);
@@ -239,8 +239,14 @@ public class ServerController {
      * 
      * @param dao the DAO to use for this controller
      */
-    public void setDAO(BackendDAO dao) {
+    public void setDAO(BackendDAO dao) { 
         this.dao = dao;
+
+        try {
+            this.dao.construct_menu_inventory_assoc();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
