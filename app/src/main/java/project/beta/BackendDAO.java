@@ -11,13 +11,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 import project.beta.types.InventoryItem;
 import project.beta.types.MenuItem;
 import project.beta.types.OrderView;
 import project.beta.types.OrderItem;
-
-
 
 /**
  * BackendDAO is a data access object (DAO) that handles all communication with
@@ -34,7 +31,6 @@ public class BackendDAO {
 
     private HashMap<Long, ArrayList<Long>> order_menu_assoc;
     private HashMap<Long, ArrayList<Long>> menu_inventory_assoc;
-
 
     /**
      * Default constructor for BackendDAO. Requires the environment variables
@@ -56,9 +52,7 @@ public class BackendDAO {
         connection = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315331_beta",
                 username, password);
 
-
         // menu_inventory_assoc = null;
-
     }
 
     /**
@@ -71,7 +65,8 @@ public class BackendDAO {
      * 
      * @throws SQLException if the query fails
      */
-    public void submitOrder(String paymentMethod, LocalDateTime date, float price, OrderView orders) throws SQLException {
+    public void submitOrder(String paymentMethod, LocalDateTime date, float price, OrderView orders)
+            throws SQLException {
         String query = "INSERT INTO order_history (order_date, price, payment_method) VALUES (?, ?, ?)";
         PreparedStatement stmt = connection.prepareStatement(query);
         Timestamp timestamp = Timestamp.valueOf(date);
@@ -82,25 +77,21 @@ public class BackendDAO {
         stmt.executeUpdate();
 
         // update_order_menu_assoc(orders);
-
     }
 
-
     /**
-     * Adds order and menu items to order_menu_assoc 
+     * Adds order and menu items to order_menu_assoc
      * 
-     * @param paymentMethod the method of payment
-     * @param date          the date of the order
-     * @param price         the price of the order
-     * @param orders        the OrderView object
+     * @param orders the OrderView object
      * 
      * @throws SQLException if the query fails
      */
-    public void update_order_menu_assoc(OrderView orders) throws SQLException { //NOT COMPLETE
-        /**
-         * Make hash table that maps each (temp) order_id to all of their respective menu_item ids. 
-         * orderID is not the actual order_id; that will be decided during the SQL query.
-         */
+    public void update_order_menu_assoc(OrderView orders) throws SQLException {
+
+        // Make hash table that maps each (temp) order_id to all of their respective
+        // menu_item ids. orderID is not the actual order_id; that will be decided
+        // during the SQL query.
+
         order_menu_assoc = new HashMap<>();
         Long orderID = 0L;
         for (OrderItem currentOrder : orders.getOrders()) {
@@ -108,36 +99,37 @@ public class BackendDAO {
             for (MenuItem currMenuItem : currentOrder.menuItems) {
                 menuOrderIDs.add(currMenuItem.getIndex());
             }
-            
+
             order_menu_assoc.put(orderID, menuOrderIDs);
             orderID++;
         }
 
-        /** May need to change design
-         * Examine order_ids (outer array) and their respective menu_items (inner array) until hash is empty:
-         *      For a given menu_item, count number of instances, and save count as quantity
-         *      Add the order-menu_item pair to assoc table via SQL query. Format is (order_id, menu_item_id, quantity)
-         *      Delete all instance of that menu_item in current inner array to avoid double counting
+        // TODO: SQL query to add order_menu_assoc to orders table (for next release)
+        /**
+         * May need to change design
+         * Examine order_ids (outer array) and their respective menu_items (inner array)
+         * until hash is empty:
+         * For a given menu_item, count number of instances, and save count as quantity
+         * Add the order-menu_item pair to assoc table via SQL query. Format is
+         * (order_id, menu_item_id, quantity)
+         * Delete all instance of that menu_item in current inner array to avoid double
+         * counting
          */
 
-        //  for (Long key : order_menu_assoc.keySet()) {
-        //     ArrayList<Long> menuOrderIDs = order_menu_assoc.get(key);
-
-        //     INSERT INTO orders (order_id, menu_item_id, quantity)
-        //     SELECT 'new_order_id', menu_item_id, COUNT(*) AS quantity
-        //     FROM orders
-        //     WHERE menu_item_id IN (menuItemIDs)
-        //     GROUP BY menu_item_id
-
-            
+        // for (Long key : order_menu_assoc.keySet()) {
+        // ArrayList<Long> menuOrderIDs = order_menu_assoc.get(key);
+        // INSERT INTO orders (order_id, menu_item_id, quantity)
+        // SELECT 'new_order_id', menu_item_id, COUNT(*) AS quantity
+        // FROM orders
+        // WHERE menu_item_id IN (menuItemIDs)
+        // GROUP BY menu_item_id
         // }
-        
     }
 
     /**
      * Decreases inventory by the amount of items in orders
      * 
-     * @param orders        the OrderView object
+     * @param orders the OrderView object
      * 
      * @throws SQLException if the query fails
      */
@@ -146,8 +138,9 @@ public class BackendDAO {
         /**
          * - Initialize list of all Inventory Ids
          * - Iterate through each OrderItem in the OrderView
-         *      - Iterate through each MenuItem in the OrderItem
-         *          - append the MenuItem's list of inventory IDs from the hash to the running list inventoryOrderIDs
+         * - Iterate through each MenuItem in the OrderItem
+         * - append the MenuItem's list of inventory IDs from the hash to the running
+         * list inventoryOrderIDs
          */
 
         ArrayList<Long> inventoryOrderIDs = new ArrayList<>();
@@ -160,31 +153,21 @@ public class BackendDAO {
                 inventoryOrderIDs.addAll(arr);
 
             }
-            
+
         }
 
-        /**
-         * - SQL query to decrease quantity of respective inventory_id each time the inventory_id appears in Inventory Id.
-         *   Should be something like this:
-         *         - UPDATE inventory_items SET quantity = quantity - 1
-         *           WHERE inventory_id IN ( {ArrayList of inventory ids} )
-         */
+        // - SQL query to decrease quantity of respective inventory_id each time the
+        // inventory_id appears in Inventory Id. Should be something like this:
+        // - UPDATE inventory_items SET quantity = quantity - 1 WHERE inventory_id IN (
+        // {ArrayList of inventory ids} )
 
         for (Long id : inventoryOrderIDs) {
             // Create a PreparedStatement to execute an update query
-            String updateQuery = "UPDATE inventory SET quantity = quantity - 1 WHERE inventory_id = ?";
+            String updateQuery = "UPDATE inventory_items SET quantity = quantity - 1 WHERE inventory_id = ?";
             PreparedStatement stmt = connection.prepareStatement(updateQuery);
             stmt.setLong(1, id);
             stmt.executeUpdate();
         }
-
-        // String updateQuery = "UPDATE inventory SET quantity = quantity - 1 WHERE inventory_id IN (SELECT * FROM UNNEST(?::bigint[]))";
-        // PreparedStatement stmt = connection.prepareStatement(updateQuery);
-        // Array array = connection.createArrayOf("BIGINT", inventoryOrderIDs.toArray());
-        // stmt.setArray(1, array);
-        // stmt.executeUpdate();
-
-
     }
 
     /**
@@ -204,18 +187,19 @@ public class BackendDAO {
             Long inventory_item_id = rs.getLong("inventory_item_id");
 
             if (menu_inventory_assoc.containsKey(menu_item_id)) {
-                // If the key is already present in the HashMap, retrieve the ArrayList and add the value to it
+                // If the key is already present in the HashMap, retrieve the ArrayList and add
+                // the value to it
                 ArrayList<Long> inventory_item_id_list = menu_inventory_assoc.get(menu_item_id);
                 inventory_item_id_list.add(inventory_item_id);
             } else {
-                // If the key is not present in the HashMap, create a new ArrayList, add the value to it, and put it in the HashMap
+                // If the key is not present in the HashMap, create a new ArrayList, add the
+                // value to it, and put it in the HashMap
                 ArrayList<Long> inventory_item_id_list = new ArrayList<>();
                 inventory_item_id_list.add(inventory_item_id);
                 menu_inventory_assoc.put(menu_item_id, inventory_item_id_list);
             }
         }
     }
-
 
     /**
      * Checks if the username and password are valid
