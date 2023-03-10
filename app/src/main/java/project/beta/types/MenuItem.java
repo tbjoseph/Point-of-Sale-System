@@ -55,9 +55,9 @@ public class MenuItem {
     }
 
     /**
-     * Required for use in a PropertyValueFactory
+     * Get the read-only ID of the menu item
      * 
-     * @return the index
+     * @return the id of the menu item
      */
     public Long getIndex() {
         return index;

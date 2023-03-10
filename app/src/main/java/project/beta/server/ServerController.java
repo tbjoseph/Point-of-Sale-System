@@ -141,10 +141,9 @@ public class ServerController {
      */
     public void processCash(ActionEvent event) {
         try {
-            // Add order to order history
-            dao.submitOrder("cash", LocalDateTime.now(), getPrice());
-            // Decrease inventory items
-            // dao.executeQuery("f");
+            dao.submitOrder("cash", LocalDateTime.now(), getPrice(), orders);
+            
+            dao.decreaseInventory(orders);
 
             goToHome(event);
 
@@ -160,10 +159,9 @@ public class ServerController {
      */
     public void processCard(ActionEvent event) {
         try {
-            dao.submitOrder("card", LocalDateTime.now(), getPrice());
+            dao.submitOrder("card", LocalDateTime.now(), getPrice(), orders);
 
-            // Decrease inventory items
-            // dao.executeQuery("f");
+            dao.decreaseInventory(orders);
 
             goToHome(event);
 
@@ -179,10 +177,9 @@ public class ServerController {
      */
     public void processDining(ActionEvent event) {
         try {
-            dao.submitOrder("dining_dollars", LocalDateTime.now(), getPrice());
+            dao.submitOrder("dining_dollars", LocalDateTime.now(), getPrice(), orders);
 
-            // Decrease inventory items
-            // dao.executeQuery("f");
+            dao.decreaseInventory(orders);
 
             goToHome(event);
 
@@ -198,10 +195,9 @@ public class ServerController {
      */
     public void processMealPlan(ActionEvent event) {
         try {
-            dao.submitOrder("meal_plan_both", LocalDateTime.now(), getPrice());
+            dao.submitOrder("meal_plan_both", LocalDateTime.now(), getPrice(), orders);
 
-            // Decrease inventory items
-            // dao.executeQuery("f");
+            dao.decreaseInventory(orders);
 
             goToHome(event);
 
@@ -215,8 +211,14 @@ public class ServerController {
      * 
      * @param dao the DAO to use for this controller
      */
-    public void setDAO(BackendDAO dao) {
+    public void setDAO(BackendDAO dao) { 
         this.dao = dao;
+
+        try {
+            this.dao.construct_menu_inventory_assoc();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
