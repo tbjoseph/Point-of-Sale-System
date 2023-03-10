@@ -106,7 +106,7 @@ public class ServerController {
     public float getPrice() {
         float priceSum = 0;
 
-        for (OrderItem item : orders.getOrders()) {
+        for (OrderItem item : orders.getOrderItems()) {
             switch (item.type) {
                 case BOWL:
                     priceSum += 6.80;
@@ -142,7 +142,7 @@ public class ServerController {
     public void processCash(ActionEvent event) {
         try {
             dao.submitOrder("cash", LocalDateTime.now(), getPrice(), orders);
-            
+
             dao.decreaseInventory(orders);
 
             goToHome(event);
@@ -211,7 +211,7 @@ public class ServerController {
      * 
      * @param dao the DAO to use for this controller
      */
-    public void setDAO(BackendDAO dao) { 
+    public void setDAO(BackendDAO dao) {
         this.dao = dao;
 
         try {
