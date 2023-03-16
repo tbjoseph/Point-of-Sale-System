@@ -79,7 +79,7 @@ public class LoginController {
             // If the permission level is valid, load the appropriate screen
             if (permissionLevel.equals("Employee")) {
                 // Employee is the same as server
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("server_home.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("server/home.fxml"));
                 Parent root = loader.load();
                 ServerHomeController serverController = loader.getController();
                 serverController.setDAO(dao);

@@ -216,7 +216,7 @@ public class ServerHomeController {
      */
     public void nextScreen(ActionEvent event) throws IOException {
         // change the scene to the drinks and appetizer screen
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../server_addons.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("addons.fxml"));
         Parent root = loader.load();
         ServerAddonsController serverController = loader.getController();
         serverController.setDAO(dao);

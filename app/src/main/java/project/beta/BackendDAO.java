@@ -62,10 +62,14 @@ public class BackendDAO {
      * @param price         the price of the order
      * @param orders        the OrderView object
      * 
-     * @throws SQLException if the query fails
+     * @throws SQLException     if the query fails
+     * @throws RuntimeException if the order is empty
      */
     public void submitOrder(String paymentMethod, LocalDateTime date, float price, OrderView orders)
-            throws SQLException {
+            throws SQLException, RuntimeException {
+        if (orders.getOrderItems().size() == 0) {
+            throw new RuntimeException("Cannot submit an empty order");
+        }
         String query = "INSERT INTO order_history (order_date, price, payment_method) VALUES (?, ?, ?) RETURNING id";
         PreparedStatement stmt = connection.prepareStatement(query);
         Timestamp timestamp = Timestamp.valueOf(date);
