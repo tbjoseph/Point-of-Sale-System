@@ -29,7 +29,6 @@ import project.beta.types.OrderItem;
 public class BackendDAO {
     private Connection connection;
 
-    private HashMap<Long, ArrayList<Long>> order_menu_assoc;
     private HashMap<Long, ArrayList<Long>> menu_inventory_assoc;
 
     /**
@@ -63,20 +62,28 @@ public class BackendDAO {
      * @param price         the price of the order
      * @param orders        the OrderView object
      * 
-     * @throws SQLException if the query fails
+     * @throws SQLException     if the query fails
+     * @throws RuntimeException if the order is empty
      */
     public void submitOrder(String paymentMethod, LocalDateTime date, float price, OrderView orders)
-            throws SQLException {
-        String query = "INSERT INTO order_history (order_date, price, payment_method) VALUES (?, ?, ?)";
+            throws SQLException, RuntimeException {
+        if (orders.getOrderItems().size() == 0) {
+            throw new RuntimeException("Cannot submit an empty order");
+        }
+        String query = "INSERT INTO order_history (order_date, price, payment_method) VALUES (?, ?, ?) RETURNING id";
         PreparedStatement stmt = connection.prepareStatement(query);
         Timestamp timestamp = Timestamp.valueOf(date);
         stmt.setTimestamp(1, timestamp);
         stmt.setFloat(2, price);
         stmt.setString(3, paymentMethod);
         // Execute the statement and update the table
-        stmt.executeUpdate();
+        ResultSet rs = stmt.executeQuery();
 
-        // update_order_menu_assoc(orders);
+        while (rs.next()) {
+            Long orderID = rs.getLong("id");
+            update_order_menu_assoc(orderID, orders);
+            return;
+        }
     }
 
     /**
@@ -86,44 +93,31 @@ public class BackendDAO {
      * 
      * @throws SQLException if the query fails
      */
-    public void update_order_menu_assoc(OrderView orders) throws SQLException {
-
-        // Make hash table that maps each (temp) order_id to all of their respective
-        // menu_item ids. orderID is not the actual order_id; that will be decided
-        // during the SQL query.
-
-        order_menu_assoc = new HashMap<>();
-        Long orderID = 0L;
-        for (OrderItem currentOrder : orders.getOrders()) {
-            ArrayList<Long> menuOrderIDs = new ArrayList<>();
-            for (MenuItem currMenuItem : currentOrder.menuItems) {
-                menuOrderIDs.add(currMenuItem.getIndex());
+    public void update_order_menu_assoc(long orderID, OrderView orders) throws SQLException {
+        HashMap<Long, Long> order_menu_assoc = new HashMap<>();
+        for (OrderItem currentItem : orders.getOrderItems()) {
+            for (MenuItem currMenuItem : currentItem.menuItems) {
+                if (order_menu_assoc.containsKey(currMenuItem.getIndex())) {
+                    order_menu_assoc.put(currMenuItem.getIndex(), order_menu_assoc.get(currMenuItem.getIndex()) + 1);
+                } else {
+                    order_menu_assoc.put(currMenuItem.getIndex(), 1L);
+                }
             }
-
-            order_menu_assoc.put(orderID, menuOrderIDs);
-            orderID++;
         }
 
-        // TODO: SQL query to add order_menu_assoc to orders table (for next release)
-        /**
-         * May need to change design
-         * Examine order_ids (outer array) and their respective menu_items (inner array)
-         * until hash is empty:
-         * For a given menu_item, count number of instances, and save count as quantity
-         * Add the order-menu_item pair to assoc table via SQL query. Format is
-         * (order_id, menu_item_id, quantity)
-         * Delete all instance of that menu_item in current inner array to avoid double
-         * counting
-         */
+        String values = "";
 
-        // for (Long key : order_menu_assoc.keySet()) {
-        // ArrayList<Long> menuOrderIDs = order_menu_assoc.get(key);
-        // INSERT INTO orders (order_id, menu_item_id, quantity)
-        // SELECT 'new_order_id', menu_item_id, COUNT(*) AS quantity
-        // FROM orders
-        // WHERE menu_item_id IN (menuItemIDs)
-        // GROUP BY menu_item_id
-        // }
+        for (Long menuItemID : order_menu_assoc.keySet()) {
+            Long quantity = order_menu_assoc.get(menuItemID);
+            values += "(" + orderID + ", " + menuItemID + ", " + quantity + "), ";
+        }
+
+        values = values.substring(0, values.length() - 2);
+
+        String query = "INSERT INTO order_menu_assoc (order_id, menu_item_id, quantity) VALUES " + values;
+
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.executeUpdate();
     }
 
     /**
@@ -135,7 +129,7 @@ public class BackendDAO {
      */
     public void decreaseInventory(OrderView orders) throws SQLException {
 
-        /**
+        /*
          * - Initialize list of all Inventory Ids
          * - Iterate through each OrderItem in the OrderView
          * - Iterate through each MenuItem in the OrderItem
@@ -145,7 +139,7 @@ public class BackendDAO {
 
         ArrayList<Long> inventoryOrderIDs = new ArrayList<>();
 
-        for (OrderItem currentOrder : orders.getOrders()) {
+        for (OrderItem currentOrder : orders.getOrderItems()) {
 
             for (MenuItem currMenuItem : currentOrder.menuItems) {
 
@@ -176,7 +170,8 @@ public class BackendDAO {
      * @throws SQLException if the query fails
      */
     public void construct_menu_inventory_assoc() throws SQLException {
-        // if (menu_inventory_assoc != null) return;
+        if (menu_inventory_assoc != null)
+            return;
 
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM menu_inventory_assoc ORDER BY menu_item_id");

@@ -58,4 +58,5 @@
             <Button text="Add" prefWidth="200.0" onAction="#addMenuItem" />
         </children>
     </HBox>
+    <Button text="Reports" onAction="#openReports" />
 </VBox>

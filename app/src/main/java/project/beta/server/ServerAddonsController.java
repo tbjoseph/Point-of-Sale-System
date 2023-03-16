@@ -73,7 +73,7 @@ public class ServerAddonsController {
      */
     public void back(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("../server_home.fxml"));
+                getClass().getResource("home.fxml"));
         Parent root = loader.load();
         ServerHomeController serverController = loader.getController();
         serverController.setDAO(dao);
@@ -94,7 +94,7 @@ public class ServerAddonsController {
      */
     public void next(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("../server_checkout.fxml"));
+                getClass().getResource("checkout.fxml"));
         Parent root = loader.load();
         ServerController serverController = loader.getController();
         serverController.setDAO(dao);

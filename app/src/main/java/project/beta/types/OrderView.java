@@ -17,13 +17,13 @@ import javafx.geometry.Pos;
  * @author Joshua Downey, Matthew Gimlin
  */
 public class OrderView {
-    private ArrayList<OrderItem> order;
+    private ArrayList<OrderItem> orderItems;
 
     /**
      * Constructs a new OrderView object.
      */
     public OrderView() {
-        order = new ArrayList<OrderItem>();
+        orderItems = new ArrayList<OrderItem>();
     }
 
     /**
@@ -32,7 +32,7 @@ public class OrderView {
      * @param item Item to add to the order.
      */
     public void addOrderItem(OrderItem item) {
-        order.add(item);
+        orderItems.add(item);
     }
 
     /**
@@ -44,7 +44,7 @@ public class OrderView {
         view.getChildren().clear();
 
         boolean first = true;
-        for (OrderItem item : order) {
+        for (OrderItem item : orderItems) {
             // add a separator between order items
             if (first) {
                 first = false;
@@ -55,7 +55,7 @@ public class OrderView {
 
             // order blocks all have same structure
             HBox orderBlock = new HBox();
-            VBox orderItems = new VBox();
+            VBox orderItemView = new VBox();
             Button plusButton = new Button("+");
             Label amount = new Label(String.valueOf(item.amount));
             Button minusButton = new Button("-");
@@ -73,22 +73,22 @@ public class OrderView {
                 public void handle(ActionEvent event) {
                     item.amount--;
                     if (item.amount < 1) {
-                        order.remove(item);
+                        orderItems.remove(item);
                     }
                     updateView(view);
                 }
             });
 
-            orderBlock.getChildren().addAll(orderItems, minusButton, amount, plusButton);
+            orderBlock.getChildren().addAll(orderItemView, minusButton, amount, plusButton);
             orderBlock.getStyleClass().add("order-item");
             orderBlock.setPrefHeight(20);
-            orderItems.setMaxWidth(Double.MAX_VALUE);
-            orderItems.setMaxHeight(20);
+            orderItemView.setMaxWidth(Double.MAX_VALUE);
+            orderItemView.setMaxHeight(20);
             plusButton.setMaxHeight(20);
             amount.setMaxHeight(20);
             minusButton.setMaxHeight(20);
             orderBlock.setAlignment(Pos.CENTER_LEFT);
-            HBox.setHgrow(orderItems, Priority.ALWAYS);
+            HBox.setHgrow(orderItemView, Priority.ALWAYS);
 
             // meals display the meal type with the sides and entrees indented below
             // a la carte items have no special indents
@@ -97,17 +97,17 @@ public class OrderView {
             switch (item.type) {
                 case BOWL:
                     typeLabel.textProperty().set("Bowl");
-                    orderItems.getChildren().add(typeLabel);
+                    orderItemView.getChildren().add(typeLabel);
                     break;
 
                 case PLATE:
                     typeLabel.textProperty().set("Plate");
-                    orderItems.getChildren().add(typeLabel);
+                    orderItemView.getChildren().add(typeLabel);
                     break;
 
                 case BIGGER_PLATE:
                     typeLabel.textProperty().set("Bigger Plate");
-                    orderItems.getChildren().add(typeLabel);
+                    orderItemView.getChildren().add(typeLabel);
                     break;
 
                 default:
@@ -120,7 +120,7 @@ public class OrderView {
                 foodItem.setMaxWidth(Double.MAX_VALUE);
                 foodItem.setPrefHeight(20);
                 foodItem.setStyle("-fx-padding: 0 0 0 20;");
-                orderItems.getChildren().add(foodItem);
+                orderItemView.getChildren().add(foodItem);
             }
 
             view.getChildren().add(orderBlock);
@@ -128,11 +128,11 @@ public class OrderView {
     }
 
     /**
-     * Returns the current orders.
+     * Returns the items in this order.
      * 
-     * @return The current orders.
+     * @return The current order items.
      */
-    public ArrayList<OrderItem> getOrders() {
-        return order;
+    public ArrayList<OrderItem> getOrderItems() {
+        return orderItems;
     }
 }

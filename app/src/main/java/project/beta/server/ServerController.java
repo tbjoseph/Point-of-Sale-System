@@ -60,7 +60,7 @@ public class ServerController {
      * @throws IOException if the file is not found
      */
     public void backButton(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../server_addons.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("addons.fxml"));
         Parent root = loader.load();
 
         ServerAddonsController serverController = loader.getController();
@@ -81,7 +81,7 @@ public class ServerController {
      */
     public void goToHome(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../server_home.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));
             Parent root = loader.load();
 
             ServerHomeController serverController = loader.getController();
@@ -106,7 +106,7 @@ public class ServerController {
     public float getPrice() {
         float priceSum = 0;
 
-        for (OrderItem item : orders.getOrders()) {
+        for (OrderItem item : orders.getOrderItems()) {
             switch (item.type) {
                 case BOWL:
                     priceSum += 6.80;
@@ -142,12 +142,14 @@ public class ServerController {
     public void processCash(ActionEvent event) {
         try {
             dao.submitOrder("cash", LocalDateTime.now(), getPrice(), orders);
-            
+
             dao.decreaseInventory(orders);
 
             goToHome(event);
 
         } catch (SQLException e) {
+            handleError(e);
+        } catch (RuntimeException e) {
             handleError(e);
         }
     }
@@ -167,6 +169,8 @@ public class ServerController {
 
         } catch (SQLException e) {
             handleError(e);
+        } catch (RuntimeException e) {
+            handleError(e);
         }
     }
 
@@ -184,6 +188,8 @@ public class ServerController {
             goToHome(event);
 
         } catch (SQLException e) {
+            handleError(e);
+        } catch (RuntimeException e) {
             handleError(e);
         }
     }
@@ -203,6 +209,8 @@ public class ServerController {
 
         } catch (SQLException e) {
             handleError(e);
+        } catch (RuntimeException e) {
+            handleError(e);
         }
     }
 
@@ -211,7 +219,7 @@ public class ServerController {
      * 
      * @param dao the DAO to use for this controller
      */
-    public void setDAO(BackendDAO dao) { 
+    public void setDAO(BackendDAO dao) {
         this.dao = dao;
 
         try {
@@ -252,6 +260,19 @@ public class ServerController {
     private void handleError(IOException exception) {
         errorPane.setVisible(true);
         errorText.textProperty().set("Warning: an error when changing scenes. See the log for details.");
+        exception.printStackTrace();
+    }
+
+    /**
+     * Handles a RuntimeException by printing the error to the console and setting
+     * the
+     * errorText label.
+     * 
+     * @param exception - the exception to handle
+     */
+    private void handleError(RuntimeException exception) {
+        errorPane.setVisible(true);
+        errorText.textProperty().set("Warning: " + exception.getMessage());
         exception.printStackTrace();
     }
 
