@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.reports.ReportsHomeController">
+    <children>
+        <VBox>
+            <children>
+                <Label text="Sales Report" />
+                <HBox>
+                    <children>
+                        <Label text="Start Time:" />
+                        <DatePicker fx:id="salesStartDatePicker" />
+                        <TextField fx:id="salesStartTimePicker" />
+                        <Label text="End Time:" />
+                        <DatePicker fx:id="salesEndDatePicker" />
+                        <TextField fx:id="salesEndTimePicker" />
+                        <Button text="Generate" onAction="#generateSalesReport" />
+                    </children>
+                </HBox>
+                <Label text="X and Z reports" />
+                <HBox>
+                    <children>
+                        <Button text="Generate X" onAction="#generateXReport" />
+                        <Button text="Generate Z" onAction="#generateZReport" />
+                    </children>
+                </HBox>
+                <Label text="Excess Report" />
+                <HBox>
+                    <children>
+                        <Label text="Timestamp:" />
+                        <DatePicker fx:id="timestampDatePicker" />
+                        <TextField fx:id="timestampTimePicker" />
+                        <Button text="Generate" onAction="#generateExcessReport" />
+                    </children>
+                </HBox>
+                <Label text="Restock Report" />
+                <HBox>
+                    <children>
+                        <Button text="Generate" onAction="#generateRestockReport" />
+                    </children>
+                </HBox>
+                <Label text="What Sells Together" />
+                <HBox>
+                    <children>
+                        <Label text="Start Time:" />
+                        <DatePicker fx:id="sellsStartDatePicker" />
+                        <TextField fx:id="sellsStartTimePicker" />
+                        <Label text="End Time:" />
+                        <DatePicker fx:id="sellsEndDatePicker" />
+                        <TextField fx:id="sellsEndTimePicker" />
+                        <Button text="Generate" onAction="#generateSellsTogetherReport" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+
+        <VBox fx:id="errorPane" alignment="CENTER">
+            <children>
+                <Label fx:id="errorText" layoutX="10.0" layoutY="10.0" text="" />
+                <Button layoutX="10.0" layoutY="10.0" text="Close" onAction="#closeErrorPane"/>
+            </children>
+        </VBox>
+    </children>
+</StackPane>

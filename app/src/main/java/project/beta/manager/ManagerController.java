@@ -4,6 +4,10 @@ import project.beta.BackendDAO;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -11,12 +15,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 import javafx.util.converter.FloatStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import project.beta.manager.ManagerController;
+import project.beta.reports.ReportsHomeController;
 import project.beta.types.InventoryItem;
 import project.beta.types.MenuItem;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.function.Consumer;
@@ -282,5 +289,17 @@ public class ManagerController {
     private void handleError(SQLException exception) {
         errorText.textProperty().set("Warning: an error occurred with the database. See the log for details.");
         exception.printStackTrace();
+    }
+
+    public void openReports(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../reports/home.fxml"));
+        Parent root = loader.load();
+        ReportsHomeController controller = loader.getController();
+        controller.setDAO(dao);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 }
