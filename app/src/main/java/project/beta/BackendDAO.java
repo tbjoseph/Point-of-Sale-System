@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 import project.beta.types.InventoryItem;
 import project.beta.types.MenuItem;
+import project.beta.types.Association;
 import project.beta.types.OrderView;
 import project.beta.types.OrderItem;
 
@@ -246,7 +247,7 @@ public class BackendDAO {
     }
 
     /**
-     * Gets the inventory items from the database
+     * Gets the menu items from the database
      * 
      * @param menuNameString   name of the menu item
      * @param mealTypeField    meal type of the menu item
@@ -267,6 +268,44 @@ public class BackendDAO {
         stmt.setFloat(4, price_small);
         stmt.setFloat(5, price_med);
         stmt.setFloat(6, price_large);
+        stmt.executeUpdate();
+    }
+
+    /**
+     * Adds the inventory item to the database
+     * 
+     * @param inventoryID  id for inventory item
+     * @param itemName     name of inventory item
+     * @param quantity     quantity of inventory it
+     * @param shipmentSize size of shipment of inventory item
+     * 
+     * @throws SQLException if the query fails
+     */
+    public void addInventoryItem(Long inventoryID, String itemName, Integer quantity, Integer shipmentSize)
+            throws SQLException {
+        String query = "INSERT INTO inventory_items (inventory_id, item_name, quantity, shipment_size) VALUES (?, ?, ?, ?)";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setLong(1, inventoryID);
+        stmt.setString(2, itemName);
+        stmt.setInt(3, quantity);
+        stmt.setInt(4, shipmentSize);
+        stmt.executeUpdate();
+    }
+
+    /**
+     * Adds the association to the database
+     * 
+     * @param menuID      id for menu item
+     * @param inventoryID id for inventory item
+     * 
+     * @throws SQLException if the query fails
+     */
+    public void addAssociation(Long menuID, Long inventoryID)
+            throws SQLException {
+        String query = "INSERT INTO menu_inventory_assoc (menu_item_id, inventory_item_id) VALUES (?, ?)";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setLong(1, menuID);
+        stmt.setLong(2, inventoryID);
         stmt.executeUpdate();
     }
 
@@ -326,6 +365,30 @@ public class BackendDAO {
     }
 
     /**
+     * Updates the associations from the database
+     * 
+     * @param association association between menuId and inventoryId to update
+     * 
+     * @throws SQLException if the query fails
+     */
+    public void updateAssociations(Association association) throws SQLException {
+        // Create an SQL statement to update the data
+        String query = "UPDATE menu_inventory_assoc SET inventory_item_id = ? WHERE menu_item_id = ?";
+
+        // Prepare the statement and set the parameters
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setLong(1, association.inventoryId);
+        stmt.setLong(2, association.menuId);
+        // Execute the statement and check the number of rows affected
+        int rows = stmt.executeUpdate();
+        if (rows == 1) {
+            System.out.println("Inventory item updated successfully");
+        } else {
+            System.out.println("Failed to update inventory item");
+        }
+    }
+
+    /**
      * Gets the menu items from the database
      * 
      * @return the menu items from the database
@@ -355,5 +418,17 @@ public class BackendDAO {
     public ResultSet getInventoryItems() throws SQLException {
         Statement stmt = connection.createStatement();
         return stmt.executeQuery("SELECT * FROM inventory_items ORDER BY inventory_id");
+    }
+
+    /**
+     * Gets the Associations from the database
+     * 
+     * @return the associations from the database
+     * 
+     * @throws SQLException if the query fails
+     */
+    public ResultSet getAssociations() throws SQLException {
+        Statement stmt = connection.createStatement();
+        return stmt.executeQuery("SELECT * FROM menu_inventory_assoc ORDER BY menu_item_id");
     }
 }
