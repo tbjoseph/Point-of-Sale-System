@@ -66,7 +66,20 @@ public class ExcessReportController {
      * @throws SQLException if a database error occurs.
      */
     public void createTextAreas() throws SQLException {
-        
+        excessCont.getChildren().clear();
+
+        for (String item : excessList) {
+            TextArea text = new TextArea(item);
+            text.setMaxHeight(Double.MAX_VALUE);
+            text.setMaxWidth(Double.MAX_VALUE);
+            text.setWrapText(true);
+
+            HBox.setHgrow(text, Priority.ALWAYS);
+            excessCont.getChildren().add(text);
+
+            text.autosize();
+        }
+        excessCont.autosize();
     }
 }
 
