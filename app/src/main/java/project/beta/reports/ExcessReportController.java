@@ -44,7 +44,30 @@ public class ExcessReportController {
         }
     }
 
+    public void output_excess() throws SQLException {
+        for(Pair<String, Long> item : inventory_data.keySet()) {
 
+            if (dao.restock(item.getKey(), timestamp)) continue;
+
+            double excess_ratio = (double) item.getValue() / (double) ( item.getValue() + inventory_data.get(item) );
+
+            if (excess_ratio > 0.1) continue;
+
+            excessList.add(item.getKey());
+            
+        }
+
+        createTextAreas();
+    }
+
+    /**
+     * Dynamically creates TextAreas for each inventory item with excess.
+     * 
+     * @throws SQLException if a database error occurs.
+     */
+    public void createTextAreas() throws SQLException {
+        
+    }
 }
 
 
