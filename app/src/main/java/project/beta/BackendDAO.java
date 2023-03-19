@@ -6,10 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.function.DoubleBinaryOperator;
+import javafx.util.Pair;
+
 
 import project.beta.types.InventoryItem;
 import project.beta.types.MenuItem;
@@ -30,6 +34,7 @@ public class BackendDAO {
     private Connection connection;
 
     private HashMap<Long, ArrayList<Long>> menu_inventory_assoc;
+    private HashMap<Pair<String, Long>, Long> inventory_data;
 
     /**
      * Default constructor for BackendDAO. Requires the environment variables
@@ -194,6 +199,41 @@ public class BackendDAO {
                 menu_inventory_assoc.put(menu_item_id, inventory_item_id_list);
             }
         }
+    }
+
+    /**
+     * Constructs hash map for inventory_data
+     * 
+     * @throws SQLException if the query fails
+     */
+    public HashMap<Pair<String, Long>, Long> construct_inventory_data(Timestamp timestamp) throws SQLException {
+
+        //Initialize all inventory items to have been a part of 0 orders
+        Statement stmt0 = connection.createStatement();
+        ResultSet rs0 = stmt0.executeQuery("SELECT item_name,quantity FROM inventory_items");
+
+        while (rs0.next()) {
+            String item_name = rs0.getString("item_name");
+            Long quantity = rs0.getLong("quantity");
+
+            Pair<String, Long> pair = new Pair<>(item_name, quantity); // name and remaining stock for a given item
+            inventory_data.put(pair, 0L);
+        }
+
+
+        return inventory_data;
+    }
+
+    /**
+     * Checks if restock of given item has occured after the timestamp
+     * 
+     * @param item_name item to check
+     * @param timestamp timestamp to check
+     * @return true if a restock has occured, false otherwise
+     */
+    public boolean restock(String item_name, Timestamp timestamp) {
+     
+        return false;
     }
 
     /**
