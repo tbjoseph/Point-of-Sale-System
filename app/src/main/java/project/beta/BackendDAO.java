@@ -247,7 +247,20 @@ public class BackendDAO {
      * @return true if a restock has occured, false otherwise
      */
     public boolean restock(String item_name, Timestamp timestamp) {
-        
+        try {
+            PreparedStatement statement = connection
+                    .prepareStatement("SELECT shipment_date,item_name FROM shipment_history WHERE shipment_date > ? AND item_name = ?");
+            statement.setTimestamp(1, timestamp);
+            statement.setString(2, item_name);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            // here we opt to not propagate the exception, and instead just return false.
+            System.err.println(e);
+            return false;
+        }
         return false;
     }
 
