@@ -12,7 +12,6 @@
    <children>
       <VBox GridPane.columnIndex="0" GridPane.vgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity">
          <children>
-            <!-- sides -->
             <Label styleClass="header" text="Excess Report" />
             <HBox prefHeight="100.0" fx:id="excessCont">
                <children>
