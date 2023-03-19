@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.reports.ExcessReportController">
+   <children>
+        <Label text="Excess Report" />
+   </children>
+
+
+   <children>
+      <VBox GridPane.columnIndex="0" GridPane.vgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity">
+         <children>
+            <!-- sides -->
+            <Label styleClass="header" text="Excess Report" />
+            <HBox prefHeight="100.0" fx:id="excessCont">
+               <children>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" percentWidth="70.0" />
+      <ColumnConstraints hgrow="SOMETIMES" percentWidth="30.0" />
+   </columnConstraints>
+</VBox>
