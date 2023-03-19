@@ -207,7 +207,7 @@ public class BackendDAO {
      */
     public HashMap<Pair<String, Long>, Long> construct_inventory_data(Timestamp timestamp) throws SQLException {
 
-        //Initialize all inventory items to have been a part of 0 orders
+        // Initialize all inventory items to have been a part of 0 orders
         Statement stmt0 = connection.createStatement();
         ResultSet rs0 = stmt0.executeQuery("SELECT item_name,quantity FROM inventory_items");
         inventory_data = new HashMap<>();
@@ -221,7 +221,7 @@ public class BackendDAO {
             inventory_data.put(pair, 0L);
         }
 
-        //Record number of item instances in order history
+        // Record number of item instances in order history
         String query = "SELECT i.item_name,i.quantity FROM order_history o JOIN order_menu_assoc a ON a.order_id = o.id JOIN menu_items m ON m.id = a.menu_item_id JOIN menu_inventory_assoc b ON b.menu_item_id = m.id JOIN inventory_items i ON i.inventory_id = b.inventory_item_id WHERE o.order_date > ?";
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setTimestamp(1, timestamp);
@@ -234,7 +234,7 @@ public class BackendDAO {
             Pair<String, Long> pair = new Pair<>(item_name, quantity); // name and remaining stock for a given item
 
             Long inventory_sold = inventory_data.get(pair);
-            inventory_data.put(pair, (inventory_sold + 1L) );
+            inventory_data.put(pair, (inventory_sold + 1L));
         }
 
         return inventory_data;
@@ -250,7 +250,8 @@ public class BackendDAO {
     public boolean restock(String item_name, Timestamp timestamp) {
         try {
             PreparedStatement statement = connection
-                    .prepareStatement("SELECT shipment_date,item_name FROM shipment_history WHERE shipment_date > ? AND item_name = ?");
+                    .prepareStatement(
+                            "SELECT shipment_date,item_name FROM shipment_history WHERE shipment_date > ? AND item_name = ?");
             statement.setTimestamp(1, timestamp);
             statement.setString(2, item_name);
             ResultSet rs = statement.executeQuery();
