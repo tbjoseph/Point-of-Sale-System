@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.util.Pair;
 
-
 import project.beta.types.InventoryItem;
 import project.beta.types.MenuItem;
 import project.beta.types.OrderView;
