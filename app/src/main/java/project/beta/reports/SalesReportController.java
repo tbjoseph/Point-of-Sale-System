@@ -1,6 +1,9 @@
 package project.beta.reports;
 
 import java.sql.Timestamp;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 // FIXME:
 import java.io.*;
@@ -16,6 +19,24 @@ public class SalesReportController {
 
     }
 
+    public void generateReport() {
+        // TODO:
+        try {
+            ArrayList<Long> orderIDs = dao.getOrderIDs(startDate, endDate);
+            for (long orderID : orderIDs) {
+                System.out.println(orderID + ":");
+
+                ArrayList<Long> menuIDs = dao.getOrderMenuIDs(orderID);
+                for (long menuID : menuIDs) {
+                    String name = dao.getMenuItemByID(menuID);
+                    System.out.println("    " + name);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
     /**
      * Pass down the DAO to use for this controller
      * 
@@ -25,6 +46,12 @@ public class SalesReportController {
         this.dao = dao;
     }
 
+    /**
+     * Gets a time window for the sales report.
+     * 
+     * @param start Start time.
+     * @param end   End time.
+     */
     public void setInputs(Timestamp start, Timestamp end) {
         this.startDate = start;
         this.endDate = end;

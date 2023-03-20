@@ -85,6 +85,9 @@ public class ReportsHomeController {
         Timestamp end = parseTimestamp(salesEndDatePicker.getValue(), salesEndTimePicker.getText());
         controller.setInputs(start, end);
 
+        // generate sales report after DAO and timestamps are passed down
+        controller.generateReport();
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
