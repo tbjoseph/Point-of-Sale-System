@@ -18,8 +18,11 @@ public class ExcessReportController {
     private HashMap<Pair<String, Long>, Long> inventory_data;
     private ArrayList<String> excessList;
 
+    // @FXML
+    // private HBox excessCont;
+
     @FXML
-    private HBox excessCont;
+    private TextArea textArea;
 
     public void initialize() {
 
@@ -39,48 +42,33 @@ public class ExcessReportController {
 
         try {
             inventory_data = dao.construct_inventory_data(this.timestamp);
+            output_excess();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void output_excess() throws SQLException {
+        excessList = new ArrayList<>();
+
         for(Pair<String, Long> item : inventory_data.keySet()) {
+
 
             if (dao.restock(item.getKey(), timestamp)) continue;
 
-            double excess_ratio = (double) item.getValue() / (double) ( item.getValue() + inventory_data.get(item) );
-
+            Long inventory_sold = inventory_data.get(item);
+            double excess_ratio = (double) inventory_sold / (double) ( item.getValue() + inventory_sold );
+            
             if (excess_ratio > 0.1) continue;
-
+            
             excessList.add(item.getKey());
             
         }
 
-        createTextAreas();
+        String joinedStrings = String.join("\n", excessList);
+        textArea.setText(joinedStrings);
     }
 
-    /**
-     * Dynamically creates TextAreas for each inventory item with excess.
-     * 
-     * @throws SQLException if a database error occurs.
-     */
-    public void createTextAreas() throws SQLException {
-        excessCont.getChildren().clear();
-
-        for (String item : excessList) {
-            TextArea text = new TextArea(item);
-            text.setMaxHeight(Double.MAX_VALUE);
-            text.setMaxWidth(Double.MAX_VALUE);
-            text.setWrapText(true);
-
-            HBox.setHgrow(text, Priority.ALWAYS);
-            excessCont.getChildren().add(text);
-
-            text.autosize();
-        }
-        excessCont.autosize();
-    }
 }
 
 
