@@ -37,6 +37,15 @@ public class ReportsHomeController {
     TextField salesEndTimePicker;
 
     @FXML
+    DatePicker sellsStartDatePicker;
+    @FXML
+    TextField sellsStartTimePicker;
+    @FXML
+    DatePicker sellsEndDatePicker;
+    @FXML
+    TextField sellsEndTimePicker;
+
+    @FXML
     DatePicker timestampDatePicker;
     // @FXML
 
@@ -71,28 +80,9 @@ public class ReportsHomeController {
         SalesReportController controller = loader.getController();
         controller.setDAO(dao);
 
-        try {
-            // set any necessary data from the inputs
-            LocalDate date = salesStartDatePicker.getValue();
-            String time = salesStartTimePicker.getText();
-            // prepend a 0 if the hour is only one digit
-            if (time.split(":")[0].length() == 1) {
-                time = "0" + time;
-            }
-            LocalTime time2 = LocalTime.parse(time);
-            Timestamp start = Timestamp.valueOf(date.atTime(time2));
-            date = salesEndDatePicker.getValue();
-            time = salesEndTimePicker.getText();
-            if (time.split(":")[0].length() == 1) {
-                time = "0" + time;
-            }
-            time2 = LocalTime.parse(time);
-            Timestamp end = Timestamp.valueOf(date.atTime(time2));
-            controller.setInputs(start, end);
-        } catch (DateTimeParseException e) {
-            handleError(e);
-            return;
-        }
+        Timestamp start = parseTimestamp(salesStartDatePicker.getValue(), salesStartTimePicker.getText());
+        Timestamp end = parseTimestamp(salesEndDatePicker.getValue(), salesEndTimePicker.getText());
+        controller.setInputs(start, end);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -148,7 +138,22 @@ public class ReportsHomeController {
      * @throws IOException if the file is not found
      */
     public void generateSellsTogetherReport(ActionEvent event) throws IOException {
-        // TODO
+        // get the sales controller and load it
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("sells_report.fxml"));
+        Parent root = loader.load();
+        SellsReportController controller = loader.getController();
+        controller.setDAO(dao);
+
+        Timestamp start = parseTimestamp(sellsStartDatePicker.getValue(), sellsStartTimePicker.getText());
+        Timestamp end = parseTimestamp(sellsEndDatePicker.getValue(), sellsEndTimePicker.getText());
+        controller.setInputs(start, end);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("sells_report.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
@@ -168,7 +173,7 @@ public class ReportsHomeController {
      */
     private void handleError(DateTimeParseException exception) {
         errorPane.setVisible(true);
-        errorText.textProperty().set("Warning: " + exception.getMessage());
+        errorText.textProperty().set("Please enter a valid date.");
         exception.printStackTrace();
     }
 
@@ -179,5 +184,22 @@ public class ReportsHomeController {
      */
     public void closeErrorPane(ActionEvent event) {
         errorPane.setVisible(false);
+    }
+
+    private Timestamp parseTimestamp(LocalDate date, String time) {
+        try {
+            if (time.strip().equals("")) {
+                time = "00:00";
+            }
+            // prepend a 0 if the hour is only one digit
+            if (time.split(":")[0].length() == 1) {
+                time = "0" + time;
+            }
+            LocalTime time2 = LocalTime.parse(time);
+            return Timestamp.valueOf(date.atTime(time2));
+        } catch (DateTimeParseException e) {
+            handleError(e);
+            return null;
+        }
     }
 }

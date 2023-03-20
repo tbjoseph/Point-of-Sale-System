@@ -345,6 +345,30 @@ public class BackendDAO {
         return menuItems;
     }
 
+    public HashMap<Long, ArrayList<Long>> getOrdersToMenuItems(Timestamp start, Timestamp end) throws SQLException {
+        String query = "SELECT a.order_id,a.menu_item_id FROM order_history o JOIN order_menu_assoc a ON a.order_id = o.id WHERE o.order_date BETWEEN ? AND ?";
+
+        // Prepare the statement and set the parameters
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setTimestamp(1, start);
+        stmt.setTimestamp(2, end);
+        // Execute the statement
+        ResultSet rs = stmt.executeQuery();
+        HashMap<Long, ArrayList<Long>> association = new HashMap<>();
+        while (rs.next()) {
+            long order_id = rs.getLong("order_id");
+            long menu_item_id = rs.getLong("menu_item_id");
+            if (association.containsKey(order_id)) {
+                association.get(order_id).add(menu_item_id);
+            } else {
+                ArrayList<Long> menuItems = new ArrayList<>();
+                menuItems.add(menu_item_id);
+                association.put(order_id, menuItems);
+            }
+        }
+        return association;
+    }
+
     /**
      * Gets the inventory items from the database
      * 
