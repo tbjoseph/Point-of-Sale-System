@@ -21,9 +21,4 @@
          </children>
       </VBox>
    </children>
-   <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" percentWidth="70.0" />
-      <ColumnConstraints hgrow="SOMETIMES" percentWidth="30.0" />
-   </columnConstraints>
-
 </GridPane>
