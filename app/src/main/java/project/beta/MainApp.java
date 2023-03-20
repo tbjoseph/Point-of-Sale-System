@@ -37,8 +37,8 @@ public class MainApp extends Application {
         stage.setScene(scene);
 
         // Uncomment to go full screen
-        // stage.setFullScreen(true);
-        // stage.setFullScreenExitHint("Press ESC to exit full screen");
+        stage.setFullScreen(true);
+        stage.setFullScreenExitHint("Press ESC to exit full screen");
         stage.show();
     }
 

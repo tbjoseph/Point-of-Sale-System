@@ -16,18 +16,19 @@
 
 .table-view .table-cell {
     -fx-border-color: transparent;
+    -fx-text-fill: black;
 }
 
-.table-row-cell: hover {
+.table-row-cell hover {
     -fx-background-color: slate3;
     -fx-text-fill: cream;
 }
 
-.table-row-cell: odd {
+.table-row-cell odd {
     -fx-background-color: slate;
 }
 
-.table-row-cell: even {
+.table-row-cell even {
     -fx-background-color: slate2;
 }
 
