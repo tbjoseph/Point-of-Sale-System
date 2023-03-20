@@ -5,10 +5,8 @@ import java.util.HashMap;
 import java.sql.Timestamp;
 import java.sql.SQLException;
 import javafx.util.Pair;
-import javafx.scene.layout.HBox;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Priority;
 
 import project.beta.BackendDAO;
 
