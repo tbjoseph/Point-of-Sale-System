@@ -25,6 +25,7 @@
                 <TableColumn fx:id="itemNameCol" prefWidth="200.0" text="Item Name" />
                 <TableColumn fx:id="quantityCol" prefWidth="150.0" text="Quantity" />
                 <TableColumn fx:id="shipmentSizeCol" prefWidth="150.0" text="Shipment Size" />
+                <TableColumn fx:id="thresholdCol" prefWidth="150.0" text="Restock Threshold" />
             </columns>
         </TableView>
         <TableView fx:id="menuTable" layoutX="26.0" layoutY="34.0">
@@ -65,6 +66,7 @@
             <TextField fx:id="itemNameField" promptText="Item Name" />
             <TextField fx:id="quantityField" promptText="Quantity" />
             <TextField fx:id="shipmentField" promptText="Shipment Size" />
+            <TextField fx:id="restockField" promptText="Restock Threshold" />
             <Label fx:id="errorText" text="" />
             <Button text="Add" prefWidth="200.0" onAction="#addInventoryItem" />
         </children>

@@ -48,6 +48,8 @@ public class ManagerController {
     private TableColumn<InventoryItem, Integer> quantityCol;
     @FXML
     private TableColumn<InventoryItem, Integer> shipmentSizeCol;
+    @FXML
+    private TableColumn<InventoryItem, Integer> thresholdCol;
 
     @FXML
     private TableView<MenuItem> menuTable;
@@ -100,6 +102,8 @@ public class ManagerController {
     private TextField quantityField;
     @FXML
     private TextField shipmentField;
+    @FXML
+    private TextField restockField;
 
     @FXML
     private HBox addAssociation;
@@ -234,6 +238,13 @@ public class ManagerController {
             inventoryItem.shipmentSize = event.getNewValue();
             updateInventory.accept(inventoryItem);
         });
+
+        thresholdCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        thresholdCol.setOnEditCommit(event -> {
+            InventoryItem inventoryItem = event.getRowValue();
+            inventoryItem.restockThreshold = event.getNewValue();
+            updateInventory.accept(inventoryItem);
+        });
     
         assocTable.setEditable(true);
 
@@ -318,12 +329,14 @@ public class ManagerController {
             itemNameCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<String>(r.getValue().itemName));
             quantityCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Integer>(r.getValue().quantity));
             shipmentSizeCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Integer>(r.getValue().shipmentSize));
+            thresholdCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Integer>(r.getValue().restockThreshold));
             while (rs.next()) {
                 Long inventoryId = rs.getLong("inventory_id");
                 String itemName = rs.getString("item_name");
                 int quantity = rs.getInt("quantity");
                 int shipmentSize = rs.getInt("shipment_size");
-                InventoryItem item = new InventoryItem(inventoryId, itemName, quantity, shipmentSize);
+                int restockThreshold = rs.getInt("restock_threshold");
+                InventoryItem item = new InventoryItem(inventoryId, itemName, quantity, shipmentSize, restockThreshold);
                 inventoryTable.getItems().add(item);
             }
         } catch (SQLException e) {
@@ -403,7 +416,8 @@ public class ManagerController {
             String itemNameString = this.itemNameField.getText();
             Integer quantityInt = Integer.parseInt(this.quantityField.getText());
             Integer shipmentSizeInt = Integer.parseInt(this.shipmentField.getText());
-            dao.addInventoryItem(itemNumber, itemNameString, quantityInt, shipmentSizeInt);
+            Integer restockThreshold = Integer.parseInt(this.restockField.getText());
+            dao.addInventoryItem(itemNumber, itemNameString, quantityInt, shipmentSizeInt, restockThreshold);
             showInventoryTable(event);
         } catch (SQLException e) {
             handleError(e);

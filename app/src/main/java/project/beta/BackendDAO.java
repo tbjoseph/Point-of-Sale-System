@@ -274,21 +274,24 @@ public class BackendDAO {
     /**
      * Adds the inventory item to the database
      * 
-     * @param inventoryID  id for inventory item
-     * @param itemName     name of inventory item
-     * @param quantity     quantity of inventory it
-     * @param shipmentSize size of shipment of inventory item
+     * @param inventoryID      id for inventory item
+     * @param itemName         name of inventory item
+     * @param quantity         quantity of inventory it
+     * @param shipmentSize     size of shipment of inventory item
+     * @param restockThreshold threshold for inventory item to be restocked
      * 
      * @throws SQLException if the query fails
      */
-    public void addInventoryItem(Long inventoryID, String itemName, Integer quantity, Integer shipmentSize)
+    public void addInventoryItem(Long inventoryID, String itemName, Integer quantity, Integer shipmentSize,
+            Integer restockThreshold)
             throws SQLException {
-        String query = "INSERT INTO inventory_items (inventory_id, item_name, quantity, shipment_size) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO inventory_items (inventory_id, item_name, quantity, shipment_size, restock_threshold) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setLong(1, inventoryID);
         stmt.setString(2, itemName);
         stmt.setInt(3, quantity);
         stmt.setInt(4, shipmentSize);
+        stmt.setInt(5, restockThreshold);
         stmt.executeUpdate();
     }
 
@@ -347,14 +350,16 @@ public class BackendDAO {
      */
     public void updateInventory(InventoryItem inventory) throws SQLException {
         // Create an SQL statement to update the data
-        String query = "UPDATE inventory_items SET item_name=?, quantity=?, shipment_size=? WHERE inventory_id = ?";
+        String query = "UPDATE inventory_items SET item_name=?, quantity=?, shipment_size=?, restock_threshold=? WHERE inventory_id = ?";
 
         // Prepare the statement and set the parameters
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, inventory.itemName);
         stmt.setInt(2, inventory.quantity);
         stmt.setInt(3, inventory.shipmentSize);
-        stmt.setLong(4, inventory.inventoryId);
+        stmt.setInt(4, inventory.restockThreshold);
+        stmt.setLong(5, inventory.inventoryId);
+
         // Execute the statement and check the number of rows affected
         int rows = stmt.executeUpdate();
         if (rows == 1) {
