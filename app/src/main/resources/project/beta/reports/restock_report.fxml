@@ -15,7 +15,7 @@
                 <TableColumn fx:id="itemNameCol" prefWidth="200.0" text="Item Name" />
                 <TableColumn fx:id="quantityCol" prefWidth="150.0" text="Quantity" />
                 <TableColumn fx:id="shipmentSizeCol" prefWidth="150.0" text="Shipment Size" />
-                <TableColumn fx:id="restockThreshold" prefWidth="150.0" text="Restock Threshold" />
+                <TableColumn fx:id="thresholdCol" prefWidth="150.0" text="Restock Threshold" />
             </columns>
         </TableView>
     </children>

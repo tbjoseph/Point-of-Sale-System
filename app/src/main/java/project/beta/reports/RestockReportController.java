@@ -28,7 +28,7 @@ public class RestockReportController {
     @FXML
     private TableColumn<InventoryItem, Integer> shipmentSizeCol;
     @FXML
-    private TableColumn<InventoryItem, Integer> restockThreshold;
+    private TableColumn<InventoryItem, Integer> thresholdCol;
 
     public void initialize() {
 
@@ -42,12 +42,14 @@ public class RestockReportController {
             itemNameCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<String>(r.getValue().itemName));
             quantityCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Integer>(r.getValue().quantity));
             shipmentSizeCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Integer>(r.getValue().shipmentSize));
+            thresholdCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Integer>(r.getValue().restockThreshold));
             while (rs.next()) {
                 Long inventoryId = rs.getLong("inventory_id");
                 String itemName = rs.getString("item_name");
                 int quantity = rs.getInt("quantity");
                 int shipmentSize = rs.getInt("shipment_size");
-                InventoryItem item = new InventoryItem(inventoryId, itemName, quantity, shipmentSize);
+                int restockThreshold = rs.getInt("restock_threshold");
+                InventoryItem item = new InventoryItem(inventoryId, itemName, quantity, shipmentSize, restockThreshold);
                 inventoryTable.getItems().add(item);
             }
         } catch (SQLException e) {
