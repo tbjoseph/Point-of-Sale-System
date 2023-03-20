@@ -147,6 +147,7 @@ public class ReportsHomeController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("restock_report.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
