@@ -8,16 +8,16 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.TextArea?>
+
+
 
 <GridPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.reports.ExcessReportController">
    <children>
       <VBox GridPane.columnIndex="0" GridPane.vgrow="ALWAYS" maxHeight="Infinity" maxWidth="Infinity">
          <children>
             <Label styleClass="header" text="Excess Report" />
-            <HBox prefHeight="100.0" fx:id="excessCont">
-               <children>
-               </children>
-            </HBox>
+            <TextArea fx:id="textArea" />
          </children>
       </VBox>
    </children>
