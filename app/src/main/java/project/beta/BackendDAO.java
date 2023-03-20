@@ -437,4 +437,17 @@ public class BackendDAO {
         Statement stmt = connection.createStatement();
         return stmt.executeQuery("SELECT * FROM menu_inventory_assoc ORDER BY menu_item_id");
     }
+
+    /**
+     * Gets the inventory items from the database
+     * 
+     * @return the inventory items from the database
+     * 
+     * @throws SQLException if the query fails
+     */
+    public ResultSet getRestockItems() throws SQLException {
+        Statement stmt = connection.createStatement();
+        return stmt
+                .executeQuery("SELECT * FROM inventory_items WHERE quantity < restock_threshold ORDER BY inventory_id");
+    }
 }
