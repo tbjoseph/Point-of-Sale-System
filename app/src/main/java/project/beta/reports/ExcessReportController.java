@@ -6,9 +6,18 @@ import java.sql.Timestamp;
 import java.sql.SQLException;
 import javafx.util.Pair;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.scene.control.TextArea;
+import java.io.IOException;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Node;
 
 import project.beta.BackendDAO;
+import project.beta.reports.ReportsHomeController;
+
 
 public class ExcessReportController {
     private BackendDAO dao;
@@ -67,9 +76,27 @@ public class ExcessReportController {
         textArea.setText(joinedStrings);
     }
 
+    /**
+     * Post checkout function to get to home
+     * 
+     * @param event the event that triggered the function
+     */
+    public void goToHome(ActionEvent event) throws IOException {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));
+            Parent root = loader.load();
+
+            ReportsHomeController serverController = loader.getController();
+            serverController.setDAO(dao);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+
+    }
+
 }
-
-
 
 /*
  * Excess Report notes

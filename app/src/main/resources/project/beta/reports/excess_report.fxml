@@ -20,5 +20,15 @@
             <TextArea fx:id="textArea" />
          </children>
       </VBox>
+      <VBox GridPane.columnIndex="1" GridPane.vgrow="ALWAYS">
+         <children>
+            <VBox fx:id="viewBox2" minHeight="100" minWidth="200" spacing="3.0" VBox.vgrow="ALWAYS">
+            </VBox>
+
+            <HBox prefHeight="100.0">
+                  <Button maxWidth="Infinity" maxHeight="Infinity" HBox.hgrow="ALWAYS" text="Back" onAction="#goToHome"/>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </GridPane>
