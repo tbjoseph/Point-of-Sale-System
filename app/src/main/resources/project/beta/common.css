@@ -80,3 +80,8 @@
 #errorPane {
     -fx-background-color: slate2;
 }
+
+#textArea {
+    -fx-background-color: cherry;
+    -fx-control-inner-background: cherry;
+}
