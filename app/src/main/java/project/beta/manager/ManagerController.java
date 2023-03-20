@@ -69,6 +69,8 @@ public class ManagerController {
     @FXML
     private TableView<Association> assocTable;
     @FXML
+    private TableColumn<Association, Long> id;
+    @FXML
     private TableColumn<Association, Long> menuIndex;
     @FXML
     private TableColumn<Association, Long> inventoryIndex;
@@ -356,10 +358,12 @@ public class ManagerController {
 
             menuIndex.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Long>(r.getValue().menuId));
             inventoryIndex.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Long>(r.getValue().inventoryId));
+            id.setCellValueFactory(r -> new ReadOnlyObjectWrapper<Long>(r.getValue().id));
             while (rs.next()) {
                 Long menuIdVar = rs.getLong("menu_item_id");
                 Long inventoryIdVar = rs.getLong("inventory_item_id");
-                Association item = new Association(menuIdVar, inventoryIdVar);
+                Long id = rs.getLong("id");
+                Association item = new Association(menuIdVar, inventoryIdVar, id);
                 assocTable.getItems().add(item);
             }
         } catch (SQLException e) {

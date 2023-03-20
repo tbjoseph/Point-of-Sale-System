@@ -373,12 +373,13 @@ public class BackendDAO {
      */
     public void updateAssociations(Association association) throws SQLException {
         // Create an SQL statement to update the data
-        String query = "UPDATE menu_inventory_assoc SET inventory_item_id = ? WHERE menu_item_id = ?";
+        String query = "UPDATE menu_inventory_assoc SET menu_item_id = ?, inventory_item_id = ? WHERE id = ?";
 
         // Prepare the statement and set the parameters
         PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setLong(1, association.inventoryId);
-        stmt.setLong(2, association.menuId);
+        stmt.setLong(2, association.inventoryId);
+        stmt.setLong(1, association.menuId);
+        stmt.setLong(3, association.id);
         // Execute the statement and check the number of rows affected
         int rows = stmt.executeUpdate();
         if (rows == 1) {

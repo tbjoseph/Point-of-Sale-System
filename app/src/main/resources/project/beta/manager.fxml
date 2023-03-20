@@ -40,6 +40,7 @@
         </TableView>
         <TableView fx:id="assocTable" layoutX="26.0" layoutY="34.0">
             <columns>
+                <TableColumn fx:id="id" prefWidth="75.0" text="Association ID" />
                 <TableColumn fx:id="menuIndex" prefWidth="200.0" text="Menu ID" />
                 <TableColumn fx:id="inventoryIndex" prefWidth="200.0" text="Inventory ID" />
             </columns>
