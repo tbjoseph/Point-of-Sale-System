@@ -139,6 +139,16 @@ public class ReportsHomeController {
      */
     public void generateRestockReport(ActionEvent event) throws IOException {
         // TODO
+        // get the sales controller and load it
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("restock_report.fxml"));
+        Parent root = loader.load();
+        RestockReportController controller = loader.getController();
+        controller.setDAO(dao);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
