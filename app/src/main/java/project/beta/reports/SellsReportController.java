@@ -28,6 +28,8 @@ import project.beta.types.MenuItem;
  * 
  * (Teams of 5+ Only) Given a time window, display a list of pairs of menu items
  * that sell together often, popular or not, sorted by most frequent.
+ * 
+ * @author Griffith Thomas
  */
 public class SellsReportController {
     private BackendDAO dao;
@@ -46,6 +48,10 @@ public class SellsReportController {
     @FXML
     private Label errorText;
 
+    /**
+     * Initializes the controller class. This method is automatically called after
+     * the fxml file has been loaded.
+     */
     public void initialize() {
         errorPane.setVisible(false);
         menuNamesCol.setCellValueFactory(new PropertyValueFactory<Pair<String, Float>, String>("key"));
@@ -53,6 +59,9 @@ public class SellsReportController {
                 r -> new ReadOnlyObjectWrapper<String>(String.format("%.2f %%", r.getValue().getValue() * 100)));
     }
 
+    /**
+     * Collects the data from the database and displays it in the table
+     */
     private void generateReport() {
         // get association table between orders and menu items
         try {
@@ -116,6 +125,12 @@ public class SellsReportController {
         this.dao = dao;
     }
 
+    /**
+     * Sets the start and end dates for the report
+     * 
+     * @param start the start timestamp
+     * @param end   the end timestamp
+     */
     public void setInputs(Timestamp start, Timestamp end) {
         this.startDate = start;
         this.endDate = end;
@@ -126,7 +141,7 @@ public class SellsReportController {
      * Handles a SQLException by printing the error to the console and setting the
      * errorText label.
      * 
-     * @param exception - the exception to handle
+     * @param exception the exception to handle
      */
     private void handleError(SQLException exception) {
         errorPane.setVisible(true);
@@ -137,12 +152,18 @@ public class SellsReportController {
     /**
      * Closes the error pane.
      * 
-     * @param event - the event that triggered the function
+     * @param event the event that triggered the function
      */
     public void closeErrorPane(ActionEvent event) {
         errorPane.setVisible(false);
     }
 
+    /**
+     * Goes back to the report home page
+     * 
+     * @param event the event that triggered the function
+     * @throws IOException if the fxml file cannot be loaded
+     */
     public void goBack(ActionEvent event) throws IOException {
         // get the report home controller and load it
         FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));

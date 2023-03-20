@@ -89,7 +89,8 @@ public class BackendDAO {
     /**
      * Adds order and menu items to order_menu_assoc
      * 
-     * @param orders the OrderView object
+     * @param orderID the ID of the order
+     * @param orders  the OrderView object
      * 
      * @throws SQLException if the query fails
      */
@@ -345,6 +346,15 @@ public class BackendDAO {
         return menuItems;
     }
 
+    /**
+     * Gets a correspondence between order ids and menu item ids with the given
+     * timespan
+     * 
+     * @param start the start of the timespan
+     * @param end   the end of the timespan
+     * @return a correspondence between order ids and menu item ids
+     * @throws SQLException if the query fails
+     */
     public HashMap<Long, ArrayList<Long>> getOrdersToMenuItems(Timestamp start, Timestamp end) throws SQLException {
         String query = "SELECT a.order_id,a.menu_item_id FROM order_history o JOIN order_menu_assoc a ON a.order_id = o.id WHERE o.order_date BETWEEN ? AND ?";
 
