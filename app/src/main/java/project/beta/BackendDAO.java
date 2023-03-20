@@ -531,79 +531,40 @@ public class BackendDAO {
     }
 
     /**
-     * Gets the ID's of all orders within a time window.
+     * Gets the inventory item names for all orders within a time window.
      * 
      * @param start Start of the time window.
      * @param end   End of the time window.
-     * @return A list of order ID's.
+     * @return A list of inventory item names.
      * 
-     * @throws SQLException If the query fails.
+     * @throws SQLException if the query fails.
      */
-    public ArrayList<Long> getOrderIDs(Timestamp start, Timestamp end) throws SQLException {
+    public ArrayList<String> getSalesData(Timestamp start, Timestamp end) throws SQLException {
         // set up query
-        String query = "SELECT id FROM order_history WHERE order_date BETWEEN ? and ?";
+        String query = "SELECT inventory_items.item_name "
+                + "FROM order_history "
+                + "JOIN order_menu_assoc "
+                + "ON order_history.id = order_menu_assoc.order_id "
+                + "JOIN menu_items "
+                + "ON order_menu_assoc.menu_item_id = menu_items.id "
+                + "JOIN menu_inventory_assoc "
+                + "ON menu_items.id = menu_inventory_assoc.menu_item_id "
+                + "JOIN inventory_items "
+                + "ON menu_inventory_assoc.inventory_item_id = inventory_items.inventory_id "
+                + "WHERE order_date BETWEEN ? AND ?";
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setTimestamp(1, start);
         stmt.setTimestamp(2, end);
 
-        // get order ID's
-        ArrayList<Long> orderIDs = new ArrayList<>();
+        // get inventory item names
+        ArrayList<String> inventoryNames = new ArrayList<>();
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-            long id = rs.getLong("id");
-            orderIDs.add(id);
+            String name = rs.getString("item_name");
+            inventoryNames.add(name);
         }
 
-        return orderIDs;
-    }
-
-    /**
-     * Gets the ID's of all menu items in a single order.
-     * 
-     * @param orderID The order to get menu ID's from.
-     * @return A list of menu ID's.
-     * 
-     * @throws SQLException If the query fails.
-     */
-    public ArrayList<Long> getOrderMenuIDs(long orderID) throws SQLException {
-        // set up query
-        String query = "SELECT menu_item_id FROM order_menu_assoc WHERE order_id=?";
-        PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setLong(1, orderID);
-
-        // get all menu ID's from order ID
-        ArrayList<Long> menuIDs = new ArrayList<>();
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            long id = rs.getLong("menu_item_id");
-            menuIDs.add(id);
-        }
-
-        return menuIDs;
-    }
-
-    /**
-     * Gets the name of a menu item.
-     * 
-     * @param menuID The ID of the menu item to get the name for.
-     * @return The name of the menu item.
-     * 
-     * @throws SQLException If the query fails.
-     */
-    public String getMenuItemByID(long menuID) throws SQLException {
-        // set up query
-        String query = "SELECT name FROM menu_items WHERE id=?";
-        PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setLong(1, menuID);
-
-        // get menu item name
-        String name = null;
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            name = rs.getString("name");
-        }
-
-        return name;
+        return inventoryNames;
     }
 
     /**

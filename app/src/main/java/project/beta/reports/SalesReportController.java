@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 // FIXME:
 import java.io.*;
 
@@ -22,15 +22,19 @@ public class SalesReportController {
     public void generateReport() {
         // TODO:
         try {
-            ArrayList<Long> orderIDs = dao.getOrderIDs(startDate, endDate);
-            for (long orderID : orderIDs) {
-                System.out.println(orderID + ":");
+            ArrayList<String> inventoryNames = dao.getSalesData(startDate, endDate);
 
-                ArrayList<Long> menuIDs = dao.getOrderMenuIDs(orderID);
-                for (long menuID : menuIDs) {
-                    String name = dao.getMenuItemByID(menuID);
-                    System.out.println("    " + name);
+            HashMap<String, Integer> uniqueNames = new HashMap<>();
+            for (String name : inventoryNames) {
+                if (uniqueNames.containsKey(name)) {
+                    uniqueNames.put(name, uniqueNames.get(name) + 1);
+                } else {
+                    uniqueNames.put(name, 1);
                 }
+            }
+
+            for (HashMap.Entry<String, Integer> entry : uniqueNames.entrySet()) {
+                System.out.println(entry.getValue().toString() + ' ' + entry.getKey());
             }
         } catch (SQLException e) {
             System.out.println(e);
