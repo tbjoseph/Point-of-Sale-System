@@ -22,7 +22,7 @@
       </VBox>
       <VBox GridPane.columnIndex="1" GridPane.vgrow="ALWAYS">
          <children>
-            <VBox fx:id="viewBox2" minHeight="100" minWidth="200" spacing="3.0" VBox.vgrow="ALWAYS">
+            <VBox fx:id="viewBox2" minHeight="50" minWidth="100" spacing="3.0" VBox.vgrow="ALWAYS">
             </VBox>
 
             <HBox prefHeight="100.0">
