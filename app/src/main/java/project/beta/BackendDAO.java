@@ -208,17 +208,19 @@ public class BackendDAO {
         //Initialize all inventory items to have been a part of 0 orders
         Statement stmt0 = connection.createStatement();
         ResultSet rs0 = stmt0.executeQuery("SELECT item_name,quantity FROM inventory_items");
+        inventory_data = new HashMap<>();
 
         while (rs0.next()) {
             String item_name = rs0.getString("item_name");
             Long quantity = rs0.getLong("quantity");
 
             Pair<String, Long> pair = new Pair<>(item_name, quantity); // name and remaining stock for a given item
+
             inventory_data.put(pair, 0L);
         }
 
         //Record number of item instances in order history
-        String query = "SELECT i.item_name,i.quantity FROM order_history o JOIN order_menu_assoc a ON a.order_id = o.id JOIN menu_items m ON m.id = a.menu_item_id JOIN menu_inventory_assoc b ON b.menu_item_id = m.id JOIN inventory_items i ON i.inventory_id = b.inventory_item_id WHERE o.order_date > ?;";
+        String query = "SELECT i.item_name,i.quantity FROM order_history o JOIN order_menu_assoc a ON a.order_id = o.id JOIN menu_items m ON m.id = a.menu_item_id JOIN menu_inventory_assoc b ON b.menu_item_id = m.id JOIN inventory_items i ON i.inventory_id = b.inventory_item_id WHERE o.order_date > ?";
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setTimestamp(1, timestamp);
         ResultSet rs = stmt.executeQuery();
