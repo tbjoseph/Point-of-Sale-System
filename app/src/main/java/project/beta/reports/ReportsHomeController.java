@@ -86,7 +86,8 @@ public class ReportsHomeController {
         controller.setInputs(start, end);
 
         // generate sales report after DAO and timestamps are passed down
-        controller.generateReport();
+        controller.SetupReport();
+        controller.displayReport();
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

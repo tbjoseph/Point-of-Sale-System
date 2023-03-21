@@ -5,6 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import javafx.fxml.FXML;
+
 // FIXME:
 import java.io.*;
 
@@ -14,31 +24,58 @@ public class SalesReportController {
     private BackendDAO dao;
     private Timestamp startDate;
     private Timestamp endDate;
+    private HashMap<String, Integer> inventorySold;
+
+    @FXML
+    private TableView<HashMap.Entry<String, Integer>> salesReportTable;
+
+    @FXML
+    private TableColumn<HashMap.Entry<String, Integer>, String> itemColumn;
+
+    @FXML
+    private TableColumn<HashMap.Entry<String, Integer>, Integer> countColumn;
 
     public void initialize() {
 
     }
 
-    public void generateReport() {
-        // TODO:
+    /**
+     * Gets the data for the sales report and displays it.
+     */
+    public void SetupReport() {
         try {
+            // get data
             ArrayList<String> inventoryNames = dao.getSalesData(startDate, endDate);
 
-            HashMap<String, Integer> uniqueNames = new HashMap<>();
+            // get a count of each unique inventory item
+            inventorySold = new HashMap<>();
             for (String name : inventoryNames) {
-                if (uniqueNames.containsKey(name)) {
-                    uniqueNames.put(name, uniqueNames.get(name) + 1);
+                if (inventorySold.containsKey(name)) {
+                    inventorySold.put(name, inventorySold.get(name) + 1);
                 } else {
-                    uniqueNames.put(name, 1);
+                    inventorySold.put(name, 1);
                 }
-            }
-
-            for (HashMap.Entry<String, Integer> entry : uniqueNames.entrySet()) {
-                System.out.println(entry.getValue().toString() + ' ' + entry.getKey());
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+
+    /**
+     * Displays the sales report in a table.
+     * 
+     * @param uniqueNames A list of inventory item names and their count.
+     */
+    public void displayReport() {
+        ObservableList<HashMap.Entry<String, Integer>> list = FXCollections.observableArrayList();
+        for (HashMap.Entry<String, Integer> entry : inventorySold.entrySet()) {
+            list.add(entry);
+        }
+
+        itemColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getKey()));
+        countColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getValue()));
+
+        salesReportTable.setItems(list);
     }
 
     /**
