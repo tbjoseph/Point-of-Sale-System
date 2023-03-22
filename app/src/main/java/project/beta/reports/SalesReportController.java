@@ -64,6 +64,11 @@ public class SalesReportController {
         }
     }
 
+    /**
+     * Gets the start and end date for the X report.
+     * 
+     * @throws SQLException if the query fails.
+     */
     public void setupXReport() throws SQLException {
         startDate = dao.getLastZReport();
         endDate = new Timestamp(System.currentTimeMillis());
@@ -71,6 +76,11 @@ public class SalesReportController {
         this.setupSalesReport();
     }
 
+    /**
+     * Gets the start and end date for the Z report.
+     * 
+     * @throws SQLException if the query fails.
+     */
     public void setupZReport() throws SQLException {
         startDate = dao.getLastZReport();
         endDate = new Timestamp(System.currentTimeMillis());

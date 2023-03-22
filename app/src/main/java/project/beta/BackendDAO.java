@@ -586,6 +586,12 @@ public class BackendDAO {
         throw new SQLException("No Z report found.");
     }
 
+    /**
+     * Adds the date of the last Z report to the SQL table.
+     * 
+     * @param reportDate
+     * @throws SQLException
+     */
     public void addZReport(Timestamp reportDate) throws SQLException {
         String query = "INSERT INTO z_report_dates (report_date) VALUES (?)";
         PreparedStatement stmt = connection.prepareStatement(query);
