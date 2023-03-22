@@ -12,6 +12,13 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.Node;
+import javafx.stage.Stage;
 
 import javafx.fxml.FXML;
 
@@ -107,5 +114,25 @@ public class SalesReportController {
     public void setInputs(Timestamp start, Timestamp end) {
         this.startDate = start;
         this.endDate = end;
+    }
+
+    /**
+     * Goes back to the report home page
+     * 
+     * @param event the event that triggered the function
+     * @throws IOException if the fxml file cannot be loaded
+     */
+    public void goBack(ActionEvent event) throws IOException {
+        // get the report home controller and load it
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));
+        Parent root = loader.load();
+        ReportsHomeController controller = loader.getController();
+        controller.setDAO(dao);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 }

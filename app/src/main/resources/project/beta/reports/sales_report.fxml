@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Button?>
 
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.reports.SalesReportController">
    <children>
@@ -14,5 +15,6 @@
                <TableColumn fx:id="countColumn" text="Count" prefWidth="50" />
             </columns>
          </TableView>
+         <Button text="Back" onAction="#goBack" />
    </children>
 </VBox>
