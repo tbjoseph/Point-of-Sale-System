@@ -568,6 +568,32 @@ public class BackendDAO {
     }
 
     /**
+     * Gets the last timestamp for an Z report.
+     * 
+     * @return The last timestamp.
+     * 
+     * @throws SQLException if the query fails.
+     */
+    public Timestamp getLastZReport() throws SQLException {
+        Statement stmt = connection.createStatement();
+        ResultSet rs = stmt.executeQuery(
+                "SELECT report_date FROM z_report_dates ORDER BY report_date DESC LIMIT 1");
+
+        while (rs.next()) {
+            return rs.getTimestamp("report_date");
+        }
+
+        throw new SQLException("No Z report found.");
+    }
+
+    public void addZReport(Timestamp reportDate) throws SQLException {
+        String query = "INSERT INTO z_report_dates (report_date) VALUES (?)";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setTimestamp(1, reportDate);
+        stmt.executeUpdate();
+    }
+
+    /**
      * Gets the Associations from the database
      * 
      * @return the associations from the database

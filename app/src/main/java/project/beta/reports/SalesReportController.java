@@ -42,23 +42,34 @@ public class SalesReportController {
     /**
      * Gets the data for the sales report and displays it.
      */
-    public void SetupReport() {
-        try {
-            // get data
-            ArrayList<String> inventoryNames = dao.getSalesData(startDate, endDate);
+    public void setupSalesReport() throws SQLException {
+        // get data
+        ArrayList<String> inventoryNames = dao.getSalesData(startDate, endDate);
 
-            // get a count of each unique inventory item
-            inventorySold = new HashMap<>();
-            for (String name : inventoryNames) {
-                if (inventorySold.containsKey(name)) {
-                    inventorySold.put(name, inventorySold.get(name) + 1);
-                } else {
-                    inventorySold.put(name, 1);
-                }
+        // get a count of each unique inventory item
+        inventorySold = new HashMap<>();
+        for (String name : inventoryNames) {
+            if (inventorySold.containsKey(name)) {
+                inventorySold.put(name, inventorySold.get(name) + 1);
+            } else {
+                inventorySold.put(name, 1);
             }
-        } catch (SQLException e) {
-            System.out.println(e);
         }
+    }
+
+    public void setupXReport() throws SQLException {
+        startDate = dao.getLastZReport();
+        endDate = new Timestamp(System.currentTimeMillis());
+
+        this.setupSalesReport();
+    }
+
+    public void setupZReport() throws SQLException {
+        startDate = dao.getLastZReport();
+        endDate = new Timestamp(System.currentTimeMillis());
+        dao.addZReport(endDate);
+
+        this.setupSalesReport();
     }
 
     /**
