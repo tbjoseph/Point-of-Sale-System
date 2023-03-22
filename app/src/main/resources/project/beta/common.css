@@ -54,6 +54,21 @@
     -fx-font-weight: bold;
 }
 
+.calendar-grid>* {
+    -fx-text-fill: slate;
+}
+
+.text-field,
+.password-field,
+.date-picker,
+.date-picker-popup,
+.date-picker-popup>.month-year-pane {
+    -fx-background-color: slate2;
+    -fx-text-fill: cream;
+    -fx-prompt-text-fill: cream3;
+    -fx-font-size: 14;
+}
+
 #inactiveButton {
     -fx-background-color: slate2;
     -fx-text-fill: cream2;

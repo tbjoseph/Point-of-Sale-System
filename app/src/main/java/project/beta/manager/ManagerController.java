@@ -444,13 +444,19 @@ public class ManagerController {
      * Handles a SQLException by printing the error to the console and setting the
      * errorText label.
      * 
-     * @param exception - the exception to handle
+     * @param exception the exception to handle
      */
     private void handleError(SQLException exception) {
         errorText.textProperty().set("Warning: an error occurred with the database. See the log for details.");
         exception.printStackTrace();
     }
 
+    /**
+     * Open the reports page
+     * 
+     * @param event the event that triggered this method
+     * @throws IOException if the fxml file cannot be found
+     */
     public void openReports(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../reports/home.fxml"));
         Parent root = loader.load();

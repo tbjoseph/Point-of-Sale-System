@@ -92,7 +92,8 @@ public class BackendDAO {
     /**
      * Adds order and menu items to order_menu_assoc
      * 
-     * @param orders the OrderView object
+     * @param orderID the ID of the order
+     * @param orders  the OrderView object
      * 
      * @throws SQLException if the query fails
      */
@@ -479,6 +480,39 @@ public class BackendDAO {
             menuItems.add(menuItem);
         }
         return menuItems;
+    }
+
+    /**
+     * Gets a correspondence between order ids and menu item ids with the given
+     * timespan
+     * 
+     * @param start the start of the timespan
+     * @param end   the end of the timespan
+     * @return a correspondence between order ids and menu item ids
+     * @throws SQLException if the query fails
+     */
+    public HashMap<Long, ArrayList<Long>> getOrdersToMenuItems(Timestamp start, Timestamp end) throws SQLException {
+        String query = "SELECT a.order_id,a.menu_item_id FROM order_history o JOIN order_menu_assoc a ON a.order_id = o.id WHERE o.order_date BETWEEN ? AND ?";
+
+        // Prepare the statement and set the parameters
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setTimestamp(1, start);
+        stmt.setTimestamp(2, end);
+        // Execute the statement
+        ResultSet rs = stmt.executeQuery();
+        HashMap<Long, ArrayList<Long>> association = new HashMap<>();
+        while (rs.next()) {
+            long order_id = rs.getLong("order_id");
+            long menu_item_id = rs.getLong("menu_item_id");
+            if (association.containsKey(order_id)) {
+                association.get(order_id).add(menu_item_id);
+            } else {
+                ArrayList<Long> menuItems = new ArrayList<>();
+                menuItems.add(menu_item_id);
+                association.put(order_id, menuItems);
+            }
+        }
+        return association;
     }
 
     /**
