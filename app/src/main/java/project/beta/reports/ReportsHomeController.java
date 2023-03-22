@@ -19,6 +19,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 
 import project.beta.BackendDAO;
+import project.beta.manager.ManagerController;
 
 /**
  * Controller class for the reports home screen.
@@ -293,5 +294,27 @@ public class ReportsHomeController {
             handleError(e);
             return null;
         }
+    }
+
+    /**
+     * Goes back to the manager home page
+     * 
+     * @param event the event that triggered the function
+     * @throws IOException if the fxml file cannot be loaded
+     */
+    public void goBack(ActionEvent event) throws IOException {
+        // get the report home controller and load it
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../manager.fxml"));
+        Parent root = loader.load();
+        ManagerController controller = loader.getController();
+        controller.setDAO(dao);
+        controller.initTable();
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
+        stage.setScene(scene);
+        stage.setFullScreen(true);
+        stage.show();
     }
 }
