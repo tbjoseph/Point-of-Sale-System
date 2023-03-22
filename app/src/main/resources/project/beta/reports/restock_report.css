@@ -1,0 +1,36 @@
+.table-view {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: slate3;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell {
+    -fx-border-color: transparent;
+}
+
+.table-row-cell: hover {
+    -fx-background-color: slate3;
+    -fx-text-fill: cream;
+}
+
+.table-row-cell: odd {
+    -fx-background-color: slate;
+}
+
+.table-row-cell: even {
+    -fx-background-color: slate2;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
+}

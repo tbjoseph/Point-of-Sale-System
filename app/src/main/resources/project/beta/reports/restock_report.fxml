@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.beta.reports.RestockReportController">
+    <children>
+        <Label fx:id="errorText" text="" />
+        <Label text="Restock Report" />
+        <TableView fx:id="inventoryTable" layoutX="26.0" layoutY="34.0">
+            <columns>
+                <TableColumn fx:id="inventoryIdTableCol" prefWidth="200.0" text="Inventory ID" />
+                <TableColumn fx:id="itemNameCol" prefWidth="200.0" text="Item Name" />
+                <TableColumn fx:id="quantityCol" prefWidth="150.0" text="Quantity" />
+                <TableColumn fx:id="shipmentSizeCol" prefWidth="150.0" text="Shipment Size" />
+                <TableColumn fx:id="thresholdCol" prefWidth="150.0" text="Restock Threshold" />
+            </columns>
+        </TableView>
+    </children>
+</VBox>
