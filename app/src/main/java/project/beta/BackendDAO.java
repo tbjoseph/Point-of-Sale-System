@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.util.Pair;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 import project.beta.types.InventoryItem;
 import project.beta.types.MenuItem;
 import project.beta.types.Association;
@@ -207,7 +209,7 @@ public class BackendDAO {
      */
     public HashMap<Pair<String, Long>, Long> construct_inventory_data(Timestamp timestamp) throws SQLException {
 
-        //Initialize all inventory items to have been a part of 0 orders
+        // Initialize all inventory items to have been a part of 0 orders
         Statement stmt0 = connection.createStatement();
         ResultSet rs0 = stmt0.executeQuery("SELECT item_name,quantity FROM inventory_items");
         inventory_data = new HashMap<>();
@@ -221,7 +223,7 @@ public class BackendDAO {
             inventory_data.put(pair, 0L);
         }
 
-        //Record number of item instances in order history
+        // Record number of item instances in order history
         String query = "SELECT i.item_name,i.quantity FROM order_history o JOIN order_menu_assoc a ON a.order_id = o.id JOIN menu_items m ON m.id = a.menu_item_id JOIN menu_inventory_assoc b ON b.menu_item_id = m.id JOIN inventory_items i ON i.inventory_id = b.inventory_item_id WHERE o.order_date > ?";
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setTimestamp(1, timestamp);
@@ -234,7 +236,7 @@ public class BackendDAO {
             Pair<String, Long> pair = new Pair<>(item_name, quantity); // name and remaining stock for a given item
 
             Long inventory_sold = inventory_data.get(pair);
-            inventory_data.put(pair, (inventory_sold + 1L) );
+            inventory_data.put(pair, (inventory_sold + 1L));
         }
 
         return inventory_data;
@@ -250,7 +252,8 @@ public class BackendDAO {
     public boolean restock(String item_name, Timestamp timestamp) {
         try {
             PreparedStatement statement = connection
-                    .prepareStatement("SELECT shipment_date,item_name FROM shipment_history WHERE shipment_date > ? AND item_name = ?");
+                    .prepareStatement(
+                            "SELECT shipment_date,item_name FROM shipment_history WHERE shipment_date > ? AND item_name = ?");
             statement.setTimestamp(1, timestamp);
             statement.setString(2, item_name);
             ResultSet rs = statement.executeQuery();
@@ -525,6 +528,75 @@ public class BackendDAO {
     public ResultSet getInventoryItems() throws SQLException {
         Statement stmt = connection.createStatement();
         return stmt.executeQuery("SELECT * FROM inventory_items ORDER BY inventory_id");
+    }
+
+    /**
+     * Gets the inventory item names for all orders within a time window.
+     * 
+     * @param start Start of the time window.
+     * @param end   End of the time window.
+     * @return A list of inventory item names.
+     * 
+     * @throws SQLException if the query fails.
+     */
+    public ArrayList<String> getSalesData(Timestamp start, Timestamp end) throws SQLException {
+        // set up query
+        String query = "SELECT inventory_items.item_name "
+                + "FROM order_history "
+                + "JOIN order_menu_assoc "
+                + "ON order_history.id = order_menu_assoc.order_id "
+                + "JOIN menu_items "
+                + "ON order_menu_assoc.menu_item_id = menu_items.id "
+                + "JOIN menu_inventory_assoc "
+                + "ON menu_items.id = menu_inventory_assoc.menu_item_id "
+                + "JOIN inventory_items "
+                + "ON menu_inventory_assoc.inventory_item_id = inventory_items.inventory_id "
+                + "WHERE order_date BETWEEN ? AND ?";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setTimestamp(1, start);
+        stmt.setTimestamp(2, end);
+
+        // get inventory item names
+        ArrayList<String> inventoryNames = new ArrayList<>();
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            String name = rs.getString("item_name");
+            inventoryNames.add(name);
+        }
+
+        return inventoryNames;
+    }
+
+    /**
+     * Gets the last timestamp for an Z report.
+     * 
+     * @return The last timestamp.
+     * 
+     * @throws SQLException if the query fails.
+     */
+    public Timestamp getLastZReport() throws SQLException {
+        Statement stmt = connection.createStatement();
+        ResultSet rs = stmt.executeQuery(
+                "SELECT report_date FROM z_report_dates ORDER BY report_date DESC LIMIT 1");
+
+        while (rs.next()) {
+            return rs.getTimestamp("report_date");
+        }
+
+        throw new SQLException("No Z report found.");
+    }
+
+    /**
+     * Adds the date of the last Z report to the SQL table.
+     * 
+     * @param reportDate
+     * @throws SQLException
+     */
+    public void addZReport(Timestamp reportDate) throws SQLException {
+        String query = "INSERT INTO z_report_dates (report_date) VALUES (?)";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setTimestamp(1, reportDate);
+        stmt.executeUpdate();
     }
 
     /**

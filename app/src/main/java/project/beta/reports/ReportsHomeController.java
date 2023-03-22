@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -85,6 +86,14 @@ public class ReportsHomeController {
         Timestamp end = parseTimestamp(salesEndDatePicker.getValue(), salesEndTimePicker.getText());
         controller.setInputs(start, end);
 
+        // generate sales report after DAO and timestamps are passed down
+        try {
+            controller.setupSalesReport();
+            controller.displayReport();
+        } catch (SQLException e) {
+            handleError(e);
+        }
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
@@ -99,7 +108,25 @@ public class ReportsHomeController {
      * @throws IOException if the file is not found
      */
     public void generateXReport(ActionEvent event) throws IOException {
-        // TODO
+        // get the sales controller and load it
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("sales_report.fxml"));
+        Parent root = loader.load();
+        SalesReportController controller = loader.getController();
+        controller.setDAO(dao);
+
+        // generate sales report after DAO and timestamps are passed down
+        try {
+            controller.setupXReport();
+            controller.displayReport();
+        } catch (SQLException e) {
+            handleError(e);
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
@@ -109,7 +136,25 @@ public class ReportsHomeController {
      * @throws IOException if the file is not found
      */
     public void generateZReport(ActionEvent event) throws IOException {
-        // TODO
+        // get the sales controller and load it
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("sales_report.fxml"));
+        Parent root = loader.load();
+        SalesReportController controller = loader.getController();
+        controller.setDAO(dao);
+
+        // generate sales report after DAO and timestamps are passed down
+        try {
+            controller.setupZReport();
+            controller.displayReport();
+        } catch (SQLException e) {
+            handleError(e);
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
@@ -211,6 +256,18 @@ public class ReportsHomeController {
     private void handleError(DateTimeParseException exception) {
         errorPane.setVisible(true);
         errorText.textProperty().set("Please enter a valid date.");
+        exception.printStackTrace();
+    }
+
+    /**
+     * Handles a SQLException by printing the error to the console and setting the
+     * errorText label.
+     * 
+     * @param exception - the exception to handle
+     */
+    private void handleError(SQLException exception) {
+        errorPane.setVisible(true);
+        errorText.textProperty().set("Warning: " + exception.getMessage());
         exception.printStackTrace();
     }
 
