@@ -98,6 +98,7 @@ public class ReportsHomeController {
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 
@@ -126,6 +127,7 @@ public class ReportsHomeController {
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 
@@ -154,6 +156,7 @@ public class ReportsHomeController {
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 
@@ -170,26 +173,14 @@ public class ReportsHomeController {
         ExcessReportController controller = loader.getController();
         controller.setDAO(dao);
 
-        try {
-            // set any necessary data from the inputs
-            LocalDate date = timestampDatePicker.getValue();
-            String time = timestampTimePicker.getText();
-            // prepend a 0 if the hour is only one digit
-            if (time.split(":")[0].length() == 1) {
-                time = "0" + time;
-            }
-            LocalTime time2 = LocalTime.parse(time);
-            Timestamp timestamp = Timestamp.valueOf(date.atTime(time2));
-            controller.setInput(timestamp);
-        } catch (DateTimeParseException e) {
-            handleError(e);
-            return;
-        }
+        Timestamp timestamp = parseTimestamp(timestampDatePicker.getValue(), timestampTimePicker.getText());
+        controller.setInput(timestamp);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 
@@ -208,8 +199,8 @@ public class ReportsHomeController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
-        scene.getStylesheets().add(getClass().getResource("restock_report.css").toExternalForm());
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 
@@ -233,8 +224,8 @@ public class ReportsHomeController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
-        scene.getStylesheets().add(getClass().getResource("sells_report.css").toExternalForm());
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 

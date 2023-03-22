@@ -36,6 +36,12 @@ public class RestockReportController {
     private TableColumn<InventoryItem, Integer> thresholdCol;
 
     /**
+     * Constructor for the restock report controller. setUp does the actual work.
+     */
+    public RestockReportController() {
+    }
+
+    /**
      * Sets up the table view with the data from the database.
      * This should be called after the DAO is set.
      */

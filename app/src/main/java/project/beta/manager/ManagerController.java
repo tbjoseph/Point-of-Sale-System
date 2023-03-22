@@ -167,7 +167,7 @@ public class ManagerController {
             }
         };
         Consumer<Association> updateAssociations = (j) -> {
-            try{
+            try {
                 dao.updateAssociations(j);
             } catch (SQLException e) {
                 handleError(e);
@@ -245,7 +245,7 @@ public class ManagerController {
             inventoryItem.restockThreshold = event.getNewValue();
             updateInventory.accept(inventoryItem);
         });
-    
+
         assocTable.setEditable(true);
 
         menuIndex.setCellFactory(TextFieldTableCell.forTableColumn(new LongStringConverter()));
@@ -281,7 +281,6 @@ public class ManagerController {
         assocTable.getItems().clear();
         addAssociation.setVisible(false);
         headerAssociations.getStyleClass().remove("active");
-
 
         try {
             index.setCellValueFactory(new PropertyValueFactory<MenuItem, Long>("index"));
@@ -319,8 +318,6 @@ public class ManagerController {
         assocTable.getItems().clear();
         addAssociation.setVisible(false);
         headerAssociations.getStyleClass().remove("active");
-
-
 
         try {
             ResultSet rs = dao.getInventoryItems();
@@ -364,7 +361,6 @@ public class ManagerController {
         assocTable.getItems().clear();
         addAssociation.setVisible(true);
         headerAssociations.getStyleClass().add("active");
-
 
         try {
             ResultSet rs = dao.getAssociations();
@@ -466,6 +462,7 @@ public class ManagerController {
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 }

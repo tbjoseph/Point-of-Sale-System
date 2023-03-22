@@ -1,13 +1,11 @@
 package project.beta.reports;
 
-import java.sql.Timestamp;
-import java.sql.ResultSet;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -15,18 +13,19 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.Node;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
-
-import javafx.fxml.FXML;
-
-// FIXME:
-import java.io.*;
-
 import project.beta.BackendDAO;
 
+/**
+ * SalesReportController is a class that controls the sales report screen.
+ * 
+ * @author Matthew Gimlin
+ */
 public class SalesReportController {
     private BackendDAO dao;
     private Timestamp startDate;
@@ -42,12 +41,16 @@ public class SalesReportController {
     @FXML
     private TableColumn<HashMap.Entry<String, Integer>, Integer> countColumn;
 
-    public void initialize() {
-
+    /**
+     * Constructor for the SalesReportController
+     */
+    public SalesReportController() {
     }
 
     /**
      * Gets the data for the sales report and displays it.
+     * 
+     * @throws SQLException if the query fails.
      */
     public void setupSalesReport() throws SQLException {
         // get data
@@ -91,8 +94,6 @@ public class SalesReportController {
 
     /**
      * Displays the sales report in a table.
-     * 
-     * @param uniqueNames A list of inventory item names and their count.
      */
     public void displayReport() {
         ObservableList<HashMap.Entry<String, Integer>> list = FXCollections.observableArrayList();
@@ -143,6 +144,7 @@ public class SalesReportController {
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 }

@@ -17,21 +17,24 @@ import javafx.scene.Node;
 
 import project.beta.BackendDAO;
 
-
+/**
+ * ExcessReportController is a class that controls the excess report screen.
+ * 
+ * @author Timothy Joseph
+ */
 public class ExcessReportController {
     private BackendDAO dao;
     private Timestamp timestamp;
     private HashMap<Pair<String, Long>, Long> inventory_data;
     private ArrayList<String> excessList;
 
-    // @FXML
-    // private HBox excessCont;
-
     @FXML
     private TextArea textArea;
 
-    public void initialize() {
-
+    /**
+     * Constructor for the ExcessReportController
+     */
+    public ExcessReportController() {
     }
 
     /**
@@ -43,6 +46,11 @@ public class ExcessReportController {
         this.dao = dao;
     }
 
+    /**
+     * Sets the input for the report
+     * 
+     * @param timestamp the timestamp to use for the report
+     */
     public void setInput(Timestamp timestamp) {
         this.timestamp = timestamp;
 
@@ -54,21 +62,27 @@ public class ExcessReportController {
         }
     }
 
+    /**
+     * Outputs the excess items to the text area
+     * 
+     * @throws SQLException if there is an error with the SQL query
+     */
     public void output_excess() throws SQLException {
         excessList = new ArrayList<>();
 
-        for(Pair<String, Long> item : inventory_data.keySet()) {
+        for (Pair<String, Long> item : inventory_data.keySet()) {
 
-
-            if (dao.restock(item.getKey(), timestamp)) continue;
+            if (dao.restock(item.getKey(), timestamp))
+                continue;
 
             Long inventory_sold = inventory_data.get(item);
-            double excess_ratio = (double) inventory_sold / (double) ( item.getValue() + inventory_sold );
-            
-            if (excess_ratio > 0.1) continue;
-            
+            double excess_ratio = (double) inventory_sold / (double) (item.getValue() + inventory_sold);
+
+            if (excess_ratio > 0.1)
+                continue;
+
             excessList.add(item.getKey());
-            
+
         }
 
         String joinedStrings = String.join("\n", excessList);
@@ -79,38 +93,21 @@ public class ExcessReportController {
      * Post checkout function to get to home
      * 
      * @param event the event that triggered the function
+     * @throws IOException if the FXML file cannot be found
      */
     public void goToHome(ActionEvent event) throws IOException {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));
-            Parent root = loader.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));
+        Parent root = loader.load();
 
-            ReportsHomeController serverController = loader.getController();
-            serverController.setDAO(dao);
+        ReportsHomeController serverController = loader.getController();
+        serverController.setDAO(dao);
 
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
-            stage.setScene(scene);
-            stage.show();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
+        stage.setScene(scene);
+        stage.setFullScreen(true);
+        stage.show();
 
     }
-
 }
-
-/*
- * Excess Report notes
- * 
- * Use SQL query that gets item names and their current inventory stock and use it 
- * to create a Hash with total inventory sold for each item
- * 
- *          SELECT i.item_name,i.quantity
- *          FROM order_history o 
- *          JOIN order_menu_assoc a ON a.order_id = o.id 
- *          JOIN menu_items m ON m.id = a.menu_item_id 
- *          JOIN menu_inventory_assoc b ON b.menu_item_id = m.id 
- *          JOIN inventory_items i ON i.inventory_id = b.inventory_item_id
- *          WHERE o.order_date > ?;
- * 
- * Use SQL query to find if there is an order with a date greater than the date 
- * specified to check for restocks for a given item
- */
