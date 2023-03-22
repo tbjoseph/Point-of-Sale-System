@@ -18,6 +18,8 @@
                     <columns>
                         <TableColumn fx:id="menuNamesCol" prefWidth="500.0" text="Menu Items" />
                         <TableColumn fx:id="freqCol" prefWidth="200.0" text="Frequency" />
+                        <TableColumn fx:id="priceColA" prefWidth="200.0" text="Item A Sold" />
+                        <TableColumn fx:id="priceColB" prefWidth="200.0" text="Item B Sold" />
                     </columns>
                 </TableView>
                 <Button text="Back" onAction="#goBack" />

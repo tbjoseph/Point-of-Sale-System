@@ -16,7 +16,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -36,12 +35,30 @@ public class SellsReportController {
     private Timestamp startDate;
     private Timestamp endDate;
 
+    private class TableRow {
+        public String menuNames;
+        public float frequency;
+        public float priceA;
+        public float priceB;
+
+        public TableRow(String menuNames, float frequency, float priceA, float priceB) {
+            this.menuNames = menuNames;
+            this.frequency = frequency;
+            this.priceA = priceA;
+            this.priceB = priceB;
+        }
+    }
+
     @FXML
-    private TableView<Pair<String, Float>> resultsTable;
+    private TableView<TableRow> resultsTable;
     @FXML
-    private TableColumn<Pair<String, Float>, String> freqCol;
+    private TableColumn<TableRow, String> freqCol;
     @FXML
-    private TableColumn<Pair<String, Float>, String> menuNamesCol;
+    private TableColumn<TableRow, String> priceColA;
+    @FXML
+    private TableColumn<TableRow, String> priceColB;
+    @FXML
+    private TableColumn<TableRow, String> menuNamesCol;
 
     @FXML
     private VBox errorPane;
@@ -60,9 +77,13 @@ public class SellsReportController {
      */
     public void initialize() {
         errorPane.setVisible(false);
-        menuNamesCol.setCellValueFactory(new PropertyValueFactory<Pair<String, Float>, String>("key"));
+        menuNamesCol.setCellValueFactory(r -> new ReadOnlyObjectWrapper<String>(r.getValue().menuNames));
         freqCol.setCellValueFactory(
-                r -> new ReadOnlyObjectWrapper<String>(String.format("%.2f %%", r.getValue().getValue() * 100)));
+                r -> new ReadOnlyObjectWrapper<String>(String.format("%.2f %%", r.getValue().frequency * 100)));
+        priceColA.setCellValueFactory(r -> new ReadOnlyObjectWrapper<String>(
+                String.format("$%.2f", r.getValue().priceA)));
+        priceColB.setCellValueFactory(r -> new ReadOnlyObjectWrapper<String>(
+                String.format("$%.2f", r.getValue().priceB)));
     }
 
     /**
@@ -79,11 +100,6 @@ public class SellsReportController {
                 ArrayList<Long> menuItems = mapping.get(order);
                 for (int i = 0; i < menuItems.size(); i++) {
                     for (int j = i + 1; j < menuItems.size(); j++) {
-                        // we skip combinations which are the same, or where i < j
-                        // to make sure we only get each combination once
-                        if (menuItems.get(i) <= menuItems.get(j)) {
-                            continue;
-                        }
                         Pair<Long, Long> pair = new Pair<>(menuItems.get(i), menuItems.get(j));
                         if (counts.containsKey(pair)) {
                             counts.put(pair, counts.get(pair) + 1);
@@ -105,18 +121,21 @@ public class SellsReportController {
             }
 
             ArrayList<MenuItem> items = dao.getMenuItems();
-            HashMap<Long, String> nameTable = new HashMap<>();
-            items.iterator().forEachRemaining(m -> nameTable.put(m.getIndex(), m.name));
+            HashMap<Long, MenuItem> itemTable = new HashMap<>();
+            items.iterator().forEachRemaining(m -> itemTable.put(m.getIndex(), m));
             // put items in the table
             for (Pair<Long, Long> pair : counts.keySet()) {
-                String menuNames = nameTable.get(pair.getKey()) + ", " + nameTable.get(pair.getValue());
+                String menuNames = itemTable.get(pair.getKey()).name + ", " + itemTable.get(pair.getValue()).name;
                 Float freq = (float) counts.get(pair)
                         / (totalCounts.get(pair.getKey()) + totalCounts.get(pair.getValue()));
-                resultsTable.getItems().add(new Pair<>(menuNames, freq));
+                // we only care about the large price
+                Float priceA = itemTable.get(pair.getKey()).priceLarge * totalCounts.get(pair.getKey());
+                Float priceB = itemTable.get(pair.getValue()).priceLarge * totalCounts.get(pair.getValue());
+                resultsTable.getItems().add(new TableRow(menuNames, freq, priceA, priceB));
             }
-            resultsTable.getItems().sort((a, b) -> (int) Math.signum(b.getValue() - a.getValue()));
+            resultsTable.getItems().sort((a, b) -> (int) Math.signum(b.frequency - a.frequency));
             // remove items that are less than 1%
-            resultsTable.getItems().removeIf(p -> p.getValue() < 0.01);
+            resultsTable.getItems().removeIf(p -> p.frequency < 0.01);
         } catch (SQLException e) {
             handleError(e);
         }
