@@ -166,10 +166,10 @@ public class ReportsHomeController {
     }
 
     /**
-     * Handles a SQLException by printing the error to the console and setting the
-     * errorText label.
+     * Handles a DateTimeParseException by printing the error to the console and
+     * setting the errorText label.
      * 
-     * @param exception - the exception to handle
+     * @param exception the exception to handle
      */
     private void handleError(DateTimeParseException exception) {
         errorPane.setVisible(true);
@@ -180,12 +180,19 @@ public class ReportsHomeController {
     /**
      * Closes the error pane.
      * 
-     * @param event - the event that triggered the function
+     * @param event the event that triggered the function
      */
     public void closeErrorPane(ActionEvent event) {
         errorPane.setVisible(false);
     }
 
+    /**
+     * Parse a LocalDate and a String into a Timestamp
+     * 
+     * @param date the date
+     * @param time the time
+     * @return a Timestamp made from the date and time
+     */
     private Timestamp parseTimestamp(LocalDate date, String time) {
         try {
             if (time.strip().equals("")) {

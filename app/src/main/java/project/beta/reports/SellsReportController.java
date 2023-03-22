@@ -49,6 +49,12 @@ public class SellsReportController {
     private Label errorText;
 
     /**
+     * Constructor for SellsReportController. Initialization is done in initialize()
+     */
+    public SellsReportController() {
+    }
+
+    /**
      * Initializes the controller class. This method is automatically called after
      * the fxml file has been loaded.
      */
