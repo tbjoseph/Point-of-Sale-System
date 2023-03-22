@@ -138,7 +138,6 @@ public class ReportsHomeController {
      * @throws IOException if the file is not found
      */
     public void generateRestockReport(ActionEvent event) throws IOException {
-        // TODO
         // get the sales controller and load it
         FXMLLoader loader = new FXMLLoader(getClass().getResource("restock_report.fxml"));
         Parent root = loader.load();

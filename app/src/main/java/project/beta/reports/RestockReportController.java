@@ -12,6 +12,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+/**
+ * Controller for the restock report.
+ * 
+ * @author Joshua Downey
+ */
 public class RestockReportController {
     private BackendDAO dao;
     @FXML
@@ -30,10 +35,10 @@ public class RestockReportController {
     @FXML
     private TableColumn<InventoryItem, Integer> thresholdCol;
 
-    public void initialize() {
-
-    }
-
+    /**
+     * Sets up the table view with the data from the database.
+     * This should be called after the DAO is set.
+     */
     public void setUp() {
         try {
             ResultSet rs = dao.getRestockItems();
