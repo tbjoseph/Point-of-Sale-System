@@ -72,6 +72,15 @@
     -fx-font-size: 16;
 }
 
+#viewBox {
+    -fx-background-color: black;
+    -fx-padding: 10px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+}
+
 #errorText {
     -fx-text-fill: cherry;
     -fx-font-weight: bold;
@@ -79,4 +88,9 @@
 
 #errorPane {
     -fx-background-color: slate2;
+}
+
+#textArea {
+    -fx-background-color: cherry;
+    -fx-control-inner-background: cherry;
 }

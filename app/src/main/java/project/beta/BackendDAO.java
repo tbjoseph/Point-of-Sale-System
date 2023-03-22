@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.util.Pair;
 
 import project.beta.types.InventoryItem;
 import project.beta.types.MenuItem;
@@ -31,6 +32,7 @@ public class BackendDAO {
     private Connection connection;
 
     private HashMap<Long, ArrayList<Long>> menu_inventory_assoc;
+    private HashMap<Pair<String, Long>, Long> inventory_data;
 
     /**
      * Default constructor for BackendDAO. Requires the environment variables
@@ -195,6 +197,71 @@ public class BackendDAO {
                 menu_inventory_assoc.put(menu_item_id, inventory_item_id_list);
             }
         }
+    }
+
+    /**
+     * Constructs hash map for inventory_data
+     * 
+     * @throws SQLException if the query fails
+     */
+    public HashMap<Pair<String, Long>, Long> construct_inventory_data(Timestamp timestamp) throws SQLException {
+
+        //Initialize all inventory items to have been a part of 0 orders
+        Statement stmt0 = connection.createStatement();
+        ResultSet rs0 = stmt0.executeQuery("SELECT item_name,quantity FROM inventory_items");
+        inventory_data = new HashMap<>();
+
+        while (rs0.next()) {
+            String item_name = rs0.getString("item_name");
+            Long quantity = rs0.getLong("quantity");
+
+            Pair<String, Long> pair = new Pair<>(item_name, quantity); // name and remaining stock for a given item
+
+            inventory_data.put(pair, 0L);
+        }
+
+        //Record number of item instances in order history
+        String query = "SELECT i.item_name,i.quantity FROM order_history o JOIN order_menu_assoc a ON a.order_id = o.id JOIN menu_items m ON m.id = a.menu_item_id JOIN menu_inventory_assoc b ON b.menu_item_id = m.id JOIN inventory_items i ON i.inventory_id = b.inventory_item_id WHERE o.order_date > ?";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setTimestamp(1, timestamp);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            String item_name = rs.getString("item_name");
+            Long quantity = rs.getLong("quantity");
+
+            Pair<String, Long> pair = new Pair<>(item_name, quantity); // name and remaining stock for a given item
+
+            Long inventory_sold = inventory_data.get(pair);
+            inventory_data.put(pair, (inventory_sold + 1L) );
+        }
+
+        return inventory_data;
+    }
+
+    /**
+     * Checks if restock of given item has occured after the timestamp
+     * 
+     * @param item_name item to check
+     * @param timestamp timestamp to check
+     * @return true if a restock has occured, false otherwise
+     */
+    public boolean restock(String item_name, Timestamp timestamp) {
+        try {
+            PreparedStatement statement = connection
+                    .prepareStatement("SELECT shipment_date,item_name FROM shipment_history WHERE shipment_date > ? AND item_name = ?");
+            statement.setTimestamp(1, timestamp);
+            statement.setString(2, item_name);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            // here we opt to not propagate the exception, and instead just return false.
+            System.err.println(e);
+            return false;
+        }
+        return false;
     }
 
     /**

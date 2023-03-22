@@ -38,7 +38,8 @@ public class ReportsHomeController {
 
     @FXML
     DatePicker timestampDatePicker;
-    // @FXML
+    @FXML
+    TextField timestampTimePicker;
 
     @FXML
     private VBox errorPane;
@@ -128,7 +129,33 @@ public class ReportsHomeController {
      * @throws IOException if the file is not found
      */
     public void generateExcessReport(ActionEvent event) throws IOException {
-        // TODO
+        // get the sales controller and load it
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("excess_report.fxml"));
+        Parent root = loader.load();
+        ExcessReportController controller = loader.getController();
+        controller.setDAO(dao);
+
+        try {
+            // set any necessary data from the inputs
+            LocalDate date = timestampDatePicker.getValue();
+            String time = timestampTimePicker.getText();
+            // prepend a 0 if the hour is only one digit
+            if (time.split(":")[0].length() == 1) {
+                time = "0" + time;
+            }
+            LocalTime time2 = LocalTime.parse(time);
+            Timestamp timestamp = Timestamp.valueOf(date.atTime(time2));
+            controller.setInput(timestamp);
+        } catch (DateTimeParseException e) {
+            handleError(e);
+            return;
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
