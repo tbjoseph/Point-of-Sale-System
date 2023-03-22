@@ -11,6 +11,13 @@ import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.Node;
+import javafx.stage.Stage;
+import java.io.IOException;
 
 /**
  * Controller for the restock report.
@@ -88,5 +95,26 @@ public class RestockReportController {
     private void handleError(SQLException exception) {
         errorText.textProperty().set("Warning: an error occurred with the database. See the log for details.");
         exception.printStackTrace();
+    }
+
+    /**
+     * Goes back to the report home page
+     * 
+     * @param event the event that triggered the function
+     * @throws IOException if the fxml file cannot be loaded
+     */
+    public void goBack(ActionEvent event) throws IOException {
+        // get the report home controller and load it
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));
+        Parent root = loader.load();
+        ReportsHomeController controller = loader.getController();
+        controller.setDAO(dao);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
+        stage.setScene(scene);
+        stage.setFullScreen(true);
+        stage.show();
     }
 }
