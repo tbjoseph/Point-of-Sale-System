@@ -11,9 +11,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.util.Pair;
-
-import javax.naming.spi.DirStateFactory.Result;
-
 import project.beta.types.InventoryItem;
 import project.beta.types.MenuItem;
 import project.beta.types.Association;
@@ -205,6 +202,9 @@ public class BackendDAO {
     /**
      * Constructs hash map for inventory_data
      * 
+     * @param timestamp the timestamp of the order
+     * @return a hash map of inventory items and the number of times they were a
+     *         part of an order
      * @throws SQLException if the query fails
      */
     public HashMap<Pair<String, Long>, Long> construct_inventory_data(Timestamp timestamp) throws SQLException {
@@ -243,11 +243,11 @@ public class BackendDAO {
     }
 
     /**
-     * Checks if restock of given item has occured after the timestamp
+     * Checks if restock of given item has occurred after the timestamp
      * 
      * @param item_name item to check
      * @param timestamp timestamp to check
-     * @return true if a restock has occured, false otherwise
+     * @return true if a restock has occurred, false otherwise
      */
     public boolean restock(String item_name, Timestamp timestamp) {
         try {
@@ -589,8 +589,8 @@ public class BackendDAO {
     /**
      * Adds the date of the last Z report to the SQL table.
      * 
-     * @param reportDate
-     * @throws SQLException
+     * @param reportDate The date of the last Z report.
+     * @throws SQLException if the query fails.
      */
     public void addZReport(Timestamp reportDate) throws SQLException {
         String query = "INSERT INTO z_report_dates (report_date) VALUES (?)";
