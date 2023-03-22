@@ -106,6 +106,7 @@ public class ExcessReportController {
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("../common.css").toExternalForm());
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
 
     }

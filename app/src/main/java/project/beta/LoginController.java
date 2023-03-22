@@ -88,6 +88,9 @@ public class LoginController {
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(getClass().getResource("common.css").toExternalForm());
                 stage.setScene(scene);
+                stage.setFullScreen(true);
+
+                stage.setFullScreen(true);
                 stage.show();
                 return;
             } else if (permissionLevel.equals("Manager")) {
@@ -101,6 +104,7 @@ public class LoginController {
                 scene.getStylesheets().add(getClass().getResource("common.css").toExternalForm());
                 scene.getStylesheets().add(getClass().getResource("manager.css").toExternalForm());
                 stage.setScene(scene);
+                stage.setFullScreen(true);
                 stage.show();
                 return;
             }
