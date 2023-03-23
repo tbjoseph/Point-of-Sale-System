@@ -17,7 +17,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 
-
 import project.beta.BackendDAO;
 
 /**
@@ -41,7 +40,6 @@ public class ExcessReportController {
     private TableColumn<InventoryItem, Long> currentInventoryCol;
     @FXML
     private TableColumn<InventoryItem, Long> previousInventoryCol;
-
 
     /**
      * Constructor for the ExcessReportController
@@ -120,11 +118,10 @@ public class ExcessReportController {
         }
     }
 
-
     /**
      * Class to represent items in the table
      */
-    public static class InventoryItem {
+    private static class InventoryItem {
         private String itemName;
         private Long currentInventory;
         private Long previousInventory;
